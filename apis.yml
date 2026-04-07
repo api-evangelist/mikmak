@@ -1,8 +1,8 @@
 aid: mikmak
 name: MikMak
 description: >-
-  MikMak provides eCommerce enablement and analytics software for multichannel
-  brands to convert global customers. 
+  MikMak provides eCommerce enablement and analytics software for multichannel brands
+  to convert global customers.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -18,8 +18,8 @@ apis:
   - aid: mikmak:mikmak
     name: MikMak
     description: >-
-      MikMak provides eCommerce enablement and analytics software for
-      multichannel brands to convert global customers. 
+      MikMak provides eCommerce enablement and analytics software for multichannel
+      brands to convert global customers.
     humanURL: ' https://www.mikmak.com/?utm_source=substack&utm_medium=email'
     tags:
       - API
