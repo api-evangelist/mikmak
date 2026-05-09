@@ -3,11 +3,11 @@
   "feeds": [
     {
       "source": "https://www.mikmak.com/blog",
-      "feed_url": "https://www.mikmak.com/blog/rss.xml",
-      "saved": 10,
-      "title": "Brand x eComm Insights by MikMak"
+      "feed_url": "https://www.mikmak.com/blog/atom.xml",
+      "title": "Brand x eComm Insights by MikMak",
+      "saved": 1
     }
   ],
-  "post_count": 10,
-  "fetched": "2026-05-03T23:31:59Z"
+  "post_count": 11,
+  "fetched": "2026-05-09T20:17:51Z"
 }
