@@ -70,6 +70,8 @@ apis:
       - type: Help Center
         url: https://help.mikmak.ai/hc
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/mikmak-tv
   - type: Website
     url: https://www.mikmak.com
   - type: Help Center
