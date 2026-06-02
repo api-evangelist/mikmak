@@ -2,13 +2,17 @@
   "repo": "mikmak",
   "feeds": [
     {
-      "source": "https://www.mikmak.com/blog",
+      "source": "https://www.mikmak.com/blog/atom.xml",
       "feed_url": "https://www.mikmak.com/blog/atom.xml",
-      "title": "Brand x eComm Insights by MikMak",
+      "title": "",
       "saved": 0,
-      "last_error": "http_404"
+      "method": "feed"
+    },
+    {
+      "source": "https://help.mikmak.ai/hc",
+      "error": "HTTPError"
     }
   ],
-  "post_count": 11,
-  "fetched": "2026-05-17T20:20:35Z"
+  "post_count": 15,
+  "fetched": "2026-06-01T23:35:02Z"
 }
