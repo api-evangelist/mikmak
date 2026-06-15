@@ -2,8 +2,8 @@
   "repo": "mikmak",
   "feeds": [
     {
-      "source": "https://www.mikmak.com/blog/atom.xml",
-      "feed_url": "https://www.mikmak.com/blog/atom.xml",
+      "source": "https://www.mikmak.com/blog/rss.xml",
+      "feed_url": "https://www.mikmak.com/blog/rss.xml",
       "title": "",
       "saved": 0,
       "method": "feed"
@@ -14,5 +14,5 @@
     }
   ],
   "post_count": 15,
-  "fetched": "2026-06-01T23:35:02Z"
+  "fetched": "2026-06-14T20:42:17Z"
 }
