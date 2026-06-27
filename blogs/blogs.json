@@ -10,9 +10,12 @@
     },
     {
       "source": "https://help.mikmak.ai/hc",
-      "error": "HTTPError"
+      "feed_url": "https://help.mikmak.ai/hc",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
   "post_count": 15,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:03:07Z"
 }
