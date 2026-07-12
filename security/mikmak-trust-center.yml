@@ -1,0 +1,18 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://www.mikmak.com/security
+url: https://www.mikmak.com/security
+certifications:
+- SOC 2
+- ISO 27001
+- GDPR
+- CSA STAR
+evidence:
+- source: https://www.mikmak.com/security
+  keywords:
+  - soc 2
+  - iso 27001
+  - iso/iec 27001
+  - gdpr
+  - csa star
