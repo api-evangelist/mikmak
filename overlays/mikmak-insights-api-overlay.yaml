@@ -1,0 +1,93 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the MikMak Insights API
+  version: 1.0.0
+extends: ../openapi/mikmak-insights-api-openapi.yml
+x-provenance:
+  generated: '2026-08-12'
+  method: generated
+  source: >-
+    Enhancements over the provider's own spec, harvested verbatim on 2026-08-12 from the live
+    Swagger UI bundle at https://api.mikmak.ai/reporting/docs (swagger-ui-init.js swaggerDoc,
+    OpenAPI 3.1.0, 15 operations, 52 schemas). Ownership confirmed - info.title is
+    "MikMak Insights API", the host is MikMak's own API domain, and the reference page at
+    https://docs.mikmak.ai/reference/mikmak-insights-api links directly to it.
+  note: >-
+    The original is never mutated. The most consequential gap this overlay records is that the
+    document has NO servers[] block at all, and declares no authentication or server errors on
+    any of its fourteen authenticated report operations.
+actions:
+  - target: $
+    description: >-
+      Contribute the servers[] block the published document omits entirely. Without it, every
+      generated client has no base URL. The host is established by the document's own serving
+      location and by the /reporting path prefix on every operation.
+    update:
+      servers:
+        - url: https://api.mikmak.ai
+          description: Production. Contributed by API Evangelist; absent from the published document.
+  - target: $.info
+    description: Record where the contract lives and how access is obtained.
+    update:
+      contact:
+        name: MikMak
+        url: https://docs.mikmak.ai/reference/mikmak-insights-api
+      x-api-evangelist-note: >-
+        Credentials are tied to one account and issued by MikMak; each request returns only that
+        account's data. There is no self-service signup.
+  - target: $.components
+    description: >-
+      Contribute the auth and throttling responses the document never declares. Fourteen of the
+      fifteen operations require authentication yet declare only 200 and 422.
+    update:
+      responses:
+        Unauthorized:
+          description: >-
+            Missing or invalid credentials. Not declared on any operation in the base document.
+          content:
+            application/json:
+              schema:
+                type: object
+        TooManyRequests:
+          description: >-
+            Rate cap exceeded. Not declared in the base document and no limits are published for
+            this API; see rate-limits/mikmak-rate-limits.yml.
+          content:
+            application/json:
+              schema:
+                type: object
+  - target: $.paths['/reporting/authenticate'].post
+    description: Name the operation the base document leaves without an operationId.
+    update:
+      operationId: reportingAuthenticate
+      x-note: >-
+        The only unauthenticated operation on this API. Exchanges account credentials for a JWT
+        carrying access_token, token_type, expires_in and expires_at. Note this is a SEPARATE
+        authentication endpoint from the Commerce API's /commerce/v1/oauth/token - MikMak runs
+        two independent token surfaces.
+  - target: $.tags
+    description: Describe the three report families the operations are grouped into.
+    update:
+      - name: Authentication
+        description: Exchange account credentials for a reporting JWT.
+      - name: Custom Reports
+        description: >-
+          Field and filter discovery, then run or export a custom report. The general-purpose
+          path into Purchase Intent and Attributable Sales data.
+      - name: Historical Pricing Reports
+        description: Pricing intelligence fields, filters, query and export.
+      - name: Shoppable Recipe Reports
+        description: Shoppable recipe performance fields, filters, query and export.
+  - target: $.info
+    description: Record the discovery-and-run interaction pattern that governs this whole API.
+    update:
+      x-usage-pattern:
+        description: >-
+          Each report family follows the same three-step shape - call *_report_fields to learn
+          the available dimensions and metrics, call *_filters (or *_single_filter /
+          *_advanced_filters) to learn the valid filter values, then POST the report itself or
+          its /export variant. Every operation is a POST, including reads.
+        families:
+          - custom_report
+          - pricing_intelligence
+          - shoppable_recipe_report

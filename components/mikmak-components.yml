@@ -1,0 +1,96 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.mikmak.ai/docs/developer-guide
+docs:
+  - https://docs.mikmak.ai/docs/commerce-for-brandcom-v1
+  - https://docs.mikmak.ai/docs/callback-javascript-function
+  - https://docs.mikmak.ai/docs/gtm-events
+provider: MikMak
+providerId: mikmak
+summary: >-
+  MikMak's client-side surface is a single async loader plus a declarative HTML data-attribute
+  API. There is no npm package, no web-component custom element and no framework binding - the
+  script scans the DOM for data-mm-* attributes and upgrades any element into a widget. It is
+  the oldest and most widely deployed part of the platform, inherited from Swaven, and it is
+  configured entirely through a global `swnDataLayer` object.
+families:
+  - name: Where-to-Buy widget (brand.com)
+    version: v2
+    loader:
+      url: https://wtb-tag.mikmak.ai/scripts/{appId}/tag.min.js
+      async: true
+      pinned: false
+      global: swnDataLayer
+      required_config:
+        - appId
+      optional_config:
+        - dnt
+        - language / locale
+        - default country
+    surfaces:
+      - name: Buy Now button
+        trigger: any non-empty element carrying data-mm-wtbid
+        behaviour: opens the widget in an overlay on click
+      - name: In-page container
+        trigger: any empty element carrying data-mm-wtbid
+        behaviour: renders the widget inline; the container must be responsive
+      - name: Sticky button
+        trigger: data attributes on a fixed-position element
+        behaviour: persistent buy-now affordance
+    attributes:
+      - name: data-mm-wtbid
+        required: true
+        description: Experience (WTB) id - the same identifier as the x-wtb-id API header.
+      - name: data-mm-container
+        required: false
+        description: DOM id or ID selector of the element the widget opens into.
+      - name: data-mm-ids
+        required: false
+        description: >-
+          Comma-separated product ids. Can be rewritten with JavaScript at runtime to drive a
+          variant selector without reloading the page.
+      - name: data-mm-default-id
+        required: false
+        description: Product id preselected in the widget; updatable with JavaScript.
+      - name: data-mm-default-id-[country]
+        required: false
+        description: Per-country preselected product id.
+      - name: data-mm-id-type
+        required: false
+        description: Identifier type for the values in data-mm-ids.
+    localisation:
+      default: the host page's body lang attribute
+      override: set language or locale on swnDataLayer
+      country_fallback: visitor IP; unsupported countries suppress the widget or show an out-of-scope message
+    events:
+      javascript_callback: https://docs.mikmak.ai/docs/callback-javascript-function
+      google_tag_manager: https://docs.mikmak.ai/docs/gtm-events
+      note: >-
+        The GTM page documents a full catalog of dataLayer events and variables. These are
+        browser-side analytics events, not HTTP webhooks - MikMak publishes no server-to-server
+        callback surface.
+    csp_requirements:
+      connect-src: ['*.mikmak.ai', '*.swaven.com']
+      frame-src: ['*.mikmak.ai', '*.swaven.com']
+      script-src: ['*.mikmak.ai', '*.swaven.com']
+      font-src: ['*.mikmak.ai', '*.swaven.com', '*.static-swaven.com']
+      img-src: ['*.mikmak.ai', '*.swaven.com', '*.static-swaven.com']
+    admin_mode: 'Append ?swntagadmin=1 to any page carrying the tag to enter administration mode.'
+  - name: Sales tracking pixel (STrack)
+    kind: pixel
+    docs: https://docs.mikmak.ai/docs/sales-tracking-pixel
+    description: >-
+      Retailer-side conversion tracking pixel, complemented by a Google Tag Manager path and a
+      batch conversion file. Feeds attribution into MikMak Insights.
+    related:
+      - https://docs.mikmak.ai/docs/sales-tracking-google-tag-manager
+      - https://docs.mikmak.ai/docs/conversion-file
+      - https://docs.mikmak.ai/docs/sales-tracking-overview
+component_families: 2
+gaps:
+  - No versioned or pinnable distribution; the loader always resolves to the current build.
+  - No subresource-integrity hash is published for the tag.
+  - No npm/ESM package, custom element, or React/Vue binding.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -4,96 +4,97 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: MikMak
 providerId: mikmak
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-12'
+generated: '2026-08-12'
+method: searched
+source: https://docs.mikmak.ai/docs/authentication-1
+docs:
+  - https://docs.mikmak.ai/docs/authentication-1
+  - https://docs.mikmak.ai/docs/tools-1
 tags:
   - Analytics
   - Commerce
   - eCommerce
-  - Multichannel
-  - Retail Media
   - Rate Limiting
   - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the MikMak API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
+  - MCP
+description: >-
+  Real published limits for the MikMak Commerce MCP Server, replacing a 2026-05-04 scaffold that
+  invented free/professional/enterprise quotas MikMak has never published. MikMak documents
+  three independent caps on the MCP layer, enforced in order, and states that the numbers are
+  defaults which "may differ per deployment" - your MikMak contact confirms the active quotas.
+  The Headless Commerce API and the Insights API are described as rate-limited in prose but
+  publish no numbers and no headers of their own.
+limit_count: 3
 headers:
   limit: X-RateLimit-Limit
   remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
   retryAfter: Retry-After
-  policy: RateLimit-Policy
+  reset: not-published
+  policy: not-published
+  on_success: >-
+    X-RateLimit-Limit and X-RateLimit-Remaining are returned on successful responses too, so a
+    client can self-regulate before being blocked.
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+  body_code: RATE_LIMITED
+  media_type: application/problem+json
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - MikMak Commerce
-      - MikMak Aura
-      - MikMak Insights
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - MikMak Commerce
-      - MikMak Aura
-      - MikMak Insights
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - MikMak Commerce
-      - MikMak Aura
-      - MikMak Insights
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - MikMak Commerce
-      - MikMak Aura
-      - MikMak Insights
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
+  - name: Global cap
+    scope: service
+    order: 1
     metric: requests_per_minute
     limit: 1000
-    burst: 5000
     timeFrame: minute
+    default: true
     applies:
-      - MikMak Commerce
-      - MikMak Aura
-      - MikMak Insights
+      - MikMak Commerce MCP Server
+    note: Protects the shared service overall.
+  - name: Per API key
+    scope: api-key
+    keyed_by: x-api-key
+    order: 2
+    metric: requests_per_minute
+    limit: 60
+    burst: 120
+    timeFrame: minute
+    default: true
+    applies:
+      - MikMak Commerce MCP Server
+  - name: Per IP
+    scope: ip
+    order: 3
+    metric: requests_per_minute
+    limit: 30
+    burst: 60
+    timeFrame: minute
+    default: true
+    applies:
+      - MikMak Commerce MCP Server
+    note: Fallback used only when x-api-key is absent.
+undocumented:
+  - api: MikMak Headless Commerce API
+    note: >-
+      The API overview says "the API includes rate-limiting controls that restrict the number of
+      requests made within a given timeframe" but publishes no limit, window or header, and the
+      OpenAPI declares no 429 response on any of its eight operations.
+  - api: MikMak Insights API
+    note: No rate limits published; the OpenAPI declares only 200 and 422 on report operations.
+  - api: MikMak Auth0 token endpoint
+    note: >-
+      Auth0 rate-limits /oauth/token per client. MikMak warns that a token-per-request pattern
+      "will eventually be throttled" and instructs clients to cache the JWT until
+      expires_in - 60 seconds. No number is given.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Backoff
+    description: Honour Retry-After on 429 and back off; retry a 401 exactly once after refreshing the token, never in a loop.
+  - name: Token caching
+    description: Cache the access token in memory until 60 seconds before expiry rather than minting one per request.
+  - name: Deployment variance
+    description: >-
+      MikMak states the published numbers are defaults and that exact quotas are
+      deployment-specific and confirmed by a MikMak contact.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

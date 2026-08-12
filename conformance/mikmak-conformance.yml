@@ -1,0 +1,143 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/mikmak-commerce-api-openapi.yml, openapi/mikmak-insights-api-openapi.yml, https://docs.mikmak.ai/docs/authentication-1
+provider: MikMak
+providerId: mikmak
+standards:
+  - id: openapi
+    name: OpenAPI Specification
+    conforms: true
+    versions:
+      - '3.0.0'
+      - '3.1.0'
+    evidence: >-
+      The Commerce API (v1) is published as OpenAPI 3.0.0 inside the provider's ReadMe reference
+      pages; the MikMak Insights API is served as OpenAPI 3.1.0 from a live Swagger UI at
+      https://api.mikmak.ai/reporting/docs.
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    version: streamable-http transport, JSON-RPC 2.0
+    evidence: >-
+      Hosted MCP server at https://mcp.mikmak.ai/commerce/v1 with three tools carrying
+      readOnly / nonDestructive / openWorld annotations; documented at
+      https://docs.mikmak.ai/docs/developer-portal. Probed live 2026-08-12 (401, auth-gated).
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: true
+    grants:
+      - client_credentials
+      - authorization_code
+      - refresh_token
+    evidence: >-
+      Authorization endpoint https://api.mikmak.ai/commerce/v1/authorize and token endpoint
+      https://api.mikmak.ai/commerce/v1/oauth/token, documented with state-parameter CSRF
+      protection, single-use codes and rotating refresh tokens.
+    deviations:
+      - >-
+        The token endpoint takes a JSON body rather than
+        application/x-www-form-urlencoded as RFC 6749 section 4.1.3 requires.
+      - No scopes reference is published; offline_access is the only named scope.
+      - No PKCE is documented for the authorization-code flow.
+      - >-
+        No /.well-known/oauth-authorization-server metadata document (RFC 8414) is served on
+        any MikMak host, so the endpoints are discoverable only from prose documentation.
+  - id: oidc
+    name: OpenID Connect
+    conforms: partial
+    evidence: >-
+      Auth0 brokers enterprise SSO into the MikMak platform over OIDC and SAML against the
+      customer's IdP, per the Enterprise SSO integration guide. This is platform login, not API
+      authorization; no OIDC discovery document is served and no id_token is documented on the
+      API surface.
+  - id: rfc9457
+    name: RFC 9457 / RFC 7807 Problem Details for HTTP APIs
+    conforms: partial
+    evidence: >-
+      The MCP server documents and actually returns application/problem+json with type, title,
+      status, detail and instance. Verified live: an unauthenticated POST to
+      https://mcp.mikmak.ai/commerce/v1 returned a 401 problem document on 2026-08-12. The docs
+      cite RFC 7807 (superseded by RFC 9457).
+    deviations:
+      - >-
+        The Commerce API (v1) OpenAPI declares 400/401/403/404/500 on every operation with no
+        response content schema at all, so the REST surface's error envelope is undocumented.
+      - >-
+        The live 401 problem document uses type "about:blank" rather than the
+        "/errors/auth-unauthorized" value shown in the documentation example.
+      - A non-standard `code` and `source` member carries the machine-readable error identity.
+  - id: rate-limit-headers
+    name: RateLimit header fields for HTTP
+    conforms: partial
+    evidence: >-
+      X-RateLimit-Limit, X-RateLimit-Remaining and Retry-After are documented on both 429 and
+      successful MCP responses.
+    deviations:
+      - >-
+        Uses the legacy X-RateLimit-* prefix, not the IETF draft RateLimit / RateLimit-Policy
+        fields. No X-RateLimit-Reset is documented.
+  - id: idempotency
+    name: Idempotency keys
+    conforms: false
+    evidence: >-
+      Not applicable in practice and not published. Every operation on both APIs is safe:
+      the Commerce API is entirely GET, the Insights API is POST-for-query (report retrieval
+      and export) with no state-changing write. No Idempotency-Key header is documented.
+  - id: pagination
+    name: Pagination
+    conforms: true
+    evidence: >-
+      GET /commerce/v1/search/products is documented as returning paginated products; the MCP
+      tool deliberately does not expose limit/offset and leaves pagination server-controlled.
+  - id: json-api
+    name: 'JSON:API'
+    conforms: false
+    evidence: Plain JSON response envelopes; no JSON:API document structure.
+  - id: iso3166
+    name: ISO 3166-1 alpha-2 / ISO 3166-2
+    conforms: true
+    evidence: >-
+      Country arguments across the Commerce API and every MCP tool are ISO 3166-1 alpha-2; the
+      brand.com tag documentation references ISO 3166-2 for region codes.
+  - id: gtin
+    name: GS1 GTIN / UPC / EAN product identification
+    conforms: true
+    evidence: >-
+      Product identity across the whole platform is GTIN/UPC/EAN, with an idType enum of
+      gtin, mpn, group, product_id and matching_id on the REST surface and
+      DEFAULT / GTIN / MPN / PRODUCT_ID / MODEL_NAME / ACCOUNT_PRODUCT_UID on the MCP tools.
+  - id: wcag
+    name: WCAG 2.1 Level AA
+    conforms: true
+    evidence: 'Claimed on https://www.mikmak.com/security: "adheres to WCAG 2.1 AA".'
+  - id: gdpr
+    name: GDPR
+    conforms: true
+    evidence: >-
+      Claimed on https://www.mikmak.com/security, with a published subprocessors page at
+      https://www.mikmak.com/legal/subprocessors and a CCPA do-not-sell opt-out at
+      https://www.mikmak.com/ca-notice-opt-out.
+  - id: soc2
+    name: SOC 2
+    conforms: true
+    evidence: >-
+      "Annual SOC 2 examinations for security, availability, processing integrity,
+      confidentiality and privacy" — https://www.mikmak.com/security. Report access is not
+      self-service; no trust portal is published.
+  - id: iso27001
+    name: ISO/IEC 27001
+    conforms: true
+    evidence: >-
+      "MikMak's information security management system is certified under ISO 27001" —
+      https://www.mikmak.com/security.
+  - id: fhir
+    name: HL7 FHIR
+    conforms: false
+    evidence: Not a healthcare API.
+  - id: psd2
+    name: PSD2 / Open Banking
+    conforms: false
+    evidence: Not a payments API. MikMak routes shoppers to retailers; it does not process payment.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

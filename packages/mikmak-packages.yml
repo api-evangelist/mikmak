@@ -1,0 +1,97 @@
+generated: '2026-08-12'
+method: searched
+source: https://registry.npmjs.org
+provider: MikMak
+providerId: mikmak
+summary: >-
+  MikMak publishes NO first-party client SDK for any of its APIs, in any language. Searches of
+  npm, PyPI, Maven Central, NuGet, pkg.go.dev, RubyGems, Packagist and crates.io returned no
+  MikMak or Swaven API client. The @mikmak npm scope exists but holds only internal frontend
+  tooling, last published in 2023; the Swaven GitHub organisation's 22 public repositories are
+  build and infrastructure utilities, several explicitly marked DEPRECATED, with no API client
+  among them. The only first-party distribution an integrator actually consumes is the
+  brand.com where-to-buy tag, served unpinned from a CDN path keyed by the customer's own app id.
+sdk_count: 0
+official_sdk_count: 0
+package_count: 4
+packages:
+  - name: mikmak-wtb-tag
+    registry: cdn
+    official: true
+    kind: browser-tag
+    url: https://wtb-tag.mikmak.ai/scripts/{appId}/tag.min.js
+    version: null
+    published: null
+    note: >-
+      Checked, nothing to record. The distribution is UNPINNED and per-customer - the path
+      carries the brand's app id, not a version, and the loader always fetches whatever
+      tag.min.js is current. There is no registry metadata endpoint, no jsDelivr/unpkg entry,
+      and no integrity hash in the documented snippet. A consumer cannot tell which build they
+      are running, and neither can we; the same is true for MikMak's own customers.
+    docs: https://docs.mikmak.ai/docs/developer-guide
+  - name: '@mikmak/components'
+    registry: npm
+    official: true
+    kind: internal-ui
+    url: https://www.npmjs.com/package/@mikmak/components
+    version: 0.25.16
+    published: '2023-03-30'
+    note: >-
+      First-party (published by MikMak staff accounts) but NOT an API client - the description
+      calls it "an internal app housing reusable Vue components used across all MikMak web
+      apps", built with Storybook. Three years without a release. Listed here as evidence of
+      what the @mikmak scope contains, not as an integration path.
+  - name: '@mikmak/eslint-config'
+    registry: npm
+    official: true
+    kind: internal-tooling
+    url: https://www.npmjs.com/package/@mikmak/eslint-config
+    version: 1.0.1
+    published: '2023-01-11'
+    repository: https://github.com/tipoentertainment/mikmak-eslint
+    note: >-
+      First-party lint rules, author "MikMak team!". Not an API client. The repository sits
+      under tipoentertainment, MikMak's founding-era org name.
+  - name: swn-logger
+    registry: npm
+    official: true
+    kind: internal-tooling
+    url: https://www.npmjs.com/package/swn-logger
+    version: 4.0.3
+    published: '2026-07-01'
+    repository: https://github.com/Swaven/swn-node-logger
+    note: >-
+      Published by the Swaven org that MikMak acquired in 2021 and still actively maintained -
+      a winston-based logging utility used inside MikMak's own Node services. Not an API client.
+      Included because it is the single piece of live evidence that the Swaven engineering
+      lineage is still shipping, six weeks before this pass.
+registries_checked:
+  - registry: npm
+    query: mikmak
+    result: '@mikmak/components, @mikmak/eslint-config - no API client'
+  - registry: npm
+    query: swaven
+    result: swn-logger, grunt-awsebtdeploy - no API client
+  - registry: pypi
+    query: mikmak
+    status: 404
+  - registry: pypi
+    query: swaven
+    status: 404
+  - registry: github
+    org: Swaven
+    public_repos: 22
+    result: >-
+      node-db-connector, swn-node-logger, grunt-swn-cachebuster, serverless-asset-pipeline and
+      forks. No SDK, no .proto, no published API spec.
+  - registry: github
+    org: mikmak
+    result: 'Account is a personal user with 0 public repositories; not the company org.'
+integration_paths_published:
+  - Raw HTTPS against https://api.mikmak.ai with an x-api-key header
+  - Raw JSON-RPC 2.0 against https://mcp.mikmak.ai/commerce/v1 with a Bearer JWT
+  - MCP client config for Cursor (~/.cursor/mcp.json) and Claude Desktop (via mcp-remote)
+  - The brand.com script tag plus HTML data attributes
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

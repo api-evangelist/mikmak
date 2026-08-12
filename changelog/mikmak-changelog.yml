@@ -1,0 +1,89 @@
+generated: '2026-08-12'
+method: searched
+source: https://www.mikmak.com/product-updates
+provider: MikMak
+providerId: mikmak
+scheme: quarterly-release-notes
+url: https://www.mikmak.com/product-updates
+dated_entries: false
+versioned_entries: false
+api_scoped: false
+machine_readable: false
+current_release: Q2 2026
+summary: >-
+  MikMak publishes marketing-shaped quarterly product announcements, not a developer changelog.
+  Entries carry no dates, no version numbers and no per-API scoping, and there is no changelog
+  on docs.mikmak.ai at all. The only per-page currency signal a machine can read is the
+  `updatedAt` timestamp ReadMe emits on each documentation page. There is no feed, no RSS and
+  no way to diff one release against the last.
+entries:
+  - release: Q2 2026
+    date: null
+    version: null
+    title: 'MikMak Aura: Power Smarter Growth with Predictive Intelligence'
+    type: addition
+    breaking: false
+  - release: Q2 2026
+    date: null
+    version: null
+    title: 'Build with Mak: Turn Prompts into Live, Retailer-Integrated Campaigns'
+    type: addition
+    breaking: false
+  - release: Q2 2026
+    date: null
+    version: null
+    title: 'Analyze with Mak: Transform Data Into Strategy Instantly'
+    type: addition
+    breaking: false
+  - release: Q2 2026
+    date: null
+    version: null
+    title: 'Commerce MCP: Power the Future of Agentic Commerce'
+    type: addition
+    breaking: false
+    note: >-
+      The launch of the MCP server documented at mcp/mikmak-mcp.yml. This is the one entry in
+      the set that changes the API surface.
+  - release: Q2 2026
+    date: null
+    version: null
+    title: MikMak Insights Enhancements
+    type: addition
+    breaking: false
+    note: >-
+      Five listed improvements - availability metrics, custom filters, UTM reporting, pricing
+      analysis and geographic dimensions - none tied to an API version or endpoint.
+  - release: Q4 2025
+    date: null
+    version: null
+    title: Q4 2025 releases
+    type: addition
+    breaking: false
+    note: Linked from the 2026 page as the prior archive.
+documentation_currency:
+  source: ReadMe `updatedAt` frontmatter on docs.mikmak.ai pages
+  observed:
+    - page: /docs/quick-start-1
+      updated: '2026-07-15'
+    - page: /docs/mikmak-commerce-api
+      updated: '2026-07-15'
+    - page: /docs/authentication-1
+      updated: '2026-06-12'
+    - page: /docs/tools-1
+      updated: '2026-06-11'
+    - page: /reference/mikmak-headless-commerce-api
+      updated: '2026-04-28'
+    - page: /reference/get_commerce-v1-products-id
+      updated: '2026-04-22'
+    - page: /reference/commerce-api-authentication
+      updated: '2026-03-16'
+    - page: /reference/mikmak-insights-api
+      updated: '2026-03-13'
+gaps:
+  - No dated developer changelog.
+  - No version numbers on any release entry.
+  - No RSS/Atom feed or machine-readable release history.
+  - No mapping from a release to an API version, endpoint or schema change.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

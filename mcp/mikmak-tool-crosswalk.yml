@@ -1,0 +1,109 @@
+generated: '2026-08-12'
+method: derived
+source: mcp/mikmak-mcp.yml, openapi/mikmak-commerce-api-openapi.yml
+provider: MikMak
+providerId: mikmak
+summary: >-
+  MikMak's own documentation states the crosswalk explicitly: "Every MCP tool call ultimately
+  resolves to a REST request against the underlying Commerce API" and publishes a tool-to-path
+  mapping table. That makes every binding here high-confidence and provider-asserted rather than
+  inferred. The Commerce OpenAPI declares no operationId on any operation, so REST operations
+  are addressed by method + path; the overlay at overlays/mikmak-commerce-api-overlay.yaml adds
+  the operationIds used below as an API Evangelist enhancement, and they are flagged as such.
+surfaces:
+  openapi:
+    - file: openapi/mikmak-commerce-api-openapi.yml
+      title: Commerce API (v1)
+      base: https://api.mikmak.ai
+      operations: 8
+      gated: true
+      note: Spec is public on docs.mikmak.ai; calling it requires an onboarding-issued key.
+    - file: openapi/mikmak-insights-api-openapi.yml
+      title: MikMak Insights API
+      base: https://api.mikmak.ai
+      operations: 15
+      gated: true
+      note: No MCP tool binds to any Insights operation.
+  graphql: none
+  mcp:
+    url: https://mcp.mikmak.ai/commerce/v1
+    transport: streamable-http
+    gated: true
+    note: tools/list returns 401 AUTH_UNAUTHORIZED anonymously; tool set transcribed from docs.
+crosswalk:
+  - tool: search_products
+    category: discovery
+    rest:
+      - GET /commerce/v1/search/products
+    operationId_overlay: searchProducts
+    binding: one-to-one
+    confidence: high
+    note: >-
+      Provider-published mapping. The tool narrows the REST surface: the operation's pagination
+      parameters are not exposed as tool arguments and are controlled server-side.
+  - tool: search_availabilities
+    category: availability
+    rest:
+      - GET /commerce/v1/availabilities/{id}
+    operationId_overlay: getAvailabilities
+    binding: one-to-one
+    confidence: high
+    note: >-
+      Provider-published mapping. Tool arguments are snake_case renames of the REST query
+      parameters, plus a Zod one-of constraint across the location pair that the OpenAPI itself
+      does not express.
+  - tool: get_products
+    category: catalog
+    rest:
+      - GET /commerce/v1/products/{id}
+    operationId_overlay: getProducts
+    binding: one-to-one
+    confidence: high
+    note: Provider-published mapping.
+mcp_only: []
+rest_only:
+  - operation: GET /commerce/v1/availabilities/cart/{id}
+    tag: Cart
+    reason: >-
+      Store-level cart availability grouped by store. No MCP tool exposes multi-line cart
+      assembly; the agent surface stops at single-product availability.
+  - operation: GET /commerce/v1/productcatalog/offers/models/{id}
+    tag: Offers
+    reason: >-
+      Online + local offer search by model. Overlaps semantically with search_availabilities but
+      is not bound to any tool.
+  - operation: GET /commerce/v1/experiences
+    tag: Experiences
+    reason: >-
+      Lists the experiences available to the authenticated account. Requires JWT (no API-key
+      alternative). An agent cannot discover its own x-wtb-id through the MCP surface.
+  - operation: GET /commerce/v1/experiences/config/{id}
+    tag: Experiences
+    reason: Experience configuration metadata (retailer sort order, pinned retailers). No tool.
+  - operation: GET /commerce/v1/products/facet
+    tag: Facet
+    reason: Product facets and productIds selection. No tool; faceted refinement is unavailable to agents.
+  - operation: POST /reporting/authenticate
+    tag: Authentication
+    api: MikMak Insights API
+    reason: Reporting-side auth. Out of scope for the commerce MCP server.
+  - operation: POST /reporting/v1/custom_report
+    tag: Custom Reports
+    api: MikMak Insights API
+    reason: >-
+      Neither the custom-report, pricing-intelligence nor shoppable-recipe report families have
+      an MCP tool. MikMak's analytics surface is not agent-exposed; only commerce is.
+coverage:
+  mcp_tools: 3
+  rest_operations_total: 23
+  rest_operations_commerce: 8
+  rest_operations_insights: 15
+  tools_bound_to_rest: 3
+  rest_covered_by_tools: 3
+  rest_uncovered: 20
+  commerce_coverage_pct: 37.5
+  overall_coverage_pct: 13.0
+  mcp_only_tools: 0
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

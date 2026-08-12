@@ -1,0 +1,159 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/mikmak-commerce-api-openapi.yml, openapi/mikmak-insights-api-openapi.yml, https://docs.mikmak.ai/docs/authentication-1
+provider: MikMak
+providerId: mikmak
+format: mixed
+summary: >-
+  MikMak runs three different error envelopes across one product. The MCP server is the only
+  surface with a machine-readable, catalogued error contract — RFC 7807 problem+json with a
+  stable `code` member, verified live. The Commerce API (v1) declares 400/401/403/404/500 on
+  every one of its eight operations with a prose description and NO response schema, so a
+  generated client gets no error type at all. The Insights API is FastAPI-shaped: only 200 and
+  422 are declared, and 422 carries the framework's HTTPValidationError, meaning auth and
+  server failures are undeclared on all fourteen reporting operations.
+envelopes:
+  - id: mcp-problem-json
+    surface: MikMak Commerce MCP Server
+    media_type: application/problem+json
+    spec: RFC 7807 (cited by MikMak; superseded by RFC 9457)
+    members:
+      - type
+      - title
+      - status
+      - detail
+      - instance
+      - code
+      - source
+    machine_readable_identity: code
+    verified:
+      url: https://mcp.mikmak.ai/commerce/v1
+      http_status: 401
+      observed: '2026-08-12'
+  - id: commerce-undeclared
+    surface: MikMak Headless Commerce API (v1)
+    media_type: undeclared
+    spec: none
+    note: >-
+      Every 4xx/5xx response object in the OpenAPI has a description and no `content`, so the
+      body shape is unspecified. Consumers cannot parse errors from the contract.
+  - id: insights-fastapi
+    surface: MikMak Insights API
+    media_type: application/json
+    spec: FastAPI HTTPValidationError
+    members:
+      - detail[].loc
+      - detail[].msg
+      - detail[].type
+problem_types:
+  - code: AUTH_UNAUTHORIZED
+    status: 401
+    surface: mcp
+    title: Unauthorized
+    type: /errors/auth-unauthorized
+    meaning: Missing, malformed or expired JWT, wrong audience, or wrong token URL.
+    remediation: >-
+      Re-acquire the token from the MikMak-supplied token URL, pin the correct per-environment
+      audience, and send the header as exactly `Authorization: Bearer <token>`. Retry once; do
+      not loop.
+    observed_type_value: about:blank
+    source: https://docs.mikmak.ai/docs/authentication-1
+  - code: MIKMAK_UNAUTHORIZED
+    status: 401
+    surface: mcp
+    title: Unauthorized
+    meaning: The JWT was accepted but the downstream MikMak Commerce API rejected the request.
+    remediation: Verify x-api-key is the correct key for that environment.
+    source: https://docs.mikmak.ai/docs/authentication-1
+  - code: MIKMAK_FORBIDDEN
+    status: 403
+    surface: mcp
+    title: Forbidden
+    meaning: Token and key are valid, but the WTB / scope is not permitted for this caller.
+    remediation: Confirm x-wtb-id belongs to the configured account.
+    source: https://docs.mikmak.ai/docs/authentication-1
+  - code: RATE_LIMITED
+    status: 429
+    surface: mcp
+    title: Too Many Requests
+    meaning: A per-key, per-IP or global rate cap was hit.
+    remediation: >-
+      Honour Retry-After and back off. Read X-RateLimit-Limit / X-RateLimit-Remaining on
+      successful responses to self-regulate before being blocked.
+    headers:
+      - Retry-After
+      - X-RateLimit-Limit
+      - X-RateLimit-Remaining
+    source: https://docs.mikmak.ai/docs/authentication-1
+  - status: 400
+    surface: commerce
+    title: Bad Request
+    meaning: >-
+      Required parameters missing, malformed, or failing validation — invalid ids, query
+      parameters, or location data.
+    remediation: Validate ids and the location pair before calling; see conventions/mikmak-conventions.yml.
+    source: openapi/mikmak-commerce-api-openapi.yml
+  - status: 401
+    surface: commerce
+    title: Unauthorized
+    meaning: Missing valid API key or JWT, or an expired/invalid token.
+    remediation: Send x-api-key or a valid Bearer token.
+    source: openapi/mikmak-commerce-api-openapi.yml
+  - status: 403
+    surface: commerce
+    title: Forbidden
+    meaning: >-
+      Authenticated but not allowed — configuration rules, disallowed countries, disabled
+      operators, or unauthorized products.
+    remediation: >-
+      Confirm the experience covers the requested country and that the product is in the
+      configured catalog. This is the code that separates "wrong credentials" from
+      "your contract does not cover this".
+    source: openapi/mikmak-commerce-api-openapi.yml
+  - status: 404
+    surface: commerce
+    title: Not Found
+    meaning: A configuration, product, experience or continuation token could not be found.
+    remediation: Re-resolve the id through search rather than retrying the same id.
+    source: openapi/mikmak-commerce-api-openapi.yml
+  - status: 500
+    surface: commerce
+    title: Internal Server Error
+    meaning: Unhandled server error.
+    remediation: Retry with exponential backoff and jitter; escalate with the X-Request-Id.
+    source: openapi/mikmak-commerce-api-openapi.yml
+  - status: 422
+    surface: insights
+    title: Validation Error
+    meaning: Request body failed schema validation.
+    envelope: '{"detail":[{"loc":[...],"msg":"...","type":"..."}]}'
+    remediation: Read detail[].loc to find the offending field path.
+    source: openapi/mikmak-insights-api-openapi.yml
+  - status: 400
+    surface: insights
+    title: Invalid client credentials
+    meaning: POST /reporting/authenticate rejected the supplied credentials.
+    remediation: Re-check the reporting client credentials issued by MikMak.
+    source: openapi/mikmak-insights-api-openapi.yml
+graceful_non_errors:
+  - condition: No product catalog configured for the experience
+    upstream_status: 400
+    mcp_behaviour: 'Returned as normal text content with isError false and guidance.'
+    source: https://docs.mikmak.ai/docs/tools-1
+  - condition: Requested country out of scope for the experience
+    upstream_status: 400
+    mcp_behaviour: 'Returned as normal text content with isError false, asking for an in-scope country.'
+    source: https://docs.mikmak.ai/docs/tools-1
+gaps:
+  - >-
+    The Commerce API's eight operations declare five error statuses with zero response schemas.
+    The error contract exists in prose only.
+  - >-
+    The Insights API declares no 401/403/429/500 on any of its fourteen v1 report operations,
+    despite requiring authentication on all of them.
+  - >-
+    The documented problem `type` value (/errors/auth-unauthorized) does not match what the
+    server actually returns (about:blank).
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

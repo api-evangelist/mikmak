@@ -1,0 +1,109 @@
+generated: '2026-08-12'
+method: probed
+source: live probes of every MikMak host named in apis.yml and in the OpenAPI servers[] blocks
+provider: MikMak
+providerId: mikmak
+result: none
+summary: >-
+  Twenty-one probes across five MikMak hosts returned no well-known document. www.mikmak.com
+  answers every /.well-known/* path with its 404 HTML shell; api.mikmak.ai answers every
+  /.well-known/* path with a bare 403 from the edge (the same host serves
+  /reporting/docs with a 200, so the 403 is path-scoped, not a whole-host block);
+  mcp.mikmak.ai returns Express "Cannot GET" 404s; docs.mikmak.ai returns the ReadMe 404 shell.
+  No pointer of type WellKnown or SecurityTxt is wired into apis.yml, because nothing was served.
+  Notably absent for an MCP provider: neither /.well-known/oauth-authorization-server nor
+  /.well-known/oauth-protected-resource exists on mcp.mikmak.ai, so an agent cannot discover
+  how to authenticate — credentials and the Auth0 audience are handed over out of band.
+hosts:
+  - host: www.mikmak.com
+    probes:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+      - path: /security.txt
+        status: 404
+        file: null
+  - host: api.mikmak.ai
+    probes:
+      - path: /.well-known/security.txt
+        status: 403
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 403
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+        file: null
+      - path: /.well-known/api-catalog
+        status: 403
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 403
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 403
+        file: null
+      - path: /.well-known/agent.json
+        status: 403
+        file: null
+  - host: mcp.mikmak.ai
+    probes:
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+        file: null
+      - path: /.well-known/oauth-protected-resource/commerce/v1
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /health
+        status: 200
+        file: null
+        note: >-
+          Not a well-known path, recorded here as the one machine-readable document the MCP host
+          serves anonymously - {"status":"ok","version":"1.0.0"}.
+  - host: docs.mikmak.ai
+    probes:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /llms.txt
+        status: 200
+        file: ../llms/mikmak-llms.txt
+        note: Not a well-known path; the provider's real llms.txt, saved verbatim.
+  - host: mikmak.com
+    probes:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

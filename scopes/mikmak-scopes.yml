@@ -1,0 +1,51 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.mikmak.ai/reference/authorization-code-flow
+docs: https://docs.mikmak.ai/reference/commerce-api-authentication
+provider: MikMak
+providerId: mikmak
+summary: >-
+  MikMak publishes two OAuth 2.0 grants against a single authorization server hosted on the API
+  domain, but does NOT publish a scope reference. The only scope value that appears anywhere in
+  the documentation is `offline_access`, returned in the authorization-code token response.
+  Neither OpenAPI declares an oauth2 security scheme, so there is no spec-derived scope map to
+  reconcile against; permissions are described in prose as "the permissions your app is
+  requesting", shown to the user on a consent screen configured by MikMak per client.
+authorization_servers:
+  - name: MikMak Authorization Server
+    authorizationUrl: https://api.mikmak.ai/commerce/v1/authorize
+    tokenUrl: https://api.mikmak.ai/commerce/v1/oauth/token
+    grants:
+      - authorization_code
+      - client_credentials
+      - refresh_token
+    consent_screen: true
+    note: >-
+      The client-credentials response documents an empty `scope` on the MCP path
+      ("scope": "") — a token minted for an audience, with no scope segmentation.
+scopes:
+  - name: offline_access
+    description: >-
+      Issues a refresh_token alongside the access token so the application can renew access
+      without sending the user back through the authorization screen. Returned in the
+      authorization-code and refresh-token grant responses.
+    grants:
+      - authorization_code
+      - refresh_token
+    source: https://docs.mikmak.ai/reference/authorization-code-flow
+scope_count: 1
+gaps:
+  - >-
+    No scopes/permissions reference page is published. An integrator cannot see, before
+    onboarding, which permissions a MikMak OAuth client can request or what the consent screen
+    will list.
+  - >-
+    Neither published OpenAPI declares an oauth2 securityScheme, so the authorization-code and
+    client-credentials flows are invisible to any tool that reads the spec — they exist only in
+    prose on the ReadMe reference pages.
+  - >-
+    Access scoping is done by identity headers (x-api-key, x-wtb-id) and by the Auth0
+    `audience`, not by OAuth scope.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

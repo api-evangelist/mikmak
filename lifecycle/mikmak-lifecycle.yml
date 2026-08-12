@@ -1,0 +1,92 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.mikmak.ai/llms.txt
+docs:
+  - https://www.mikmak.com/product-updates
+  - https://www.mikmak.com/legal/sla
+  - https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+provider: MikMak
+providerId: mikmak
+versioning:
+  style: uri-path
+  pattern: /{surface}/v1/...
+  surfaces:
+    - name: MikMak Headless Commerce API
+      current_version: v1
+      spec_version: '1.0'
+      released: unknown
+      status: current
+    - name: MikMak Insights API
+      current_version: v1
+      spec_version: 1.0.0
+      status: current
+    - name: MikMak Commerce MCP Server
+      current_version: 1.0.0
+      status: current
+      evidence: 'GET https://mcp.mikmak.ai/health -> {"status":"ok","version":"1.0.0"} (200, 2026-08-12)'
+    - name: MikMak Commerce for Brand.com (WTB tag)
+      current_version: v2
+      status: current
+      note: >-
+        v1 is still documented alongside v2 at
+        https://docs.mikmak.ai/docs/commerce-for-brandcom-v1 with no stated sunset date. The
+        docs index lists "Commerce for Brand.com (v2)" and "(v1)" as peers, which is the only
+        place in the whole MikMak surface where two versions coexist publicly.
+  no_prior_versions_published: true
+  breaking_change_policy: not published
+deprecation:
+  policy_published: false
+  sunset_header: not documented
+  deprecation_header: not documented
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No deprecation or sunset policy exists on any MikMak surface. Neither OpenAPI marks a single
+    operation, parameter or schema `deprecated: true`. An integrator has no published notice
+    period and no runtime signal that anything is going away.
+status_page:
+  published: false
+  probed:
+    - url: https://status.mikmak.ai
+      status: 0
+      note: DNS does not resolve.
+    - url: https://status.mikmak.com
+      status: 0
+      note: DNS does not resolve.
+  note: >-
+    MikMak publishes no status page. The only availability signal an integrator can poll is
+    GET https://mcp.mikmak.ai/health, which the docs describe as "unauthenticated; use for
+    probes only" and which covers the MCP layer alone, not the Commerce or Insights APIs.
+sla:
+  published: true
+  url: https://www.mikmak.com/legal/sla
+  scope: contractual, platform-level
+  note: >-
+    An SLA document is published under legal, but no availability percentage, latency target or
+    error-budget figure is exposed in the developer documentation, and it is not tied to any
+    named API surface.
+support:
+  channels:
+    - https://docs.mikmak.ai/page/support
+    - https://help.mikmak.ai/hc
+    - hola@mikmak.com
+  note: >-
+    help.mikmak.ai is behind a Cloudflare interstitial and returned 403 to every automated
+    probe on 2026-08-12.
+release_notes:
+  published: true
+  url: https://www.mikmak.com/product-updates
+  cadence: quarterly
+  dated_entries: false
+  versioned_entries: false
+  see: changelog/mikmak-changelog.yml
+onboarding:
+  self_service: false
+  note: >-
+    There is no developer signup. API keys, OAuth clients, the Auth0 audience and the token URL
+    are all issued by a MikMak representative under contract, and the Commerce API's permitted
+    uses require a signed agreement or addendum. Every credential in this profile is
+    out-of-band.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

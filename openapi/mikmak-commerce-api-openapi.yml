@@ -1,0 +1,2886 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Commerce API (v1)
+security:
+- ApiKeyAuth: []
+x-sharedDocumentationSamples:
+  locationDallas:
+    latitude: 32.781339
+    longitude: -96.799759
+    address: null
+    city: Dallas
+    country: US
+    state: TX
+    zipCode: '75270'
+    placeType: null
+    isMetricRegion: false
+  productsHellmannTwo:
+  - id: 0048001353855
+    ids:
+    - 0048001353855
+    gtin: 0048001353855
+    gtins:
+    - 0048001353855
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Mayonnaise Dressing with Olive Oil
+    subtitle: null
+    description: Hellmann's Mayonnaise Dressing with Olive Oil combines the creamy, rich taste you love from Hellmann's with
+      the delicious goodness of olive oil.
+    packaging: 20 oz
+    review: null
+  - id: 0048001213586
+    ids:
+    - 0048001213586
+    gtin: 0048001213586
+    gtins:
+    - 0048001213586
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Light Mayonnaise
+    subtitle: null
+    description: Looking for a lighter mayonnaise? Hellmann's Light Mayo has half the calories & half the fat of our Real
+      Mayonnaise with the same rich, creamy taste!
+    packaging: 30 oz
+    review: null
+paths:
+  /commerce/v1/availabilities/cart/{id}:
+    get:
+      tags:
+      - Cart
+      security:
+      - ApiKeyAuth: []
+      - JWTBearerAuth: []
+      description: Returns store-level cart availability grouped by store. Distances are in the metric system (m).
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The list of the requested product ids separated by a comma
+        schema:
+          type: string
+        example: 0048001353855,0048001213586
+      - name: idType
+        in: query
+        description: 'The type of the unique product identifier (default - MikMak default Product Id, gtin, mpn, product_id).
+          (eg: gtin)'
+        schema:
+          type: string
+          default: default
+          enum:
+          - default
+          - gtin
+          - mpn
+          - product_id
+      - name: wtbId
+        in: query
+        required: true
+        description: The experience id
+        schema:
+          type: string
+        example: 54511c2f827bef6f9c68f29a
+      - name: draft
+        in: query
+        description: True to use the draft experience configuration
+        schema:
+          type: boolean
+      - name: maxDistance
+        in: query
+        description: Max search distance (radius) in km, this parameter can override subaccount default setting
+        schema:
+          type: integer
+        example: 5
+      - name: maxReturnedStores
+        in: query
+        description: Maximum number of returned stores
+        schema:
+          type: string
+        example: 10
+      - name: language
+        in: query
+        description: Requested language or locale for the product and retailers
+        schema:
+          type: string
+        examples:
+          language:
+            value: en
+            summary: Language code
+          lcoale:
+            value: en-US
+            summary: Locale code
+      - name: latitude
+        in: query
+        description: Search location latitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        required: true
+        schema:
+          type: number
+        example: 48.8640493
+      - name: longitude
+        in: query
+        description: Search location longitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        required: true
+        schema:
+          type: number
+        example: 2.331052600000021
+      - name: country
+        in: query
+        required: true
+        description: Search location country code (2-letters)  (any combination of Latitude + Longitude OR ZipCode + Country
+          must be provided)
+        schema:
+          type: string
+        example: US
+      - name: zipCode
+        in: query
+        required: true
+        description: Search location zip code (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        schema:
+          type: string
+        example: 20004
+      - name: city
+        in: query
+        description: Search location city
+        schema:
+          type: string
+        example: Washington D.C
+      - name: address
+        in: query
+        description: Search location address
+        schema:
+          type: string
+        example: 401 9th St NW
+      - name: state
+        in: query
+        description: Search location state
+        schema:
+          type: string
+        example: DC
+      - name: requestedCountry
+        in: query
+        description: Requested country code (2-letters). Only for multiple countries experience. If the location country is
+          different from the requestedCountry, the location falls back to default location for the requested country.
+        schema:
+          type: string
+        example: US
+      - name: sessionId
+        in: query
+        description: Id for the current session so the events can be properly tracked.
+        schema:
+          type: string
+        example: 1234abcd
+      - name: currentUrl
+        in: query
+        description: The full URL visible in the shopper's browser as they interact with the Experience. It must include all
+          query parameters. This is necessary to report on UTM parameters.
+        schema:
+          type: string
+        example: https://www.mikmak.com/
+      - name: sessionUrl
+        in: query
+        description: The full URL visible in the shopper's browser when they first arrived on the website. This has to be
+          persisted throughout the session. It must include all query parameters. This is necessary to report on UTM parameters.
+        schema:
+          type: string
+        example: https://www.mikmak.com/
+      - name: includeOutOfStock
+        in: query
+        description: True to include out of stock products
+        schema:
+          type: boolean
+        example: true
+      - name: hideOutOfStockOfflineStores
+        in: query
+        description: True to hide out of stock offline stores
+        schema:
+          type: boolean
+        example: true
+      - name: applyTiedHouseLaw
+        in: query
+        description: To override the experience setting for applying tied house law
+        schema:
+          type: boolean
+        example: true
+      - name: retailerIds
+        in: query
+        description: Comma-separated list of retailer IDs to filter availability results. Only stores from the specified retailers
+          will be returned. If omitted, all in-scope retailers are returned.
+        schema:
+          type: string
+        example: 1,2,3
+      - name: modes
+        in: query
+        description: Delivery mode filter (delivery, clickAndCollect, brickAndMortar). Filters availability results to only
+          include stores that support the specified delivery modes
+        schema:
+          type: string
+        example: delivery
+      - name: src
+        in: query
+        description: Source identifier for tracking where the request originated from
+        schema:
+          type: string
+      - name: instanceId
+        in: query
+        description: Instance identifier for multi-tenant or distributed system tracking
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartResponse'
+              example:
+                location:
+                  latitude: 32.781339
+                  longitude: -96.799759
+                  address: null
+                  city: Dallas
+                  country: US
+                  state: TX
+                  zipCode: '75270'
+                  placeType: null
+                  isMetricRegion: false
+                products:
+                - id: 0048001353855
+                  ids:
+                  - 0048001353855
+                  gtin: 0048001353855
+                  gtins:
+                  - 0048001353855
+                  imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=500&org_if_sml=1&ci_url_encoded=1
+                  thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+                  brand: hellmann's
+                  title: Mayonnaise Dressing with Olive Oil
+                  subtitle: null
+                  description: Hellmann's Mayonnaise Dressing with Olive Oil combines the creamy, rich taste you love from
+                    Hellmann's with the delicious goodness of olive oil.
+                  packaging: 20 oz
+                  review: null
+                - id: 0048001213586
+                  ids:
+                  - 0048001213586
+                  gtin: 0048001213586
+                  gtins:
+                  - 0048001213586
+                  imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=500&org_if_sml=1&ci_url_encoded=1
+                  thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+                  brand: hellmann's
+                  title: Light Mayonnaise
+                  subtitle: null
+                  description: Looking for a lighter mayonnaise? Hellmann's Light Mayo has half the calories & half the fat
+                    of our Real Mayonnaise with the same rich, creamy taste!
+                  packaging: 30 oz
+                  review: null
+                carts:
+                - store:
+                    retailer:
+                      id: 245
+                      name: Walmart
+                      logo:
+                        isDefault: false
+                        url: https://img.static-swaven.com/v7/https%3A%2F%2Fcontent-nocache.static-swaven.com%2Fimg%2Fretailers%2Fhd%2F245.png?width=200&org_if_sml=1&ci_url_encoded=1
+                        type: rectangle
+                      logos:
+                      - url: https://img.static-swaven.com/v7/https%3A%2F%2Fcontent-nocache.static-swaven.com%2Fimg%2Fretailers%2Fhd%2F245.png?width=200&org_if_sml=1&ci_url_encoded=1
+                        type: rectangle
+                      - url: https://img.static-swaven.com/v7/https%3A%2F%2Fcontent-nocache.static-swaven.com%2Fimg%2Fretailers%2Fsquare%2F245.png?width=200&org_if_sml=1&ci_url_encoded=1
+                        type: square
+                      url: https://www.walmart.com
+                      pickUpOptionAvailable: true
+                      category: MASS
+                    id: 245_WEB
+                    name: Walmart
+                    phoneNumber: null
+                    internationalPhoneNumber: null
+                    whatsappNumber: null
+                    delivery: true
+                    clickAndCollect: false
+                    brickAndMortar: false
+                    url: https://www.walmart.com
+                    storeOpeningHoursSchema: null
+                  addToCartUrl: https://wtb-api-hub-stg.swaven.com/wtb/v3/api_click?wtbid=699485f7dbdacda1bbe63aaf&d=eyJ2IjoiMTc3NDM2NDQ0MTQwMyIsImFjdGlvbiI6ImJ1eSIsImZtdCI6ImFwaSIsInR5cGUiOiJhcGkiLCJtb2R1bGUiOiJ3dGIiLCJ0b3VjaHBvaW50IjoiQVBJIiwid3RiaWQiOiI2OTk0ODVmN2RiZGFjZGExYmJlNjNhYWYiLCJvcHNjb2RlIjoiIiwidGVzdCI6MCwiY3QiOiJVUyIsInBpZCI6IjAwNDgwMDEzNTM4NTUsMDA0ODAwMTIxMzU4NiIsImFwdWlkIjpudWxsLCJvcmRpZCI6IjIzNWUzMWYwLTFjOWYtNDk0Ny04NmVjLWQzNTYwYmE3ZWM1MiIsInNpZCI6IjI0NV9XRUIiLCJwcmMiOiIxMS45NCIsInByY19jdXJyZW5jeSI6IlVTRCIsImRpc3QiOiIwLjAwIiwiZGx2IjoiSEQiLCJxdCI6MiwiaXNfYnVuZGxlIjoxLCJhdnBpZHMiOiIwMDQ4MDAxMzUzODU1LDAwNDgwMDEyMTM1ODYiLCJhdl9hcHVpZHMiOm51bGwsImF2cGlkIjpudWxsLCJhdl9hcHVpZCI6bnVsbCwiYXZncGMiOjEyLjQ1LCJhdmdkaXN0IjowLCJuYnJlcyI6MiwibmJyZWZyZXQiOm51bGwsInNpZHMiOiIyNDVfV0VCLDEyODhfV0VCIiwiY2xrdXJsYWZmIjoxLCJjbGt1cmxhZmZfcHJnaWQiOjcwMzg4LCJjbGt1cmx0Ijo1LCJ1cmwiOiJodHRwczovL3d0Yi1hcGktaHViLXN0Zy5zd2F2ZW4uY29tL3d0Yi92My9vdXRib3VuZF9jbGljaz93dGJpZD02OTk0ODVmN2RiZGFjZGExYmJlNjNhYWZcdTAwMjZtb2R1bGU9d3RiXHUwMDI2dG91Y2hwb2ludD1BUElcdTAwMjZsYW5nPWVuLVVTXHUwMDI2c2lkPTI0NV9XRUJcdTAwMjZhdnBpZD0wMDQ4MDAxMzUzODU1XHUwMDI2cHJjPTExLjk0XHUwMDI2cHJjX2N1cnJlbmN5PVVTRFx1MDAyNmNsa3VybHQ9NVx1MDAyNmlzX2J1bmRsZT0xXHUwMDI2YXZwaWRzPTAwNDgwMDEzNTM4NTUsMDA0ODAwMTIxMzU4Nlx1MDAyNmNsa3VybGFmZj0xXHUwMDI2Y2xrdXJsYWZmX3ByZ2lkPTcwMzg4XHUwMDI2dWxvY19jb3VudHJ5PVVTXHUwMDI2dWxvY19yZWdpb249VFhcdTAwMjZ1bG9jX2NpdHk9RGFsbGFzXHUwMDI2dWxvY196aXBjb2RlPTc1MjcwXHUwMDI2dWxvY19sYXQ9MzIuNzhcdTAwMjZ1bG9jX2xuZz0tOTYuODBcdTAwMjZ1cmw9YUhSMGNITTZMeTluYjNSdkxuZGhiRzFoY25RdVkyOXRMMk12TXpreU9EUTBMelUyTlRjd05pODVNemd6UDNabGFEMWhabVltYzI5MWNtTmxhV1E5YVcxd1h6QXdNREF4TVRFeE1qSXlNak16TXpNME5DWnpkV0pKWkRFOU5qazVORGcxWmpka1ltUmhZMlJoTVdKaVpUWXpZV0ZtSm5OMVlrbGtNajE3VTFkT0xVeEZRVVJKUkgwbWMzVmlTV1F6UFh0VFYwNHRSVUZPZlNaemRXSkpaRFE5ZTFOWFRpMURURWxFZlNaMVBXaDBkSEJ6SlROaEpUSm1KVEptWVdabWFXd3VkMkZzYldGeWRDNWpiMjBsTW1aallYSjBKVEptWW5WNWJtOTNKVE5tYVhSbGJYTWxNMlEwTXpnNU16RTRPU1UzWXpFbE1tTXhNREk1TVRjek15VTNZekUlM2RcdTAwMjZ2PXt2fVx1MDAyNnNfdXJsPXtTV04tU1VSTH1cdTAwMjZyZnIyPXtTV04tUkZSMn1cdTAwMjZzX3Jmcj17U1dOLVNSRlJ9XHUwMDI2cmZyPXtTV04tUkZSfSIsImxlYWRpZCI6Ijk3OTk5MWUzODYzODQ2ZTc4NmU3MDA5MjBhNjUwMjcwIiwicmZyIjpudWxsLCJyZnIyIjoiaHR0cDovL2FwaS1xYS5taWttYWsuYWkvY29tbWVyY2UvdjEvYXZhaWxhYmlsaXRpZXMvY2FydC8wMDQ4MDAxMzUzODU1LDAwNDgwMDEyMTM1ODY/d3RiaWQ9Njk5NDg1ZjdkYmRhY2RhMWJiZTYzYWFmXHUwMDI2bGFuZ3VhZ2U9ZW4tVVNcdTAwMjZyZXF1ZXN0ZWRDb3VudHJ5PVVTXHUwMDI2X2ludGVybmFsVXNhZ2U9dHJ1ZVx1MDAyNmluY2x1ZGVPdXRPZlN0b2NrPWZhbHNlXHUwMDI2bGF0aXR1ZGU9MzIuNzgxMzM5XHUwMDI2bG9uZ2l0dWRlPS05Ni43OTk3NTlcdTAwMjZjb3VudHJ5PVVTXHUwMDI2c3RhdGU9VFhcdTAwMjZjaXR5PURhbGxhc1x1MDAyNm5leHRFbmRwb2ludFYyPXRydWUiLCJvdXRib3VuZCI6MSwieF9wdXJwb3NlIjpudWxsLCJpaWQiOiIifQ==
+                  doNotTrackAddToCartUrl: https://affil.walmart.com/cart/buynow?items=43893189%7c1%2c10291733%7c1
+                  totalPrice:
+                    currency: USD
+                    value: 11.94
+                    valueFormatted: '11.94'
+                  totalQuantity: 2
+                  productCount: 2
+                  averagePrice:
+                    currency: USD
+                    value: 5.97
+                    valueFormatted: '5.97'
+                  availableProducts: 2
+                  requestedProducts: 2
+                  availabilities:
+                  - productId: 0048001353855
+                    gtin: 0048001353855
+                    quantity: 1
+                    stockStatus: Available
+                    price:
+                      currency: USD
+                      value: 5.97
+                      valueFormatted: '5.97'
+                    totalPrice:
+                      currency: USD
+                      value: 5.97
+                      valueFormatted: '5.97'
+                    clickUrl: https://wtb-api-hub-stg.swaven.com/wtb/v3/outbound_click?wtbid=699485f7dbdacda1bbe63aaf&module=wtb&touchpoint=API&lang=en-US&sid=245_WEB&avpid=0048001353855&prc=5.97&prc_currency=USD&clkurlt=3&clkurlaff=1&clkurlaff_prgid=70388&uloc_country=US&uloc_region=TX&uloc_city=Dallas&uloc_zipcode=75270&uloc_lat=32.78&uloc_lng=-96.80&url=aHR0cHM6Ly9nb3RvLndhbG1hcnQuY29tL2MvMzkyODQ0LzE0NDY3NjAvOTM4Mz9wcm9kc2t1PTQzODkzMTg5JnN1YklkMT02OTk0ODVmN2RiZGFjZGExYmJlNjNhYWYmc3ViSWQyPXtTV04tTEVBRElEfSZzdWJJZDM9MDA0ODAwMTM1Mzg1NSZzdWJJZDQ9e1NXTi1DTElEfSZzdWJJZDU9bWlrbWFrMyZ1PWh0dHBzJTNBJTJGJTJGd3d3LndhbG1hcnQuY29tJTJGaXAlMkZIZWxsbWFubi1zLUhpZ2gtaW4tT21lZ2EtMy1BTEEtYW5kLVZpdGFtaW4tRS1PbGl2ZS1PaWwtTWF5b25uYWlzZS0yMC1mbC1vei1Cb3R0bGUlMkY0Mzg5MzE4OSZpbnRzcmM9Q0FURl8xMDY2NQ%3d%3d&v=1774364441386&s_url={SWN-SURL}&rfr2={SWN-RFR2}&s_rfr={SWN-SRFR}&rfr={SWN-RFR}&url_to=aHR0cHM6Ly93d3cud2FsbWFydC5jb20vaXAvSGVsbG1hbm4tcy1NYXlvbm5haXNlLURyZXNzaW5nLXdpdGgtT2xpdmUtT2lsLVJpY2gtaW4tT21lZ2EtMy1BTEEtMjAtb3ovNDM4OTMxODk%2fZmlsdGVycz1beyJpbnRlbnQiOiJyZXRhaWxlciIsInZhbHVlcyI6WyJXYWxtYXJ0Il19XQ%3d%3d
+                    doNotTrackClickUrl: https://www.walmart.com/ip/Hellmann-s-Mayonnaise-Dressing-with-Olive-Oil-Rich-in-Omega-3-ALA-20-oz/43893189?filters=%5b%7b%22intent%22%3a%22retailer%22%2c%22values%22%3a%5b%22Walmart%22%5d%7d%5d
+                    isTiedHouseLaw: false
+                  - productId: 0048001213586
+                    gtin: 0048001213586
+                    quantity: 1
+                    stockStatus: Available
+                    price:
+                      currency: USD
+                      value: 5.97
+                      valueFormatted: '5.97'
+                    totalPrice:
+                      currency: USD
+                      value: 5.97
+                      valueFormatted: '5.97'
+                    clickUrl: https://wtb-api-hub-stg.swaven.com/wtb/v3/outbound_click?wtbid=699485f7dbdacda1bbe63aaf&module=wtb&touchpoint=API&lang=en-US&sid=245_WEB&avpid=0048001213586&prc=5.97&prc_currency=USD&clkurlt=3&clkurlaff=1&clkurlaff_prgid=70388&uloc_country=US&uloc_region=TX&uloc_city=Dallas&uloc_zipcode=75270&uloc_lat=32.78&uloc_lng=-96.80&url=aHR0cHM6Ly9nb3RvLndhbG1hcnQuY29tL2MvMzkyODQ0LzE0NDY3NjAvOTM4Mz9wcm9kc2t1PTEwMjkxNzMzJnN1YklkMT02OTk0ODVmN2RiZGFjZGExYmJlNjNhYWYmc3ViSWQyPXtTV04tTEVBRElEfSZzdWJJZDM9MDA0ODAwMTIxMzU4NiZzdWJJZDQ9e1NXTi1DTElEfSZzdWJJZDU9bWlrbWFrMyZ1PWh0dHBzJTNBJTJGJTJGd3d3LndhbG1hcnQuY29tJTJGaXAlMkZIZWxsbWFubi1zLU1hZGUtd2l0aC1DYWdlLUZyZWUtRWdncy1MaWdodC1NYXlvbm5haXNlLTMwLWZsLW96LUphciUyRjEwMjkxNzMzJmludHNyYz1DQVRGXzEwNjY1&v=1774364441386&s_url={SWN-SURL}&rfr2={SWN-RFR2}&s_rfr={SWN-SRFR}&rfr={SWN-RFR}&url_to=aHR0cHM6Ly93d3cud2FsbWFydC5jb20vaXAvSGVsbG1hbm4tcy1NYWRlLXdpdGgtQ2FnZS1GcmVlLUVnZ3MtTGlnaHQtTWF5b25uYWlzZS1Db25kaW1lbnRzLTMwLWZsLW96LUphci8xMDI5MTczMz9maWx0ZXJzPVslN0IiaW50ZW50IjoicmV0YWlsZXIiLCJ2YWx1ZXMiOlsiV2FsbWFydCJdJTdEXQ%3d%3d
+                    doNotTrackClickUrl: https://www.walmart.com/ip/Hellmann-s-Made-with-Cage-Free-Eggs-Light-Mayonnaise-Condiments-30-fl-oz-Jar/10291733?filters=%5b%7b%22intent%22%3a%22retailer%22%2c%22values%22%3a%5b%22Walmart%22%5d%7d%5d
+                    isTiedHouseLaw: false
+                - store:
+                    retailer:
+                      id: 1288
+                      name: Instacart
+                      logo:
+                        isDefault: false
+                        url: https://img.static-swaven.com/v7/https%3A%2F%2Fcontent-nocache.static-swaven.com%2Fimg%2Fretailers%2Fhd%2F1288.png?width=200&org_if_sml=1&ci_url_encoded=1
+                        type: rectangle
+                      logos:
+                      - url: https://img.static-swaven.com/v7/https%3A%2F%2Fcontent-nocache.static-swaven.com%2Fimg%2Fretailers%2Fhd%2F1288.png?width=200&org_if_sml=1&ci_url_encoded=1
+                        type: rectangle
+                      - url: https://img.static-swaven.com/v7/https%3A%2F%2Fcontent-nocache.static-swaven.com%2Fimg%2Fretailers%2Fsquare%2F1288.png?width=200&org_if_sml=1&ci_url_encoded=1
+                        type: square
+                      url: https://www.instacart.com/
+                      pickUpOptionAvailable: false
+                      category: DELIVERY_SERVICES
+                    id: 1288_WEB
+                    name: Instacart
+                    phoneNumber: null
+                    internationalPhoneNumber: null
+                    whatsappNumber: null
+                    delivery: true
+                    clickAndCollect: false
+                    brickAndMortar: false
+                    url: https://www.instacart.com/
+                    storeOpeningHoursSchema: null
+                  addToCartUrl: https://wtb-api-hub-stg.swaven.com/wtb/v3/api_click?wtbid=699485f7dbdacda1bbe63aaf&d=eyJ2IjoiMTc3NDM2NDQ0MTQyNSIsImFjdGlvbiI6ImJ1eSIsImZtdCI6ImFwaSIsInR5cGUiOiJhcGkiLCJtb2R1bGUiOiJ3dGIiLCJ0b3VjaHBvaW50IjoiQVBJIiwid3RiaWQiOiI2OTk0ODVmN2RiZGFjZGExYmJlNjNhYWYiLCJvcHNjb2RlIjoiIiwidGVzdCI6MCwiY3QiOiJVUyIsInBpZCI6IjAwNDgwMDEyMTM1ODYiLCJhcHVpZCI6bnVsbCwib3JkaWQiOiIzMzYwOWU0Yy02ZWM0LTQ4MDUtYjhjOS1iM2JlNjU2M2M5ZWQiLCJzaWQiOiIxMjg4X1dFQiIsInByYyI6IjYuOTkiLCJwcmNfY3VycmVuY3kiOiJVU0QiLCJkaXN0IjoiMC4wMCIsImRsdiI6IkhEIiwicXQiOjEsImlzX2J1bmRsZSI6bnVsbCwiYXZwaWRzIjpudWxsLCJhdl9hcHVpZHMiOm51bGwsImF2cGlkIjoiMDA0ODAwMTIxMzU4NiIsImF2X2FwdWlkIjpudWxsLCJhdmdwYyI6MTIuNDUsImF2Z2Rpc3QiOjAsIm5icmVzIjoyLCJuYnJlZnJldCI6bnVsbCwic2lkcyI6IjI0NV9XRUIsMTI4OF9XRUIiLCJjbGt1cmxhZmYiOjEsImNsa3VybGFmZl9wcmdpZCI6MTAwOTU4LCJjbGt1cmx0Ijo1LCJ1cmwiOiJodHRwczovL3d0Yi1hcGktaHViLXN0Zy5zd2F2ZW4uY29tL3d0Yi92My9vdXRib3VuZF9jbGljaz93dGJpZD02OTk0ODVmN2RiZGFjZGExYmJlNjNhYWZcdTAwMjZtb2R1bGU9d3RiXHUwMDI2dG91Y2hwb2ludD1BUElcdTAwMjZsYW5nPWVuLVVTXHUwMDI2c2lkPTEyODhfV0VCXHUwMDI2YXZwaWQ9MDA0ODAwMTIxMzU4Nlx1MDAyNnByYz02Ljk5XHUwMDI2cHJjX2N1cnJlbmN5PVVTRFx1MDAyNmNsa3VybHQ9NVx1MDAyNmNsa3VybGFmZj0xXHUwMDI2Y2xrdXJsYWZmX3ByZ2lkPTEwMDk1OFx1MDAyNnVsb2NfY291bnRyeT1VU1x1MDAyNnVsb2NfcmVnaW9uPVRYXHUwMDI2dWxvY19jaXR5PURhbGxhc1x1MDAyNnVsb2NfemlwY29kZT03NTI3MFx1MDAyNnVsb2NfbGF0PTMyLjc4XHUwMDI2dWxvY19sbmc9LTk2LjgwXHUwMDI2dXJsPWFIUjBjSE02THk5M2RHSXRZWEJwTFdoMVlpMXBiblF1YzNkaGRtVnVMbU52YlM5aGNHa3ZkalF2WTJGeWRDOXlaV1JwY21WamREOTNkR0pKWkQwMk9UazBPRFZtTjJSaVpHRmpaR0V4WW1KbE5qTmhZV1ltY21WMFlXbHNaWEpKWkQweE1qZzRKbWwwWlcxelBVeHBaMmgwSlRJMU1qQk5ZWGx2Ym01aGFYTmxPakUlM2RcdTAwMjZ2PXt2fVx1MDAyNnNfdXJsPXtTV04tU1VSTH1cdTAwMjZyZnIyPXtTV04tUkZSMn1cdTAwMjZzX3Jmcj17U1dOLVNSRlJ9XHUwMDI2cmZyPXtTV04tUkZSfSIsImxlYWRpZCI6ImQ3NzBiMWM3ZjM5ZjQ3MjU5ZWQwOGVhYWQwYzkwNmU3IiwicmZyIjpudWxsLCJyZnIyIjoiaHR0cDovL2FwaS1xYS5taWttYWsuYWkvY29tbWVyY2UvdjEvYXZhaWxhYmlsaXRpZXMvY2FydC8wMDQ4MDAxMzUzODU1LDAwNDgwMDEyMTM1ODY/d3RiaWQ9Njk5NDg1ZjdkYmRhY2RhMWJiZTYzYWFmXHUwMDI2bGFuZ3VhZ2U9ZW4tVVNcdTAwMjZyZXF1ZXN0ZWRDb3VudHJ5PVVTXHUwMDI2X2ludGVybmFsVXNhZ2U9dHJ1ZVx1MDAyNmluY2x1ZGVPdXRPZlN0b2NrPWZhbHNlXHUwMDI2bGF0aXR1ZGU9MzIuNzgxMzM5XHUwMDI2bG9uZ2l0dWRlPS05Ni43OTk3NTlcdTAwMjZjb3VudHJ5PVVTXHUwMDI2c3RhdGU9VFhcdTAwMjZjaXR5PURhbGxhc1x1MDAyNm5leHRFbmRwb2ludFYyPXRydWUiLCJvdXRib3VuZCI6MSwieF9wdXJwb3NlIjpudWxsLCJpaWQiOiIifQ==
+                  doNotTrackAddToCartUrl: https://wtb-api-hub-int.swaven.com/api/v4/cart/redirect?wtbId=699485f7dbdacda1bbe63aaf&retailerId=1288&items=Light%2520Mayonnaise%3a1
+                  totalPrice:
+                    currency: USD
+                    value: 6.99
+                    valueFormatted: '6.99'
+                  totalQuantity: 1
+                  productCount: 1
+                  averagePrice:
+                    currency: USD
+                    value: 6.99
+                    valueFormatted: '6.99'
+                  availableProducts: 1
+                  requestedProducts: 2
+                  availabilities:
+                  - productId: 0048001213586
+                    gtin: 0048001213586
+                    quantity: 1
+                    stockStatus: Available
+                    price:
+                      currency: USD
+                      value: 6.99
+                      valueFormatted: '6.99'
+                    totalPrice:
+                      currency: USD
+                      value: 6.99
+                      valueFormatted: '6.99'
+                    clickUrl: https://wtb-api-hub-stg.swaven.com/wtb/v3/outbound_click?wtbid=699485f7dbdacda1bbe63aaf&module=wtb&touchpoint=API&lang=en-US&sid=1288_WEB&avpid=0048001213586&prc=6.99&prc_currency=USD&clkurlt=3&clkurlaff=1&clkurlaff_prgid=100958&uloc_country=US&uloc_region=TX&uloc_city=Dallas&uloc_zipcode=75270&uloc_lat=32.78&uloc_lng=-96.80&url=aHR0cHM6Ly9pbnN0YWNhcnQub2xvaXliLm5ldC9jLzM5Mjg0NC8xMjg2NTI0Lzc0MTI%2fcHJvZHNrdT02Nzk0NjA2Njg0NjEmc3ViSWQxPTY5OTQ4NWY3ZGJkYWNkYTFiYmU2M2FhZiZzdWJJZDI9e1NXTi1MRUFESUR9JnN1YklkMz0wMDQ4MDAxMjEzNTg2JnN1YklkND17U1dOLUNMSUR9JnN1YklkNT1taWttYWszJnU9aHR0cHMlM0ElMkYlMkZ3d3cuaW5zdGFjYXJ0LmNvbSUyRmxhbmRpbmclM0Zwcm9kdWN0X2lkJTNENzExNTclMjYmaW50c3JjPUNBVEZfOTc5Nw%3d%3d&v=1774364441386&s_url={SWN-SURL}&rfr2={SWN-RFR2}&s_rfr={SWN-SRFR}&rfr={SWN-RFR}&url_to=aHR0cHM6Ly93d3cuaW5zdGFjYXJ0LmNvbS9wcm9kdWN0cy83MTE1Nz9jc3I9dHJ1ZQ%3d%3d
+                    doNotTrackClickUrl: https://www.instacart.com/products/71157?csr=true
+                    isTiedHouseLaw: false
+                sessionId: NjljMmE3MTlmYTA1NDI2MGYxYWVjNzNjXzAwNDgwMDEzNTM4NTUsMDA0ODAwMTIxMzU4Ng==
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query
+            parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators,
+            or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+  /commerce/v1/availabilities/{id}:
+    get:
+      tags:
+      - Availabilities
+      security:
+      - ApiKeyAuth: []
+      - JWTBearerAuth: []
+      description: Returns a list of store availability. Distances are in the metric system (m).
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The list of the requested product ids separated by a comma
+        schema:
+          type: string
+        example: 0048001353855,0048001213586
+      - name: idType
+        in: query
+        description: 'The type of the unique product identifier (default - MikMak default Product Id, gtin, mpn, product_id).
+          (eg: gtin)'
+        schema:
+          type: string
+          default: default
+          enum:
+          - default
+          - gtin
+          - mpn
+          - product_id
+      - name: wtbId
+        in: query
+        required: true
+        description: The experience id
+        schema:
+          type: string
+        example: 54511c2f827bef6f9c68f29a
+      - name: draft
+        in: query
+        description: True to use the draft experience configuration
+        schema:
+          type: boolean
+      - name: maxDistance
+        in: query
+        description: Max search distance (radius) in km, this parameter can override subaccount default setting
+        schema:
+          type: integer
+        example: 5
+      - name: maxReturnedStores
+        in: query
+        description: Maximum number of returned stores
+        schema:
+          type: string
+        example: 10
+      - name: language
+        in: query
+        description: Requested language or locale for the product and retailers
+        schema:
+          type: string
+        examples:
+          language:
+            value: en
+            summary: Language code
+          lcoale:
+            value: en-US
+            summary: Locale code
+      - name: latitude
+        in: query
+        description: Search location latitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        required: true
+        schema:
+          type: number
+        example: 48.8640493
+      - name: longitude
+        in: query
+        required: true
+        description: Search location longitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        schema:
+          type: number
+        example: 2.331052600000021
+      - name: country
+        in: query
+        required: true
+        description: Search location country code (2-letters)  (any combination of Latitude + Longitude OR ZipCode + Country
+          must be provided)
+        schema:
+          type: string
+        example: US
+      - name: zipCode
+        in: query
+        required: true
+        description: Search location zip code (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        schema:
+          type: string
+        example: 20004
+      - name: city
+        in: query
+        description: Search location city
+        schema:
+          type: string
+        example: Washington D.C
+      - name: address
+        in: query
+        description: Search location address
+        schema:
+          type: string
+        example: 401 9th St NW
+      - name: state
+        in: query
+        description: Search location state
+        schema:
+          type: string
+        example: DC
+      - name: requestedCountry
+        in: query
+        description: Requested country code (2-letters). Only for multiple countries experience. If the location country is
+          different from the requestedCountry, the location falls back to default location for the requested country.
+        schema:
+          type: string
+        example: US
+      - name: sessionId
+        in: query
+        description: Id for the current session so the events can be properly tracked.
+        schema:
+          type: string
+        example: 1234abcd
+      - name: currentUrl
+        in: query
+        description: The full URL visible in the shopper's browser as they interact with the Experience. It must include all
+          query parameters. This is necessary to report on UTM parameters.
+        schema:
+          type: string
+        example: https://www.mikmak.com/
+      - name: sessionUrl
+        in: query
+        description: The full URL visible in the shopper's browser when they first arrived on the website. This has to be
+          persisted throughout the session. It must include all query parameters. This is necessary to report on UTM parameters.
+        schema:
+          type: string
+        example: https://www.mikmak.com/
+      - name: includeOutOfStock
+        in: query
+        description: True to include out of stock products
+        schema:
+          type: boolean
+        example: true
+      - name: hideOutOfStockOfflineStores
+        in: query
+        description: True to hide out of stock offline stores
+        schema:
+          type: boolean
+        example: true
+      - name: applyTiedHouseLaw
+        in: query
+        description: To override the experience setting for applying tied house law
+        schema:
+          type: boolean
+        example: true
+      - name: retailerIds
+        in: query
+        description: Comma-separated list of retailer IDs to filter availability results. Only stores from the specified retailers
+          will be returned. If omitted, all in-scope retailers are returned.
+        schema:
+          type: string
+        example: 1,2,3
+      - name: modes
+        in: query
+        description: Delivery mode filter (delivery, clickAndCollect, brickAndMortar). Filters availability results to only
+          include stores that support the specified delivery modes
+        schema:
+          type: string
+        example: delivery
+      - name: src
+        in: query
+        description: Source identifier for tracking where the request originated from
+        schema:
+          type: string
+      - name: instanceId
+        in: query
+        description: Instance identifier for multi-tenant or distributed system tracking
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilitiesResponse'
+              example:
+                location:
+                  latitude: 32.781339
+                  longitude: -96.799759
+                  address: null
+                  city: Dallas
+                  country: US
+                  state: TX
+                  zipCode: '75270'
+                  placeType: null
+                  isMetricRegion: false
+                products:
+                - id: 0048001353855
+                  ids:
+                  - 0048001353855
+                  gtin: 0048001353855
+                  gtins:
+                  - 0048001353855
+                  imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=500&org_if_sml=1&ci_url_encoded=1
+                  thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+                  brand: hellmann's
+                  title: Mayonnaise Dressing with Olive Oil
+                  subtitle: null
+                  description: Hellmann's Mayonnaise Dressing with Olive Oil combines the creamy, rich taste you love from
+                    Hellmann's with the delicious goodness of olive oil.
+                  packaging: 20 oz
+                  review: null
+                - id: 0048001213586
+                  ids:
+                  - 0048001213586
+                  gtin: 0048001213586
+                  gtins:
+                  - 0048001213586
+                  imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=500&org_if_sml=1&ci_url_encoded=1
+                  thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+                  brand: hellmann's
+                  title: Light Mayonnaise
+                  subtitle: null
+                  description: Looking for a lighter mayonnaise? Hellmann's Light Mayo has half the calories & half the fat
+                    of our Real Mayonnaise with the same rich, creamy taste!
+                  packaging: 30 oz
+                  review: null
+                availabilities:
+                - gtin: 0048001353855
+                  store:
+                    id: 265_WEB
+                    name: Amazon
+                    retailer:
+                      id: 265
+                      name: Amazon.com
+                      logo:
+                        url: https://img.static-swaven.com/v7/https%3A%2F%2Fcontent.static-swaven.com%2Fimg%2Fretailers%2Fhd%2F265_2048.png?width=200&org_if_sml=1&ci_url_encoded=1
+                        isDefault: false
+                      url: http://www.amazon.com
+                    phoneNumber: ''
+                    internationalPhoneNumber: ''
+                    whatsappNumber: ''
+                    delivery: true
+                    clickAndCollect: false
+                    brickAndMortar: false
+                    url: https://www.amazon.com
+                    storeOpeningHoursSchema: null
+                    pickUpOptionAvailable: false
+                  price:
+                    currency: USD
+                    value: 6.98
+                  clickUrl: https://wtb-api-hub.swaven.com/wtb/v3/outbound_click?example=0048001353855
+                  doNotTrackClickUrl: http://www.amazon.com
+                  isTiedHouseLaw: false
+                - gtin: 0048001213586
+                  store:
+                    id: 245_WEB
+                    name: Walmart
+                    retailer:
+                      id: 245
+                      name: Walmart
+                      logo:
+                        url: https://img.static-swaven.com/v7/https%3A%2F%2Fcontent.static-swaven.com%2Fimg%2Fretailers%2Fhd%2F245.png?width=200&org_if_sml=1&ci_url_encoded=1
+                        isDefault: false
+                      url: https://www.walmart.com
+                    phoneNumber: ''
+                    internationalPhoneNumber: ''
+                    whatsappNumber: ''
+                    delivery: true
+                    clickAndCollect: false
+                    brickAndMortar: false
+                    storeOpeningHoursSchema: null
+                    url: https://www.walmart.com
+                    pickUpOptionAvailable: true
+                  price:
+                    currency: USD
+                    value: 5.97
+                  clickUrl: https://wtb-api-hub.swaven.com/wtb/v3/outbound_click?example=0048001213586
+                  doNotTrackClickUrl: https://www.walmart.com
+                  isTiedHouseLaw: false
+                alcoholSettings:
+                  tiedHouseLaw: 4
+                  showLocalRetailers: true
+                  showRetailerText: true
+                  settingCode: 3
+                  applyTiedHouseLaw: true
+                  tiedHouseConditionMet: false
+                sessionId: 1234abcd
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query
+            parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators,
+            or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+  /commerce/v1/experiences/config/{id}:
+    get:
+      tags:
+      - Experiences
+      security:
+      - ApiKeyAuth: []
+      - JWTBearerAuth: []
+      description: Returns configuration metadata for a specific experience, including retailer sort order and pinned retailers.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The experience ID
+        schema:
+          type: string
+        example: 54511c2f827bef6f9c68f29a
+      responses:
+        '200':
+          description: OK. Configuration metadata for the experience.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationResponse'
+              example:
+                experienceId: 54511c2f827bef6f9c68f29a
+                retailerSortType: manual
+                pinnedRetailerIds:
+                - 1
+                - 2
+                - 3
+                retailers:
+                - id: 1
+                  name: Amazon.com
+                - id: 2
+                  name: Walmart
+                - id: 3
+                  name: Target
+                - id: 245
+                  name: CVS Pharmacy
+                - id: 265
+                  name: Walgreens
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query
+            parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators,
+            or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+  /commerce/v1/experiences:
+    get:
+      tags:
+      - Experiences
+      security:
+      - JWTBearerAuth: []
+      description: Returns a list of experiences available for the authenticated account.
+      responses:
+        '200':
+          description: OK. A list of experiences.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExperiencesResponse'
+              example:
+              - accountName: Brand A
+                subAccountName: US Region
+                api:
+                - id: 54511c2f827bef6f9c68f29a
+                  name: US E-commerce API
+                - id: 54511c2f827bef6f9c68f29c
+                  name: US Store Locator API
+                media:
+                - id: 54511c2f827bef6f9c68f29b
+                  name: US Media Experience
+                  url: https://media.mikmak.com/experience/54511c2f827bef6f9c68f29b
+                  showPrice: true
+                  products:
+                  - id: '0013000626057'
+                    idType: gtin
+                    title: Product A
+                    imageUrl: https://example.com/productA.jpg
+              - accountName: Brand A
+                subAccountName: EU Region
+                api:
+                - id: 54511c2f827bef6f9c68f29d
+                  name: EU E-commerce API
+                media:
+                - id: 54511c2f827bef6f9c68f29e
+                  name: EU Media Experience
+                  url: https://media.mikmak.com/experience/54511c2f827bef6f9c68f29e
+                  showPrice: false
+                  products:
+                  - id: '5901234123457'
+                    idType: gtin
+                    title: Product B
+                    imageUrl: https://example.com/productB.jpg
+                  - id: '4007817327326'
+                    idType: gtin
+                    title: Product C
+                    imageUrl: https://example.com/productC.jpg
+              - accountName: Brand B
+                subAccountName: US Operations
+                api:
+                - id: 54511c2f827bef6f9c68f30a
+                  name: US Store Finder
+                media:
+                - id: 54511c2f827bef6f9c68f30b
+                  name: US Product Locator
+                  url: https://media.mikmak.com/experience/54511c2f827bef6f9c68f30b
+                  showPrice: true
+                  products:
+                  - id: 0074780197609
+                    idType: gtin
+                    title: Product X
+                    imageUrl: https://example.com/productX.jpg
+                  - id: 0074780197616
+                    idType: gtin
+                    title: Product Y
+                    imageUrl: https://example.com/productY.jpg
+                  - id: 0074780197623
+                    idType: gtin
+                    title: Product Z
+                    imageUrl: https://example.com/productZ.jpg
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query
+            parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators,
+            or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+  /commerce/v1/productcatalog/offers/models/{id}:
+    get:
+      tags:
+      - Offers
+      security:
+      - ApiKeyAuth: []
+      - JWTBearerAuth: []
+      description: The Offers endpoint is used to search both Online and Local retailers of a product. When Offer Location
+        is not provided, only Online information is searched.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The requested product GTIN
+        schema:
+          type: string
+        example: 3600530901197
+      - name: wtbId
+        in: query
+        required: true
+        description: The experience id
+        schema:
+          type: string
+        example: 54511c2f827bef6f9c68f29a
+      - name: draft
+        in: query
+        description: True to use the draft experience configuration
+        schema:
+          type: boolean
+      - name: idType
+        in: query
+        description: The type of the product identifier (gtin, upc, ean, brandProductId). Default is gtin
+        schema:
+          type: string
+        example: gtin
+      - name: countryCode
+        in: query
+        description: Search location country code (2-letters)
+        schema:
+          type: string
+        example: US
+      - name: state
+        in: query
+        description: Search location state (2-letters)
+        schema:
+          type: string
+        example: DC
+      - name: address
+        in: query
+        description: Search location address
+        schema:
+          type: string
+        example: 401 9th St NW
+      - name: city
+        in: query
+        description: Search location city
+        schema:
+          type: string
+        example: Washington D.C
+      - name: postalCode
+        in: query
+        description: Search location postal code
+        schema:
+          type: string
+        example: 20001
+      - name: latitude
+        in: query
+        description: Search location latitude
+        schema:
+          type: number
+        example: 38.254238
+      - name: longitude
+        in: query
+        description: Search location longitude
+        schema:
+          type: number
+        example: -85.759407
+      - name: language
+        in: query
+        description: Requested language or locale for the product and retailers
+        schema:
+          type: string
+        example: en
+      - name: maxLocationsPerRetailer
+        in: query
+        description: Default = 25. The maximum number of store locations that will be returned for a retailer
+        schema:
+          type: number
+      - name: maxReturnedStores
+        in: query
+        description: Default = 100. The maximum number of store locations that will be returned in total
+        schema:
+          type: number
+      - name: distanceRange
+        in: query
+        description: Max search distance (radius)
+        schema:
+          type: number
+      - name: distanceUnit
+        in: query
+        description: '''miles'' or ''kilometers''. Default = ''miles'''
+        schema:
+          type: string
+      - name: retailerNames
+        in: query
+        description: Pipe ( '|' ) separated list of Retailer names to include
+        schema:
+          type: string
+        example: Walmart.com|Target.com
+      - name: backupProductStrategy
+        in: query
+        description: Default = 'none'. When 'onlineOnly' if the requested product is not in stock in any Online Retailer variant
+          models will be returned instead
+        schema:
+          type: string
+      - name: sessionId
+        in: query
+        description: Id for the current session so the events can be properly tracked.
+        schema:
+          type: string
+        example: 1234abcd
+      - name: currentUrl
+        in: query
+        description: The full URL visible in the shopper's browser as they interact with the Experience. It must include all
+          query parameters. This is necessary to report on UTM parameters.
+        schema:
+          type: string
+        example: https://www.mikmak.com/
+      - name: sessionUrl
+        in: query
+        description: The full URL visible in the shopper's browser when they first arrived on the website. This has to be
+          persisted throughout the session. It must include all query parameters. This is necessary to report on UTM parameters.
+        schema:
+          type: string
+        example: https://www.mikmak.com/
+      - name: source
+        in: query
+        description: Source identifier for tracking where the request originated from
+        schema:
+          type: string
+      - name: includeOutOfStock
+        in: query
+        description: True to include out of stock products
+        schema:
+          type: boolean
+        example: true
+      - name: hideOutOfStockOfflineStores
+        in: query
+        description: True to hide out of stock offline stores
+        schema:
+          type: boolean
+        example: true
+      - name: applyTiedHouseLaw
+        in: query
+        description: To override the experience setting for applying tied house law
+        schema:
+          type: boolean
+        example: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OffersResponse'
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query
+            parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators,
+            or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+  /commerce/v1/products/facet:
+    get:
+      tags:
+      - Facet
+      security:
+      - ApiKeyAuth: []
+      description: Returns product facets and optionally a productIds selection.
+      parameters:
+      - name: wtbid
+        in: query
+        required: true
+        description: The experience id
+        schema:
+          type: string
+      - name: country
+        in: query
+        required: true
+        description: Target country (2-letters)
+        schema:
+          type: string
+        example: US
+      - name: lang
+        in: query
+        description: Requested language or locale
+        schema:
+          type: string
+        example: en
+      - name: cascading
+        in: query
+        description: Enable cascading facets
+        schema:
+          type: boolean
+        example: true
+      - name: auto
+        in: query
+        description: Automatically select facet values and return productIds
+        schema:
+          type: boolean
+        example: true
+      - name: filters
+        in: query
+        description: JSON object (as string) of selected filters
+        schema:
+          type: string
+        example: '{"productLine":["Limited Release"]}'
+      - name: defaultProductId
+        in: query
+        description: Default product id to prefer when auto is enabled
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK. Facets and optional productIds selection.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tooks:
+                    type: number
+                  facets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                        name:
+                          type: string
+                        values:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                              count:
+                                type: number
+                              selected:
+                                type: boolean
+                  productIds:
+                    type: array
+                    items:
+                      type: string
+                  defaultProductId:
+                    type: string
+              example:
+                tooks: 2323
+                facets:
+                - key: categoryName
+                  name: Category
+                  values:
+                  - value: Caramel Dips
+                    count: 5
+                  - value: Chocolate Dip
+                    count: 2
+                  - value: Classic Refrigerated Dressings
+                    count: 22
+                    selected: true
+                  - value: Croutons
+                    count: 5
+                  - value: Fruit Dips
+                    count: 5
+                  - value: Non-Refrigerated Dressings
+                    count: 7
+                  - value: Simply
+                    count: 10
+                  - value: Slaw Dressings
+                    count: 8
+                  - value: Veggie Dips
+                    count: 9
+                productIds:
+                - 0070200504219
+                - '0070200504226'
+                - '0070200504240'
+                defaultProductId: 0070200504394
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query
+            parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators,
+            or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+  /commerce/v1/products/{id}:
+    get:
+      tags:
+      - Product
+      security:
+      - ApiKeyAuth: []
+      - JWTBearerAuth: []
+      description: Returns a list of products.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The list of the requested product ids (GTIN, UPC, EAN) separated by a comma
+        schema:
+          type: string
+        example: 3600530901197,3600530901173,3600530901210
+      - name: idType
+        in: query
+        description: 'The type of the product identifier (gtin, mpn, group, product_id, matching_id). (eg: gtin)'
+        schema:
+          type: string
+          default: gtin
+          enum:
+          - gtin
+          - mpn
+          - group
+          - product_id
+          - matching_id
+      - name: wtbId
+        in: query
+        required: true
+        description: The experience id
+        schema:
+          type: string
+        example: 54511c2f827bef6f9c68f29a
+      - name: draft
+        in: query
+        description: True to use the draft experience configuration
+        schema:
+          type: boolean
+      - name: latitude
+        in: query
+        description: Search location latitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        required: true
+        schema:
+          type: number
+        example: 48.8640493
+      - name: longitude
+        in: query
+        required: true
+        description: Search location longitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        schema:
+          type: number
+        example: 2.331052600000021
+      - name: country
+        in: query
+        required: true
+        description: Search location country code (2-letters)  (any combination of Latitude + Longitude OR ZipCode + Country
+          must be provided)
+        schema:
+          type: string
+        example: US
+      - name: zipCode
+        in: query
+        required: true
+        description: Search location zip code (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        schema:
+          type: string
+        example: 20004
+      - name: language
+        in: query
+        description: Requested language or locale for the product and retailers
+        schema:
+          type: string
+        examples:
+          language:
+            value: en
+            summary: Language code
+          lcoale:
+            value: en-US
+            summary: Locale code
+      - name: requestedCountry
+        in: query
+        description: Requested country code (2-letters). Only for multiple countries experience. If the location country is
+          different from the requestedCountry, the location falls back to default location for the requested country.
+        schema:
+          type: string
+        example: US
+      - name: maxDistance
+        in: query
+        description: Max search distance (radius) in km, this parameter can override subaccount default setting
+        schema:
+          type: integer
+        example: 5
+      - name: address
+        in: query
+        description: Search location address
+        schema:
+          type: string
+        example: 401 9th St NW
+      - name: city
+        in: query
+        description: Search location city
+        schema:
+          type: string
+        example: Washington D.C
+      - name: state
+        in: query
+        description: Search location state
+        schema:
+          type: string
+        example: DC
+      responses:
+        '200':
+          description: OK. A list of products.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsResponse'
+              example:
+                location:
+                  latitude: 38.89512
+                  longitude: -77.03637
+                  address: Washington D.C
+                  city: Washington D.C
+                  country: US
+                  state: DC
+                  zipCode: '20001'
+                  placetype: null
+                  isMetricRegion: false
+                products:
+                - gtin: '0013000626057'
+                  gtins:
+                  - '0013000626057'
+                  imageUrl: https://img.static-swaven.com/v7/http%3A%2F%2Fimages.salsify.com%2Fimage%2Fupload%2Fs--K4Lol3R0--%2Fbbevayk74kski6ouiac4.jpg?width=500&org_if_sml=1&ci_url_encoded=1
+                  thumbnailImageUrl: https://img.static-swaven.com/v7/http%3A%2F%2Fimages.salsify.com%2Fimage%2Fupload%2Fs--K4Lol3R0--%2Fbbevayk74kski6ouiac4.jpg?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+                  brand: HEINZ
+                  title: Heinz Organic Tomato Ketchup
+                  subtitle: ''
+                  description: ''
+                  packaging: 32 OZ
+                  review: null
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query
+            parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators,
+            or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+  /commerce/v1/search/products:
+    get:
+      tags:
+      - Product Search
+      security:
+      - ApiKeyAuth: []
+      - JWTBearerAuth: []
+      description: Returns paginated products matching the provided filters and optional free-text query.
+      parameters:
+      - name: wtbid
+        in: query
+        required: true
+        description: The experience id
+        schema:
+          type: string
+        example: 54511c2f827bef6f9c68f29a
+      - name: module
+        in: query
+        description: Request module type
+        schema:
+          type: string
+      - name: draft
+        in: query
+        description: Set to 1 to use draft experience configuration
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+        example: 0
+      - name: language
+        in: query
+        required: true
+        description: 'Requested language or locale. Examples: `en` (English), `fr` (French), `es` (Spanish), or `en-US`.
+
+          If omitted, the API falls back to the `Accept-Language` header; if neither is present, the request fails.
+
+          '
+        schema:
+          type: string
+        examples:
+          language:
+            value: en
+            summary: Language code (English)
+          locale:
+            value: en-US
+            summary: Locale code
+      - name: country
+        in: query
+        required: true
+        description: Target country (2-letters)
+        schema:
+          type: string
+        example: US
+      - name: filters
+        in: query
+        description: JSON object (as string) of selected filters
+        schema:
+          type: string
+        example: '{"brand":["HEINZ"],"categoryName":["Ketchup"]}'
+      - name: offset
+        in: query
+        description: Pagination offset (zero-based)
+        schema:
+          type: integer
+          default: 0
+        example: 0
+      - name: limit
+        in: query
+        description: Number of products returned per page
+        schema:
+          type: integer
+          default: 10
+        example: 10
+      - name: q
+        in: query
+        description: Free-text search term
+        schema:
+          type: string
+        example: ketchup
+      responses:
+        '200':
+          description: OK. Paginated list of products.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsSearchResponse'
+              example:
+                offset: 0
+                limit: 10
+                total: 2
+                products:
+                - id: '0013000626057'
+                  ids:
+                  - '0013000626057'
+                  gtin: '0013000626057'
+                  imageUrl: https://img.static-swaven.com/v7/http%3A%2F%2Fimages.salsify.com%2Fimage%2Fupload%2Fs--K4Lol3R0--%2Fbbevayk74kski6ouiac4.jpg?width=500&org_if_sml=1&ci_url_encoded=1
+                  thumbnailImageUrl: https://img.static-swaven.com/v7/http%3A%2F%2Fimages.salsify.com%2Fimage%2Fupload%2Fs--K4Lol3R0--%2Fbbevayk74kski6ouiac4.jpg?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+                  brand: HEINZ
+                  title: Heinz Organic Tomato Ketchup
+                  subtitle: ''
+                  description: ''
+                  packaging: 32 OZ
+                  review:
+                    count: 12
+                    averageRating: 4.2
+                    roundedAverageRating: 4
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid country,
+            malformed filters JSON, or invalid query parameters).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators,
+            or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+servers:
+- url: https://api.mikmak.ai
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API Key for authentication
+    JWTBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token for authentication
+  schemas:
+    Location:
+      type: object
+      description: Resolved or requested search location (shared across products, availabilities, and cart responses).
+      properties:
+        latitude:
+          type: number
+          description: Latitude
+        longitude:
+          type: number
+          description: Longitude
+        address:
+          type: string
+          description: Address
+          nullable: true
+        city:
+          type: string
+          description: City
+        country:
+          type: string
+          description: Country
+        state:
+          type: string
+          description: State
+        zipCode:
+          type: string
+          description: Zip code
+        placeType:
+          type: string
+          description: Place type
+          nullable: true
+        isMetricRegion:
+          type: boolean
+          description: Country is standard metric system (m) or not (miles)
+    CatalogProduct:
+      type: object
+      description: Product metadata returned with availability and cart responses (catalog fields; not store-specific).
+      properties:
+        id:
+          type: string
+          description: Product id (when applicable)
+        ids:
+          type: array
+          description: Alternate product identifiers
+          items:
+            type: string
+        gtin:
+          type: string
+          description: GTIN
+        gtins:
+          type: array
+          description: List of GTINs
+          items:
+            type: string
+            description: GTIN
+        imageUrl:
+          type: string
+          description: Product image URL
+        thumbnailImageUrl:
+          type: string
+          description: Product thumbnail image URL (optimized for small displays, 144px width)
+        brand:
+          type: string
+          description: Brand
+        title:
+          type: string
+          description: Title
+        subtitle:
+          type: string
+          description: Subtitle
+          nullable: true
+        description:
+          type: string
+          description: Product description (empty by default)
+        packaging:
+          type: string
+          description: Containing or color
+        review:
+          type: object
+          description: Review
+          properties:
+            count:
+              type: number
+              description: Count
+            averageRating:
+              type: number
+              description: Rating
+            roundedAverageRating:
+              type: number
+              description: Rounded rating
+    Voucher:
+      type: object
+      description: Promotional voucher that may apply to a line item
+      properties:
+        id:
+          type: string
+        versionId:
+          type: string
+        name:
+          type: string
+        code:
+          type: string
+        retailerId:
+          type: integer
+          nullable: true
+        online:
+          type: boolean
+          nullable: true
+        offline:
+          type: boolean
+        startDate:
+          type: string
+          format: date-time
+          nullable: true
+        endDate:
+          type: string
+          format: date-time
+          nullable: true
+        type:
+          type: string
+          description: Voucher type (configuration enum)
+        text:
+          type: string
+        imageUrl:
+          type: string
+        description:
+          type: string
+        ctaText:
+          type: string
+        discountType:
+          type: string
+          nullable: true
+        discountPercent:
+          type: number
+          format: double
+          nullable: true
+        discountAmount:
+          type: number
+          format: double
+          nullable: true
+        url:
+          type: string
+        gtins:
+          type: array
+          items:
+            type: string
+        hasSecondStep:
+          type: boolean
+        secondStepUrl:
+          type: string
+        secondStepType:
+          type: string
+          nullable: true
+        formId:
+          type: string
+          nullable: true
+        locales:
+          type: object
+    CartResponse:
+      type: object
+      description: Public cart response (location, requested products, per-store carts, optional sessionId and alcoholSettings).
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        products:
+          type: array
+          description: Requested products (catalog metadata)
+          items:
+            $ref: '#/components/schemas/CatalogProduct'
+        carts:
+          type: array
+          description: One entry per store with aggregated cart totals and per-line availability
+          items:
+            $ref: '#/components/schemas/CartStoreGroup'
+        sessionId:
+          type: string
+          description: SessionID value
+          nullable: true
+        alcoholSettings:
+          type: object
+          description: Alcohol settings configuration
+          nullable: true
+          properties:
+            tiedHouseLaw:
+              type: integer
+              description: Tied house law setting code
+              example: 4
+            showLocalRetailers:
+              type: boolean
+              description: Whether to show local retailers
+              example: true
+            showRetailerText:
+              type: boolean
+              description: Whether to show retailer text
+              example: true
+            settingCode:
+              type: integer
+              description: Alcohol setting code
+              example: 3
+            applyTiedHouseLaw:
+              type: boolean
+              description: Whether to apply tied house law
+              example: true
+            tiedHouseConditionMet:
+              type: boolean
+              description: Whether tied house condition is met (null if applyTiedHouseLaw is false)
+              example: false
+    CartStoreGroup:
+      type: object
+      description: Store-level cart with aggregated totals and line items (public `Cart` shape)
+      properties:
+        store:
+          type: object
+          description: Store details (same general shape as store on each availability item in AvailabilitiesResponse)
+          properties:
+            retailer:
+              type: object
+              description: Retailer
+              properties:
+                id:
+                  type: number
+                  description: Id
+                name:
+                  type: string
+                  description: Name
+                logo:
+                  type: object
+                  description: Logo
+                  properties:
+                    isDefault:
+                      type: boolean
+                      description: Is the default logo
+                    url:
+                      type: string
+                      description: URL
+                    type:
+                      type: string
+                      description: rectangle or square
+                logos:
+                  type: array
+                  description: Retailer logos (e.g. rectangle and square)
+                  items:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                      type:
+                        type: string
+                url:
+                  type: string
+                  description: Retailer URL
+                pickUpOptionAvailable:
+                  type: boolean
+                  description: Pickup option available at retailer level
+                  nullable: true
+                category:
+                  type: string
+                  description: Retailer category code
+                subsidiary:
+                  type: object
+                  description: Sub-brand / subsidiary when applicable
+                  nullable: true
+                  properties:
+                    name:
+                      type: string
+                    logo:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                        isDefault:
+                          type: boolean
+                        type:
+                          type: string
+                    logos:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          url:
+                            type: string
+                          type:
+                            type: string
+                    pickUpOptionAvailable:
+                      type: boolean
+                      description: Whether the retailer offers pickup options
+                      nullable: true
+            localeInfo:
+              type: object
+              description: Store locale (physical stores)
+              properties:
+                latitude:
+                  type: number
+                  nullable: true
+                longitude:
+                  type: number
+                  nullable: true
+                address:
+                  type: string
+                zipCode:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                country:
+                  type: string
+                open24:
+                  type: boolean
+                openingHours:
+                  type: string
+                  nullable: true
+                googleMapsUrl:
+                  type: string
+                directionsUrl:
+                  type: string
+                  nullable: true
+                appointmentUrl:
+                  type: string
+                  nullable: true
+                distance:
+                  type: number
+                  description: Distance from search location (km)
+                isLockedDown:
+                  type: boolean
+                timeZone:
+                  type: string
+            id:
+              type: string
+              description: Store id
+            name:
+              type: string
+              description: Store name
+            phoneNumber:
+              type: string
+              description: Phone number
+              nullable: true
+            internationalPhoneNumber:
+              type: string
+              description: International phone number
+              nullable: true
+            whatsappNumber:
+              type: string
+              description: Whatsapp phone number
+            delivery:
+              type: boolean
+              description: Is delivery
+            clickAndCollect:
+              type: boolean
+              description: Is click and collect (Buy Online Pickup In Store)
+            brickAndMortar:
+              type: boolean
+              description: Is brick and mortar
+            url:
+              type: string
+              description: Store URL
+            storeOpeningHoursSchema:
+              type: array
+              description: List of opening hours
+              items:
+                type: string
+                description: Opening hours
+              nullable: true
+            customAttributes:
+              type: object
+              description: Optional retailer-specific key-value attributes on the store
+              nullable: true
+              additionalProperties:
+                type: string
+        addToCartUrl:
+          type: string
+          description: Tracked add-to-cart URL for the whole cart at this store. Null when the retailer does not support cart
+            links; line-level clickUrl is still present
+          nullable: true
+        doNotTrackAddToCartUrl:
+          type: string
+          description: Add-to-cart URL without tracking. Null under the same conditions as addToCartUrl.
+          nullable: true
+        totalPrice:
+          type: object
+          description: Total cart price for this store
+          properties:
+            currency:
+              type: string
+              description: Currency
+            value:
+              type: number
+              description: Value
+            valueFormatted:
+              type: string
+              description: Display-formatted price string
+            valueWithVoucher:
+              type: number
+              description: Total after voucher when applicable
+              nullable: true
+        totalQuantity:
+          type: integer
+          description: Sum of line quantities across products in this cart
+        productCount:
+          type: integer
+          description: Number of distinct products in this cart
+        averagePrice:
+          type: object
+          description: Average unit price when applicable
+          properties:
+            currency:
+              type: string
+              description: Currency
+            value:
+              type: number
+              description: Value
+            valueFormatted:
+              type: string
+              description: Display-formatted price string
+            valueWithVoucher:
+              type: number
+              nullable: true
+        availableProducts:
+          type: integer
+          description: Count of products available at this store
+          nullable: true
+        requestedProducts:
+          type: integer
+          description: Count of requested products considered for this store
+          nullable: true
+        availabilities:
+          type: array
+          description: Line items per product at this store
+          items:
+            $ref: '#/components/schemas/CartAvailabilityLine'
+    CartAvailabilityLine:
+      type: object
+      description: Line item within a store cart (public `CartAvailability` shape)
+      properties:
+        productId:
+          type: string
+          description: Product identifier
+        gtin:
+          type: string
+          description: GTIN
+        quantity:
+          type: integer
+          description: Quantity in cart
+        stockStatus:
+          type: string
+          description: Stock status for the line
+        price:
+          type: object
+          description: Unit price
+          properties:
+            currency:
+              type: string
+              description: Currency
+            value:
+              type: number
+              description: Value
+            valueFormatted:
+              type: string
+              description: Display-formatted price string
+            valueWithVoucher:
+              type: number
+              description: Unit price after voucher when applicable
+              nullable: true
+        totalPrice:
+          type: object
+          description: Line total price
+          properties:
+            currency:
+              type: string
+              description: Currency
+            value:
+              type: number
+              description: Value
+            valueFormatted:
+              type: string
+              description: Display-formatted price string
+            valueWithVoucher:
+              type: number
+              description: Line total after voucher when applicable
+              nullable: true
+        voucher:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Voucher'
+        clickUrl:
+          type: string
+          description: Tracked click URL for this line
+        doNotTrackClickUrl:
+          type: string
+          description: Click URL without tracking
+        isTiedHouseLaw:
+          type: boolean
+          description: Whether tied house law applies to this line
+    AvailabilitiesResponse:
+      type: object
+      description: Availabilities response
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        products:
+          type: array
+          description: List of products
+          items:
+            $ref: '#/components/schemas/CatalogProduct'
+        availabilities:
+          type: array
+          description: List of availabilities
+          items:
+            properties:
+              gtin:
+                type: string
+                description: GTIN
+              price:
+                type: object
+                description: Price
+                properties:
+                  currency:
+                    type: string
+                    description: Currency
+                  value:
+                    type: number
+                    description: Value
+                  valueWithVoucher:
+                    type: number
+                    description: Value with Voucher
+              store:
+                type: object
+                description: Store Info
+                properties:
+                  id:
+                    type: string
+                    description: Id
+                  name:
+                    type: string
+                    description: Store name
+                  retailer:
+                    type: object
+                    description: retailer
+                    properties:
+                      id:
+                        type: number
+                        description: Id
+                      name:
+                        type: string
+                        description: Name
+                      logo:
+                        type: object
+                        description: Logo
+                        properties:
+                          url:
+                            type: string
+                            description: URL
+                          isDefault:
+                            type: boolean
+                            description: Is the default logo
+                          type:
+                            type: string
+                            description: rectangle or square
+                      logos:
+                        type: array
+                        description: List of logos
+                        items:
+                          type: object
+                          properties:
+                            url:
+                              type: string
+                              description: URL
+                            type:
+                              type: string
+                              description: rectangle or square
+                      url:
+                        type: string
+                        description: URL
+                      subsidiary:
+                        type: object
+                        description: Subsidiary
+                        properties:
+                          name:
+                            type: string
+                            description: Name
+                          logo:
+                            type: object
+                            description: Logo
+                            properties:
+                              url:
+                                type: string
+                                description: URL
+                              isDefault:
+                                type: boolean
+                                description: Is the default logo
+                              type:
+                                type: string
+                                description: rectangle or square
+                          logos:
+                            type: array
+                            description: List of logos
+                            items:
+                              type: object
+                              properties:
+                                url:
+                                  type: string
+                                  description: URL
+                                type:
+                                  type: string
+                                  description: rectangle or square
+                      pickUpOptionAvailable:
+                        type: boolean
+                        description: Whether the retailer offers pickup options
+                        nullable: true
+                  localeInfo:
+                    type: object
+                    description: Locale Info
+                    properties:
+                      latitude:
+                        type: number
+                        description: Latitude
+                      longitude:
+                        type: number
+                        description: Longitude
+                      address:
+                        type: string
+                        description: Address
+                      zipCode:
+                        type: string
+                        description: Zip code
+                      city:
+                        type: string
+                        description: City
+                      state:
+                        type: string
+                        description: State
+                      open24:
+                        type: boolean
+                        description: Is open 24h
+                      openingHours:
+                        type: string
+                        description: Opening hours
+                      googleMapsUrl:
+                        type: string
+                        description: Google Maps URL
+                      appointmentUrl:
+                        type: string
+                        description: Appointment URL
+                      distance:
+                        type: number
+                        description: Distance
+                      isLockedDown:
+                        type: boolean
+                        description: Is locked down
+                      timeZone:
+                        type: string
+                        description: Time zone
+                  phoneNumber:
+                    type: string
+                    description: Phone number
+                  internationalPhoneNumber:
+                    type: string
+                    description: International phone number
+                  whatsappNumber:
+                    type: string
+                    description: Whatsapp phone Number
+                  delivery:
+                    type: boolean
+                    description: Is delivery
+                  clickAndCollect:
+                    type: boolean
+                    description: Is click and collect (Buy Online Pickup In Store)
+                  brickAndMortar:
+                    type: boolean
+                    description: Is brick and mortar
+                  storeOpeningHoursSchema:
+                    type: array
+                    description: List of opening hours
+                    items:
+                      type: string
+                      description: Opening hours
+                  url:
+                    type: string
+                    description: URL
+                  clickUrl:
+                    type: string
+                    description: Click URL
+                  doNotTrackClickUrl:
+                    type: string
+                    description: Do not track click URL
+              voucher:
+                allOf:
+                - $ref: '#/components/schemas/Voucher'
+              isTiedHouseLaw:
+                type: boolean
+                description: Is tied house law
+        sessionId:
+          type: string
+          description: SessionID value
+        alcoholSettings:
+          type: object
+          description: Alcohol settings configuration
+          properties:
+            tiedHouseLaw:
+              type: integer
+              description: Tied house law setting code
+              example: 4
+            showLocalRetailers:
+              type: boolean
+              description: Whether to show local retailers
+              example: true
+            showRetailerText:
+              type: boolean
+              description: Whether to show retailer text
+              example: true
+            settingCode:
+              type: integer
+              description: Alcohol setting code
+              example: 3
+            applyTiedHouseLaw:
+              type: boolean
+              description: Whether to apply tied house law
+              example: true
+            tiedHouseConditionMet:
+              type: boolean
+              description: Whether tied house condition is met (null if applyTiedHouseLaw is false)
+              example: false
+    ConfigurationResponse:
+      type: object
+      description: Configuration metadata for an experience
+      properties:
+        experienceId:
+          type: string
+          description: The experience ID
+          example: 54511c2f827bef6f9c68f29a
+        retailerSortType:
+          type: string
+          description: How retailers should be sorted in availabilities
+          enum:
+          - manual
+          - random
+          - price_low_to_high
+          example: manual
+        pinnedRetailerIds:
+          type: array
+          description: List of retailer IDs that should be pinned/featured at the top
+          items:
+            type: integer
+          example:
+          - 1
+          - 2
+          - 3
+        retailers:
+          type: array
+          description: List of retailers in the experience configuration
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Retailer ID
+                example: 245
+              name:
+                type: string
+                description: Retailer name
+                example: Walmart
+    ExperiencesResponse:
+      type: object
+      description: List of experiences for an account
+      properties:
+        accountName:
+          type: string
+          description: Name of the account
+        subAccountName:
+          type: string
+          description: Name of the sub-account
+        api:
+          type: array
+          description: List of API experiences
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Experience ID
+              name:
+                type: string
+                description: Experience name
+        media:
+          type: array
+          description: List of media experiences
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Experience ID
+              name:
+                type: string
+                description: Experience name
+              url:
+                type: string
+                description: Experience URL
+              showPrice:
+                type: boolean
+                description: Whether to show prices
+              products:
+                type: array
+                description: List of products associated with the experience
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Product ID
+                    idType:
+                      type: string
+                      description: Type of product ID (e.g. gtin)
+                    title:
+                      type: string
+                      description: Product title
+                    imageUrl:
+                      type: string
+                      description: Product image URL
+                    thumbnailImageUrl:
+                      type: string
+                      description: Product thumbnail image URL (optimized for small displays, 144px width)
+    OffersResponse:
+      type: object
+      description: Offers response
+      properties:
+        countryCode:
+          type: string
+          description: Country code
+        modelCode:
+          type: string
+          description: Product model code
+        modelName:
+          type: string
+          description: Product model name
+        ean:
+          type: string
+          description: Product EAN
+        upc:
+          type: string
+          description: Product UPC
+        brandProductId:
+          type: string
+          description: Product ID
+        marketingModelName:
+          type: string
+          description: Product marketing model name
+        description:
+          type: string
+          description: Product description
+        additionalInformation:
+          type: string
+          description: Product additional information
+        productImage:
+          type: string
+          description: Product image
+        productThumbnailImage:
+          type: string
+          description: Product thumbnail image (optimized for small displays, 144px width)
+        categoryName:
+          type: string
+          description: Product category
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Product attributes
+        backupProductsSummary:
+          type: object
+          description: The array of replaced products, informing of each Requested Product and its replaced Backup Product
+          properties:
+            replacedProducts:
+              type: array
+              description: List of replaced products
+              items:
+                properties:
+                  requestedProduct:
+                    type: string
+                    description: The requested product GTIN
+                  backupProduct:
+                    type: string
+                    description: The backup product GTIN
+        onlineRetailers:
+          type: array
+          description: Online retailers
+          items:
+            properties:
+              name:
+                type: string
+                description: Retailer name
+              homepageUrl:
+                type: string
+                description: Retailer homepage url
+              availability:
+                type: string
+                description: Retailer product availability. 'Available' or 'NotAvailable'
+              logoUrl:
+                type: string
+                description: Retailer logo url
+              retailerId:
+                type: number
+                description: Retailer ID
+              productLink:
+                type: string
+                description: Retailer product link
+              cartLink:
+                type: string
+                description: Add to cart link
+              price:
+                type: number
+                description: Retailer product price
+              currencyCode:
+                type: string
+                description: Retailer product currency code
+              currencySymbol:
+                type: string
+                description: Retailer product currency symbol
+              sku:
+                type: string
+                description: Retailer product sku
+              promotions:
+                type: array
+                description: Retailer product promotions
+                items:
+                  properties:
+                    promotionalMessage:
+                      type: string
+                      description: Promotion message
+                    promotionalType:
+                      type: string
+                      description: Promotion type
+              priceFormatted:
+                type: string
+                description: Price formatted
+              priceFormattedWithCurrency:
+                type: string
+                description: Price formatted with currency symbol
+              lastUpdatedUtc:
+                type: string
+                description: The last time the retailer product was updated
+              priceDetails:
+                type: object
+                description: Price details
+                properties:
+                  price:
+                    type: number
+                    description: Retailer product price
+                  priceFormatted:
+                    type: string
+                    description: Price formatted
+                  priceFormattedWithCurrency:
+                    type: string
+                    description: Price formatted with currency symbol
+              altPriceDetails:
+                type: object
+                description: Price details
+                properties:
+                  price:
+                    type: number
+                    description: Alternative price
+                  priceFormatted:
+                    type: string
+                    description: Alternative price formatted
+                  priceFormattedWithCurrency:
+                    type: string
+                    description: Alternative price formatted with currency symbol
+              isTiedHouseLaw:
+                type: boolean
+                description: Is tied house law
+        localRetailers:
+          type: array
+          description: Local retailers
+          items:
+            properties:
+              locationName:
+                type: string
+                description: Location name
+              locationUrl:
+                type: string
+                description: Location URL
+              sourceLocationId:
+                type: string
+                description: Location ID
+              retailerName:
+                type: string
+                description: Retailer name
+              retailerId:
+                type: number
+                description: Retailer ID
+              retailerLogoUrl:
+                type: string
+                description: Retailer logo URL
+              hours:
+                type: string
+                description: Location opening hours
+              address:
+                type: string
+                description: Location address
+              city:
+                type: string
+                description: Location city
+              state:
+                type: string
+                description: Location state
+              postalCode:
+                type: string
+                description: Location postal code
+              phone:
+                type: string
+                description: Location phone number
+              latitude:
+                type: number
+                description: Location latitude
+              longitude:
+                type: number
+                description: Location longitude
+              distanceFromUserLocation:
+                type: number
+                description: Distance from user location
+              distanceUnit:
+                type: string
+                description: Distance unit. 'Miles' or 'Kilometers'
+              countryCode:
+                type: string
+                description: Country code
+              availability:
+                type: string
+                description: Availability. 'Available' or 'NotAvailable'
+              price:
+                type: number
+                description: Retailer product price
+              currencyCode:
+                type: string
+                description: Retailer product currency code
+              promotions:
+                type: array
+                description: Retailer product promotions
+                items:
+                  properties:
+                    promotionalMessage:
+                      type: string
+                      description: Promotion message
+                    promotionalType:
+                      type: string
+                      description: Promotion type
+              open24:
+                type: boolean
+                description: Is location open 24 hours
+              googleMapsUrl:
+                type: string
+                description: Location Google Maps URL
+              appointmentUrl:
+                type: string
+                description: Location appointment URL
+              timeZone:
+                type: string
+                description: Location time zone
+              internationalPhoneNumber:
+                type: string
+                description: Location international phone number
+              whatsAppNumber:
+                type: string
+                description: Location WhatsApp phone Number
+              isTiedHouseLaw:
+                type: boolean
+                description: Is tied house law
+        variants:
+          type: array
+          description: Product variants
+          items:
+            properties:
+              modelCode:
+                type: string
+                description: Variant model code
+              modelName:
+                type: string
+                description: Variant model name
+              description:
+                type: string
+                description: Variant description
+              imageUrl:
+                type: string
+                description: Variant image URL
+              thumbnailImageUrl:
+                type: string
+                description: Variant thumbnail image URL (optimized for small displays, 144px width)
+              attributes:
+                type: object
+                additionalProperties:
+                  type: string
+                description: Variant attributes
+        brand:
+          type: string
+          description: Product brand
+        subtitle:
+          type: string
+          description: Product subtitle
+        review:
+          type: object
+          description: Review details
+          properties:
+            count:
+              type: number
+              description: Review count
+            averageRating:
+              type: number
+              description: Review average rating
+        sessionId:
+          type: string
+          description: SessionID value
+    ProductsResponse:
+      type: object
+      description: List of products
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        products:
+          type: object
+          description: List of products
+          properties:
+            gtin:
+              type: string
+              description: GTIN
+            gtins:
+              type: array
+              description: List of GTINs
+              items:
+                type: string
+                description: GTIN
+            imageUrl:
+              type: string
+              description: Product image URL
+            thumbnailImageUrl:
+              type: string
+              description: Product thumbnail image URL (optimized for small displays, 144px width)
+            brand:
+              type: string
+              description: Brand
+            title:
+              type: string
+              description: Title
+            subtitle:
+              type: string
+              description: Subtitle
+            description:
+              type: string
+              description: Product description (empty by default)
+            packaging:
+              type: string
+              description: Containing or color
+            review:
+              type: object
+              description: Review
+              properties:
+                count:
+                  type: number
+                  description: Count
+                averageRating:
+                  type: number
+                  description: Rating
+                roundedAverageRating:
+                  type: number
+                  description: Rounded rating
+    ProductsSearchResponse:
+      type: object
+      description: Paginated product search response
+      properties:
+        offset:
+          type: integer
+          description: Pagination offset (zero-based)
+        limit:
+          type: integer
+          description: Number of products returned per page
+        total:
+          type: integer
+          description: Total number of matching products
+        products:
+          type: array
+          description: Product list for the current page
+          items:
+            $ref: '#/components/schemas/ProductsSearchProduct'
+    ProductsSearchProduct:
+      type: object
+      description: Product item returned by product search
+      properties:
+        id:
+          type: string
+          description: Primary product identifier (UPC or account product UID)
+        ids:
+          type: array
+          description: List of product identifiers (UPCs or account product UIDs)
+          items:
+            type: string
+        gtin:
+          type: string
+          description: GTIN for backward compatibility
+        imageUrl:
+          type: string
+          description: Product image URL
+        thumbnailImageUrl:
+          type: string
+          description: Product thumbnail image URL (optimized for small displays, 144px width)
+        brand:
+          type: string
+          description: Product brand
+        title:
+          type: string
+          description: Product title
+        subtitle:
+          type: string
+          description: Product subtitle
+        description:
+          type: string
+          description: Product description
+        packaging:
+          type: string
+          description: Product packaging
+        review:
+          type: object
+          description: Product review metadata
+          properties:
+            count:
+              type: number
+              description: Number of reviews
+            averageRating:
+              type: number
+              description: Average rating
+            roundedAverageRating:
+              type: number
+              description: Rounded average rating
+  parameters: {}
+  responses: {}

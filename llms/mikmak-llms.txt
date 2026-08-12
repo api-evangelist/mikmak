@@ -1,0 +1,52 @@
+# MikMak Documentation
+
+> Documentation for MikMak
+
+## Guides
+- [Commerce for Brand.com (v2)](https://docs.mikmak.ai/docs/developer-guide.md): This page will help you get started with MikMak Commerce Brand.com.
+- [Commerce for Brand.com (v1)](https://docs.mikmak.ai/docs/commerce-for-brandcom-v1.md)
+- [Callback JavaScript function](https://docs.mikmak.ai/docs/callback-javascript-function.md)
+- [Google Tag Manager (GTM) Events & Variables](https://docs.mikmak.ai/docs/gtm-events.md)
+- [Products](https://docs.mikmak.ai/docs/manufacturer-product-catalog.md): This page describes how to complete the manufacturer catalog information that should be used to provide MikMak with your product catalog.
+- [Stores](https://docs.mikmak.ai/docs/store-locator.md): This page describes how to fill the store template file that should be used to update or insert stores in your Commerce Experience or store locator.
+- [Product & Availability Feeds](https://docs.mikmak.ai/docs/retailer-products.md)
+- [Products](https://docs.mikmak.ai/docs/retailer-feed-products.md): This page describes the product catalog feed for Retailer or Brand DTC Website.
+- [Stores](https://docs.mikmak.ai/docs/retailer-feed-stores.md): This page describes the stores feed for retailer.
+- [Price & Availability](https://docs.mikmak.ai/docs/retailer-feed-prices.md): This page describes the prices feed for retailer.
+- [Conversion File](https://docs.mikmak.ai/docs/conversion-file.md): This page will help you get started with the MikMak conversion tracking file for retailers.
+- [Sales Tracking Overview](https://docs.mikmak.ai/docs/sales-tracking-overview.md)
+- [Google Tag Manager](https://docs.mikmak.ai/docs/sales-tracking-google-tag-manager.md)
+- [Sales Tracking Pixel (STrack)](https://docs.mikmak.ai/docs/sales-tracking-pixel.md)
+- [Enterprise SSO Integration Guide](https://docs.mikmak.ai/docs/mikmak-platform-auth0-enterprise-sso-integration-guide.md): This guide provides an overview of how MikMak leverages Auth0's Enterprise Single Sign-On (SSO) to enable seamless integration with your Enterprise Identity Provider (IdP), enhancing security and streamlining access to the MikMak platform for your organization.
+- [Retailer Sales Data Requirements](https://docs.mikmak.ai/docs/retailer-sales-data-requirements.md): This page outlines the specific retail sales data and formatting your brand needs to provide to launch and power your MikMak Aura study.
+- [Media Spend Data Requirements](https://docs.mikmak.ai/docs/media-spend-data-requirements.md): username blank
+- [Quick Start](https://docs.mikmak.ai/docs/quick-start-1.md)
+- [Key Features](https://docs.mikmak.ai/docs/key-features-1.md): This page is a summary of what the MCP offers
+- [Developer Portal](https://docs.mikmak.ai/docs/developer-portal.md)
+- [MCP Reference](https://docs.mikmak.ai/docs/mcp-reference.md)
+- [Overview](https://docs.mikmak.ai/docs/overview-1.md)
+- [Authentication](https://docs.mikmak.ai/docs/authentication-1.md)
+- [Architecture Diagram](https://docs.mikmak.ai/docs/architecture-diagram.md)
+- [Build Requirements](https://docs.mikmak.ai/docs/build-requirements.md)
+- [Hosted Integration](https://docs.mikmak.ai/docs/hosted-integration.md)
+- [Integration Guide](https://docs.mikmak.ai/docs/integration-guide-1.md)
+- [Tools](https://docs.mikmak.ai/docs/tools-1.md)
+- [Prompt Library](https://docs.mikmak.ai/docs/prompt-library.md)
+- [MikMak Commerce API](https://docs.mikmak.ai/docs/mikmak-commerce-api.md)
+
+## API Reference
+- [MikMak Commerce API Overview](https://docs.mikmak.ai/reference/mikmak-headless-commerce-api.md): The following is an overview of the MikMak Headless Commerce API (v1)
+- [/commerce/v1/products/{id}](https://docs.mikmak.ai/reference/get_commerce-v1-products-id.md): Returns a list of products.
+- [/commerce/v1/availabilities/{id}](https://docs.mikmak.ai/reference/get_commerce-v1-availabilities-id.md): Returns a list of store availability. Distances are in the metric system (m).
+- [/commerce/v1/availabilities/cart/{id}](https://docs.mikmak.ai/reference/get_commerce-v1-availabilities-cart-id.md): Returns store-level cart availability grouped by store. Distances are in the metric system (m).
+- [/commerce/v1/productcatalog/offers/models/{id}](https://docs.mikmak.ai/reference/get_commerce-v1-productcatalog-offers-models-id.md): The Offers endpoint is used to search both Online and Local retailers of a product. When Offer Location is not provided, only Online information is searched.
+- [/commerce/v1/experiences/config/{id}](https://docs.mikmak.ai/reference/get_commerce-v1-experiences-config-id.md): Returns configuration metadata for a specific experience, including retailer sort order and pinned retailers.
+- [/commerce/v1/experiences](https://docs.mikmak.ai/reference/get_commerce-v1-experiences.md): Returns a list of experiences available for the authenticated account.
+- [/commerce/v1/products/facet](https://docs.mikmak.ai/reference/get_commerce-v1-products-facet.md): Returns product facets and optionally a productIds selection.
+- [Commerce API Authentication](https://docs.mikmak.ai/reference/commerce-api-authentication.md)
+- [Authorization Code Flow](https://docs.mikmak.ai/reference/authorization-code-flow.md)
+- [/commerce/v1/search/products](https://docs.mikmak.ai/reference/get_commerce-v1-search-products.md): Returns paginated products matching the provided filters and optional free-text query.
+- [MikMak Insights API](https://docs.mikmak.ai/reference/mikmak-insights-api.md)
+
+## Pages
+- [Support](https://docs.mikmak.ai/page/support.md)

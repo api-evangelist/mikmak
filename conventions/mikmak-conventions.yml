@@ -1,0 +1,167 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.mikmak.ai/docs/authentication-1
+docs:
+  - https://docs.mikmak.ai/docs/tools-1
+  - https://docs.mikmak.ai/docs/build-requirements
+  - https://docs.mikmak.ai/reference/commerce-api-authentication
+derived_from:
+  - openapi/mikmak-commerce-api-openapi.yml
+  - openapi/mikmak-insights-api-openapi.yml
+provider: MikMak
+providerId: mikmak
+authentication:
+  style: api-key-or-bearer
+  header: x-api-key
+  alternative: 'Authorization: Bearer <jwt>'
+  mcp: Bearer JWT required, API key optional
+  see: authentication/mikmak-authentication.yml
+identity_scoping:
+  description: >-
+    MikMak scopes a request by experience, not by OAuth scope. Every call resolves an api_key
+    and a wtb_id (experience id), in this order - tool argument, HTTP header, server config -
+    with the first non-empty value winning. A missing value after all three is a configuration
+    error, not an auth error.
+  headers:
+    - x-api-key
+    - x-wtb-id
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency key is published, and there is nothing to make idempotent. All eight
+    Commerce operations are GET. The Insights API uses POST for report *retrieval* rather than
+    mutation, so its calls are naturally repeatable. There is no write surface on either API.
+pagination:
+  style: server-controlled
+  applies_to:
+    - GET /commerce/v1/search/products
+  parameters_exposed_to_agents: false
+  note: >-
+    The Commerce search operation returns paginated products, and the MCP tool deliberately
+    hides limit/offset so the agent cannot page. The Commerce OpenAPI also references a
+    "continuation token" in its 404 description, implying cursor-style continuation on at least
+    one path.
+filtering:
+  description: >-
+    Availability results are refined with max_distance (kilometres), max_stores, delivery_modes,
+    include_out_of_stock and retailer_ids. The documentation instructs agents NOT to send any
+    optional filter the user did not ask for.
+  delivery_modes:
+    - HomeDelivery
+    - Drive
+    - CollectInStore
+    - Brick
+location:
+  rule: exactly-one-of
+  modes:
+    - name: postal
+      required:
+        - postal_code
+        - country
+      optional_refinements:
+        - state
+        - city
+    - name: coordinates
+      required:
+        - latitude
+        - longitude
+      ranges:
+        latitude: -90..90
+        longitude: -180..180
+  cross_country: >-
+    requested_country (ISO 3166-1 alpha-2) scopes results to a country other than the location's
+    own, for multi-country experiences only.
+  enforcement: >-
+    The MCP server's input-schema validation rejects a mixed-mode location with the literal
+    message "Do not mix location methods. Use either (latitude + longitude) OR (postal_code +
+    country), not both." The underlying OpenAPI does not express this constraint, so the rule is
+    only enforceable on the agent surface.
+identifiers:
+  product:
+    primary: GTIN
+    accepted:
+      - GTIN
+      - UPC
+      - EAN
+    id_type_enum_rest:
+      - gtin
+      - mpn
+      - group
+      - product_id
+      - matching_id
+    id_type_enum_mcp:
+      - DEFAULT
+      - GTIN
+      - MPN
+      - PRODUCT_ID
+      - MODEL_NAME
+      - ACCOUNT_PRODUCT_UID
+    multi_value: comma-separated in a single path segment
+  experience: wtb_id / x-wtb-id / data-mm-wtbid, the same identifier across API, MCP and the brand.com tag
+  country: ISO 3166-1 alpha-2
+  region: ISO 3166-2
+  distance_unit: metres in REST availability responses, kilometres in the MCP max_distance argument
+casing:
+  rest: camelCase query parameters and response fields
+  mcp: snake_case tool arguments
+  note: >-
+    The same concept changes case across surfaces - REST `idType` becomes MCP `id_type`,
+    REST `maxDistance` becomes MCP `max_distance`. Bind through the crosswalk, not by name.
+tracing:
+  header: X-Request-Id
+  direction: client-supplied, echoed into MikMak server logs
+  generated_when_absent: true
+  note: The only support-correlation handle MikMak publishes.
+versioning:
+  style: uri-path
+  pattern: /commerce/v1/..., /reporting/v1/...
+  current:
+    commerce: v1
+    insights: v1
+    mcp: 1.0.0 (reported by GET https://mcp.mikmak.ai/health)
+  see: lifecycle/mikmak-lifecycle.yml
+errors:
+  envelope: mixed by surface
+  mcp: application/problem+json with a `code` member
+  commerce: undeclared - no response schema on any 4xx/5xx
+  insights: FastAPI HTTPValidationError on 422 only
+  see: errors/mikmak-problem-types.yml
+rate_limit_signalling:
+  headers:
+    - X-RateLimit-Limit
+    - X-RateLimit-Remaining
+    - Retry-After
+  on_success: X-RateLimit-Limit and X-RateLimit-Remaining are also returned on 2xx
+  status_on_exhaustion: 429
+  see: rate-limits/mikmak-rate-limits.yml
+transport:
+  https_only: true
+  mcp_transport: streamable-http
+  mcp_envelope: JSON-RPC 2.0
+  content_type: application/json
+  token_endpoint_body: application/json
+  note: >-
+    MikMak's OAuth token endpoint accepts a JSON body rather than the form-encoded body RFC
+    6749 specifies. Generic OAuth clients will need an override.
+usage_restrictions:
+  description: >-
+    Unusual for a commerce API - the Commerce API's permitted uses are contractual, not
+    technical. Brand-owned websites and media ad units are allowed with explicit written
+    approval; deployment on third-party sites, platforms or unauthorized resellers is
+    prohibited. Enforcement shows up at runtime as 403.
+  source: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+client_side:
+  csp_allowlist:
+    connect-src: ['*.mikmak.ai', '*.swaven.com']
+    frame-src: ['*.mikmak.ai', '*.swaven.com']
+    script-src: ['*.mikmak.ai', '*.swaven.com']
+    font-src: ['*.mikmak.ai', '*.swaven.com', '*.static-swaven.com']
+    img-src: ['*.mikmak.ai', '*.swaven.com', '*.static-swaven.com']
+  note: >-
+    Integrating the brand.com tag requires allowing the legacy Swaven domains in the host page's
+    Content-Security-Policy, alongside mikmak.ai.
+  source: https://docs.mikmak.ai/docs/developer-guide
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

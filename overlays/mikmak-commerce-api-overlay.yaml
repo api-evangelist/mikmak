@@ -1,0 +1,182 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the MikMak Commerce API (v1)
+  version: 1.0.0
+extends: ../openapi/mikmak-commerce-api-openapi.yml
+x-provenance:
+  generated: '2026-08-12'
+  method: generated
+  source: >-
+    Enhancements over the provider's own spec. The base document was assembled verbatim from the
+    per-operation OpenAPI 3.0.0 blocks MikMak publishes on its ReadMe reference pages
+    (https://docs.mikmak.ai/reference/get_commerce-v1-*.md); the eight slices merged with zero
+    conflicting definitions. Ownership confirmed - servers[] is https://api.mikmak.ai, the
+    ReadMe project name is "MikMak", and the Insights API is served live from the same host.
+  base_spec_operations: 8
+  note: >-
+    The original is never mutated. This overlay records what MikMak's published contract is
+    missing - operationIds on every operation, a documented error body, a 429 response, and the
+    one-of location constraint the MCP layer enforces but the REST spec does not express.
+actions:
+  - target: $.info
+    description: Record the contract's real base and contact posture.
+    update:
+      contact:
+        name: MikMak
+        url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+      x-api-evangelist-note: >-
+        Use of this API requires explicit contractual approval from MikMak's Commercial teams;
+        deployment on third-party sites or unauthorized resellers is prohibited.
+  - target: $.paths['/commerce/v1/products/{id}'].get
+    description: Add the missing operationId.
+    update:
+      operationId: getProducts
+  - target: $.paths['/commerce/v1/search/products'].get
+    description: Add the missing operationId.
+    update:
+      operationId: searchProducts
+  - target: $.paths['/commerce/v1/products/facet'].get
+    description: Add the missing operationId.
+    update:
+      operationId: getProductFacets
+  - target: $.paths['/commerce/v1/availabilities/{id}'].get
+    description: Add the missing operationId.
+    update:
+      operationId: getAvailabilities
+  - target: $.paths['/commerce/v1/availabilities/cart/{id}'].get
+    description: Add the missing operationId.
+    update:
+      operationId: getCartAvailabilities
+  - target: $.paths['/commerce/v1/productcatalog/offers/models/{id}'].get
+    description: Add the missing operationId.
+    update:
+      operationId: getModelOffers
+  - target: $.paths['/commerce/v1/experiences'].get
+    description: Add the missing operationId.
+    update:
+      operationId: listExperiences
+  - target: $.paths['/commerce/v1/experiences/config/{id}'].get
+    description: Add the missing operationId.
+    update:
+      operationId: getExperienceConfig
+  - target: $.components.securitySchemes.ApiKeyAuth
+    description: Record that the key is issued out of band and is server-side only.
+    update:
+      x-issuance: manual
+      x-note: >-
+        Issued by a MikMak representative at onboarding. There is no self-service signup. The
+        provider's documentation forbids using this key in frontend, mobile or client-side
+        JavaScript.
+  - target: $.components.securitySchemes.JWTBearerAuth
+    description: Record the OAuth endpoints that back this bearer token.
+    update:
+      x-token-url: https://api.mikmak.ai/commerce/v1/oauth/token
+      x-authorization-url: https://api.mikmak.ai/commerce/v1/authorize
+      x-grants:
+        - client_credentials
+        - authorization_code
+        - refresh_token
+      x-note: >-
+        MikMak's token endpoint accepts a JSON body rather than the form-encoded body RFC 6749
+        specifies. See authentication/mikmak-authentication.yml.
+  - target: $.paths['/commerce/v1/availabilities/{id}'].get
+    description: Express the one-of location rule the MCP layer enforces but the spec omits.
+    update:
+      x-location-constraint:
+        rule: exactly-one-of
+        options:
+          - [postal_code, country]
+          - [latitude, longitude]
+        enforcement: >-
+          Rejected by the MCP server's input-schema validation with "Do not mix location
+          methods." Not expressed in this OpenAPI.
+  - target: $.paths['/commerce/v1/products/{id}'].get
+    description: Express the same one-of location rule on product detail.
+    update:
+      x-location-constraint:
+        rule: exactly-one-of
+        options:
+          - [postal_code, country]
+          - [latitude, longitude]
+  - target: $.components
+    description: >-
+      Contribute the error and rate-limit contract MikMak documents in prose but does not put in
+      the spec. Every 4xx/5xx in the base document has a description and no content schema.
+    update:
+      schemas:
+        ProblemDetails:
+          type: object
+          description: >-
+            RFC 7807 problem document, as returned by the MikMak Commerce MCP Server and
+            verified live on 2026-08-12. Contributed by API Evangelist; the Commerce REST
+            surface declares no error body of its own.
+          properties:
+            type:
+              type: string
+            title:
+              type: string
+            status:
+              type: integer
+            detail:
+              type: string
+            instance:
+              type: string
+            code:
+              type: string
+              enum:
+                - AUTH_UNAUTHORIZED
+                - MIKMAK_UNAUTHORIZED
+                - MIKMAK_FORBIDDEN
+                - RATE_LIMITED
+            source:
+              type: string
+      headers:
+        X-Request-Id:
+          description: Client-supplied trace id echoed into MikMak server logs; generated server-side when absent.
+          schema:
+            type: string
+        X-RateLimit-Limit:
+          description: The active cap for this caller.
+          schema:
+            type: integer
+        X-RateLimit-Remaining:
+          description: Requests left in the current window. Returned on 2xx as well as 429.
+          schema:
+            type: integer
+        Retry-After:
+          description: Seconds to wait before retrying after a 429.
+          schema:
+            type: integer
+      responses:
+        TooManyRequests:
+          description: >-
+            Rate cap exceeded. Documented by MikMak with body code RATE_LIMITED, but not
+            declared on any operation in the base spec.
+          headers:
+            Retry-After:
+              $ref: '#/components/headers/Retry-After'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  - target: $.tags
+    description: Declare the tag set the operations already use but the document never defines.
+    update:
+      - name: Product
+        description: Product metadata lookup by GTIN/UPC/EAN.
+      - name: Product Search
+        description: Free-text and filtered product search with server-controlled pagination.
+      - name: Facet
+        description: Product facets and productId selection.
+      - name: Availabilities
+        description: Location-scoped retailer availability, price, stock and delivery mode.
+      - name: Cart
+        description: Store-grouped multi-product cart availability with per-store totals.
+      - name: Offers
+        description: Online and local retailer offers for a manufacturer model.
+      - name: Experiences
+        description: Experience listing and configuration metadata.

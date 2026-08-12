@@ -1,101 +1,275 @@
 aid: mikmak
 name: MikMak
-description: >-
-  MikMak provides eCommerce enablement and analytics software for multichannel
-  brands to convert global customers across social media, retail media, brand
-  websites, search, CTV, display, and QR codes. The platform combines
-  commerce, analytics, and AI-powered insights to connect marketing spend to
-  retail sales performance.
+description: MikMak is an eCommerce enablement and analytics platform for multichannel brands, converting
+  shoppers across social media, retail media, brand-owned websites, search, CTV, display and QR codes.
+  The platform pairs a Headless Commerce API — product lookup, retailer availability, offers, carts and
+  experience configuration across a global retailer network — with the MikMak Insights reporting API that
+  pushes purchase-intent and attributable-sales data into data lakes and BI tools, and a hosted Model
+  Context Protocol server that exposes the same commerce surface to AI agents. MikMak acquired the French
+  shoppable-media company Swaven in 2021, whose where-to-buy tag technology still powers the brand.com
+  widget and whose name persists in the platform's asset hosts.
 type: Index
 accessModel:
-  pricing: freemium
-  onboarding: unknown
+  pricing: contact-sales
+  onboarding: contract
   trial: false
   try_now: false
   public: false
-  label: Freemium
-  confidence: medium
+  label: Contract Only
+  confidence: high
   source:
-  - plans
-  generated: '2026-07-22'
-  method: derived
+  - https://www.mikmak.com/pricing (404)
+  - https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  generated: '2026-08-12'
+  method: searched
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/mikmak.png
 tags:
-  - Analytics
-  - Commerce
-  - eCommerce
-  - Multichannel
-  - Retail Media
+- Analytics
+- Commerce
+- eCommerce
+- Multichannel
+- Retail Media
+- Where to Buy
+- Shoppable Media
+- Product Availability
+- MCP
+- Agent Native
+- Reporting
+- CPG
 created: '2025-02-21'
-modified: '2026-04-28'
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/mikmak/refs/heads/main/apis.yml
+modified: '2026-08-12'
+url: https://raw.githubusercontent.com/api-evangelist/mikmak/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: mikmak:mikmak-commerce
-    name: MikMak Commerce
-    description: >-
-      MikMak Commerce enables checkout across retailers through various
-      channels including social media, retail media, brand websites, search,
-      CTV, display, QR codes, and more, with AI-powered inventory accuracy.
-    humanURL: https://www.mikmak.com/products/commerce
-    tags:
-      - Checkout
-      - Commerce
-      - Multichannel
-    properties:
-      - type: Documentation
-        url: https://www.mikmak.com/products/commerce
-      - type: Help Center
-        url: https://help.mikmak.ai/hc
-  - aid: mikmak:mikmak-aura
-    name: MikMak Aura
-    description: >-
-      MikMak Aura provides real-time intelligence, fueled by AI, to connect
-      marketing spend across channels to actual sales performance at retailers.
-    humanURL: https://www.mikmak.com/products/aura
-    tags:
-      - AI
-      - Analytics
-      - Marketing Intelligence
-    properties:
-      - type: Documentation
-        url: https://www.mikmak.com/products/aura
-      - type: Help Center
-        url: https://help.mikmak.ai/hc
-  - aid: mikmak:mikmak-insights
-    name: MikMak Insights
-    description: >-
-      MikMak Insights delivers multichannel commerce analytics to help brands
-      understand retailer sales impact and consumers' online behavior and
-      preferences.
-    humanURL: https://www.mikmak.com/products/insights
-    tags:
-      - Analytics
-      - Commerce Analytics
-      - Insights
-    properties:
-      - type: Documentation
-        url: https://www.mikmak.com/products/insights
-      - type: Help Center
-        url: https://help.mikmak.ai/hc
-common:
-  - type: TrustCenter
-    url: security/mikmak-trust-center.yml
-  - type: DomainSecurity
-    url: security/mikmak-domain-security.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/mikmak-tv
-  - type: Website
-    url: https://www.mikmak.com
+- aid: mikmak:mikmak-commerce
+  name: MikMak Headless Commerce API
+  description: 'The MikMak Headless Commerce API (v1) lets brands and their authorized agencies power
+    commerce experiences on brand-owned websites and media ad units with MikMak''s retailer network: product
+    lookup by GTIN/UPC/EAN, location-scoped retailer availability with price, stock and delivery mode,
+    multi-product cart availability, online and local offers, product search with facets, and experience
+    configuration. Use requires contractual approval; deployment on third-party sites is prohibited.'
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  tags:
+  - Commerce
+  - Checkout
+  - Where to Buy
+  - Product Availability
+  - Retailer Network
+  - Multichannel
+  - Headless
+  properties:
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: OpenAPI
+    url: openapi/mikmak-commerce-api-openapi.yml
+  - type: Overlay
+    url: overlays/mikmak-commerce-api-overlay.yaml
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
   - type: Help Center
     url: https://help.mikmak.ai/hc
-  - type: Blog
-    url: https://www.mikmak.com/blog
-  - type: Contact
-    url: https://www.mikmak.com/contact
+  baseURL: https://api.mikmak.ai
+- aid: mikmak:mikmak-aura
+  name: MikMak Aura
+  description: MikMak Aura provides real-time intelligence, fueled by AI, to connect marketing spend across
+    channels to actual sales performance at retailers.
+  humanURL: https://www.mikmak.com/products/aura
+  tags:
+  - AI
+  - Analytics
+  - Marketing Intelligence
+  properties:
+  - type: Documentation
+    url: https://www.mikmak.com/products/aura
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+- aid: mikmak:mikmak-insights
+  name: MikMak Insights API
+  description: The MikMak Insights API is a reporting API that pushes MikMak commerce intelligence — Purchase
+    Intent, Attributable Sales, historical pricing intelligence and shoppable-recipe performance — into
+    data lakes, analytics platforms and BI tools such as Tableau, Power BI and Google Looker Studio. Callers
+    authenticate against a single account, discover the available report fields and filters, then run
+    or export custom reports.
+  humanURL: https://api.mikmak.ai/reporting/docs
+  tags:
+  - Analytics
+  - Reporting
+  - Commerce Analytics
+  - Insights
+  - Business Intelligence
+  - Pricing Intelligence
+  - Attribution
+  properties:
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+  - type: OpenAPI
+    url: openapi/mikmak-insights-api-openapi.yml
+  - type: Overlay
+    url: overlays/mikmak-insights-api-overlay.yaml
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  baseURL: https://api.mikmak.ai
+- aid: mikmak:mikmak-commerce-mcp
+  name: MikMak Commerce MCP Server
+  description: The MikMak Commerce MCP Server is a hosted Model Context Protocol surface in front of the
+    Headless Commerce API (v1). It exposes three strictly-typed, read-only, non-destructive tools — search_products,
+    search_availabilities and get_products — over the streamable-http transport, adding JSON-Schema argument
+    validation, Auth0 JWT enforcement, per-key/per-IP/global rate limiting and request-id propagation
+    so any MCP-compatible client can reason about products, retailers and availability without a bespoke
+    REST integration.
+  humanURL: https://docs.mikmak.ai/docs/developer-portal
+  baseURL: https://mcp.mikmak.ai/commerce/v1
+  tags:
+  - MCP
+  - Agent Native
+  - Commerce
+  - Where to Buy
+  - Product Availability
+  - AI Agents
+  - Tools
+  properties:
+  - type: MCPServer
+    url: mcp/mikmak-mcp.yml
+  - type: MCPServer
+    url: https://mcp.mikmak.ai/commerce/v1
+  - type: ToolCrosswalk
+    url: mcp/mikmak-tool-crosswalk.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/docs/developer-portal
+  - type: GettingStarted
+    url: https://docs.mikmak.ai/docs/quick-start-1
+  - type: Authentication
+    url: https://docs.mikmak.ai/docs/authentication-1
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+- aid: mikmak:mikmak-brand-com-tag
+  name: MikMak Commerce for Brand.com (WTB Tag)
+  description: The MikMak where-to-buy tag is the client-side distribution of MikMak Commerce for brand-owned
+    websites. A single async script loaded from wtb-tag.mikmak.ai renders buy-now buttons, in-page containers
+    and sticky widgets from HTML data attributes, driven by a window.swnDataLayer object, with a JavaScript
+    callback surface and Google Tag Manager event and variable definitions for analytics.
+  humanURL: https://docs.mikmak.ai/docs/developer-guide
+  baseURL: https://wtb-tag.mikmak.ai
+  tags:
+  - Web Components
+  - Widget
+  - Where to Buy
+  - Brand.com
+  - Tag
+  - Client Side
+  properties:
+  - type: Documentation
+    url: https://docs.mikmak.ai/docs/developer-guide
+  - type: Components
+    url: components/mikmak-components.yml
+  - type: Packages
+    url: packages/mikmak-packages.yml
+common:
+- type: DeveloperPortal
+  url: https://docs.mikmak.ai/docs/developer-portal
+- type: Documentation
+  url: https://docs.mikmak.ai/
+- type: APIReference
+  url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+- type: GettingStarted
+  url: https://docs.mikmak.ai/docs/quick-start-1
+- type: Support
+  url: https://docs.mikmak.ai/page/support
+- type: Help Center
+  url: https://help.mikmak.ai/hc
+- type: Blog
+  url: https://www.mikmak.com/blog
+- type: Website
+  url: https://www.mikmak.com
+- type: LinkedIn
+  url: https://www.linkedin.com/company/mikmak-tv
+- type: Contact
+  url: https://www.mikmak.com/contact
+- type: TermsOfService
+  url: https://www.mikmak.com/legal/terms
+- type: PrivacyPolicy
+  url: https://www.mikmak.com/legal/privacypolicy
+- type: ChangeLog
+  url: https://www.mikmak.com/product-updates
+- type: ChangeLog
+  url: changelog/mikmak-changelog.yml
+- type: LLMsTxt
+  url: llms/mikmak-llms.txt
+- type: LLMsTxt
+  url: https://docs.mikmak.ai/llms.txt
+- type: MCPServer
+  url: mcp/mikmak-mcp.yml
+- type: Authentication
+  url: authentication/mikmak-authentication.yml
+- type: OAuthScopes
+  url: scopes/mikmak-scopes.yml
+- type: Conventions
+  url: conventions/mikmak-conventions.yml
+- type: Lifecycle
+  url: lifecycle/mikmak-lifecycle.yml
+- type: Conformance
+  url: conformance/mikmak-conformance.yml
+- type: Compliance
+  url: security/mikmak-trust-center.yml
+- type: TrustCenter
+  url: security/mikmak-trust-center.yml
+- type: DomainSecurity
+  url: security/mikmak-domain-security.yml
+- type: ErrorCatalog
+  url: errors/mikmak-problem-types.yml
+- type: DataModel
+  url: data-model/mikmak-data-model.yml
+- type: Components
+  url: components/mikmak-components.yml
+- type: Packages
+  url: packages/mikmak-packages.yml
+- type: RateLimits
+  url: rate-limits/mikmak-rate-limits.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Login
+  url: https://platform.mikmak.ai
+- type: GitHubOrganization
+  url: https://github.com/Swaven
+- type: SLA
+  url: https://www.mikmak.com/legal/sla
+- type: Subprocessors
+  url: https://www.mikmak.com/legal/subprocessors
+- type: ToolCrosswalk
+  url: mcp/mikmak-tool-crosswalk.yml
+- type: Overlay
+  url: overlays/mikmak-commerce-api-overlay.yaml
+- type: Overlay
+  url: overlays/mikmak-insights-api-overlay.yaml
+- type: OpenAPI
+  url: openapi/mikmak-commerce-api-openapi.yml
+- type: OpenAPI
+  url: openapi/mikmak-insights-api-openapi.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 25
+  pass: local-v1

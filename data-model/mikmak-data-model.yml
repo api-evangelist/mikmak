@@ -1,0 +1,258 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/mikmak-commerce-api-openapi.yml
+docs: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+provider: MikMak
+providerId: mikmak
+summary: >-
+  MikMak's commerce domain has four anchors - Experience, Product, Retailer/Store and
+  Availability - and one hard rule that shapes everything: nothing is retrievable without a
+  Location. Every availability and product-detail response embeds the resolved Location it was
+  answered for, because the same GTIN yields different retailers, prices and stock in different
+  places. Identity is external, not MikMak-assigned: a Product is a GS1 GTIN. The Experience
+  (wtb_id) is the tenancy boundary and appears in every surface - as an API header, an MCP tool
+  argument and an HTML data attribute on the brand.com tag.
+  Relationships below are read from $ref links and id-reference fields in the Commerce OpenAPI;
+  several are id-only (retailerId, pinnedRetailerIds) with no $ref, because the spec never
+  defines a Retailer schema despite returning retailer data on four operations.
+entities:
+  - name: Experience
+    schema: ConfigurationResponse / ExperiencesResponse
+    identity: experienceId
+    aliases:
+      - wtb_id
+      - x-wtb-id
+      - data-mm-wtbid
+    description: >-
+      The tenancy and configuration boundary. Determines which retailers appear, in what order,
+      which countries are in scope and which product catalog is attached. A request outside its
+      scope returns 403, or on the MCP surface a graceful 400 rendered as guidance text.
+    fields:
+      - experienceId
+      - retailerSortType
+      - pinnedRetailerIds
+      - retailers
+      - accountName
+      - subAccountName
+    operations:
+      - GET /commerce/v1/experiences
+      - GET /commerce/v1/experiences/config/{id}
+  - name: Product
+    schema: CatalogProduct / ProductsSearchProduct
+    identity: gtin
+    id_types:
+      - gtin
+      - mpn
+      - group
+      - product_id
+      - matching_id
+    description: >-
+      A sellable item identified by an external GS1 code. Carries both singular and plural id
+      fields (id/ids, gtin/gtins) because one MikMak product can group several retailer SKUs.
+    fields:
+      - id
+      - ids
+      - gtin
+      - gtins
+      - brand
+      - title
+      - subtitle
+      - description
+      - packaging
+      - imageUrl
+      - thumbnailImageUrl
+      - review
+    operations:
+      - GET /commerce/v1/products/{id}
+      - GET /commerce/v1/search/products
+      - GET /commerce/v1/products/facet
+  - name: Location
+    schema: Location
+    identity: composite
+    description: >-
+      The resolved place a query was answered for. Supplied as either postal_code + country or
+      latitude + longitude, never both, and echoed back on the response so the caller can see
+      what MikMak actually resolved.
+    fields:
+      - latitude
+      - longitude
+      - address
+      - city
+      - country
+      - state
+      - zipCode
+      - placeType
+      - isMetricRegion
+  - name: Availability
+    schema: AvailabilitiesResponse.availabilities[]
+    identity: composite (product x retailer/store)
+    description: >-
+      An offer of one product at one retailer or store - price, stock status and a clickUrl that
+      carries the shopper into the retailer's own journey. This is MikMak's core unit of value
+      and the thing the whole platform monetises.
+    fields:
+      - stockStatus
+      - price
+      - clickUrl
+      - doNotTrackClickUrl
+    operations:
+      - GET /commerce/v1/availabilities/{id}
+  - name: Cart
+    schema: CartResponse / CartStoreGroup / CartAvailabilityLine
+    identity: composite (store + product set)
+    description: >-
+      Multi-product availability grouped by store, with per-store totals so a shopper can see
+      which single retailer can fulfil the whole basket. The only place quantity appears.
+    fields:
+      - store
+      - addToCartUrl
+      - doNotTrackAddToCartUrl
+      - totalPrice
+      - totalQuantity
+      - productCount
+      - averagePrice
+      - availableProducts
+      - requestedProducts
+    operations:
+      - GET /commerce/v1/availabilities/cart/{id}
+  - name: Voucher
+    schema: Voucher
+    identity: id
+    description: >-
+      A retailer-scoped promotion attached to an availability line - discount type, percent or
+      amount, validity window, locales, and an optional two-step redemption with its own URL
+      and form id.
+    fields:
+      - id
+      - versionId
+      - name
+      - code
+      - retailerId
+      - online
+      - offline
+      - startDate
+      - endDate
+      - discountType
+      - discountPercent
+      - discountAmount
+      - url
+      - gtins
+      - hasSecondStep
+      - secondStepUrl
+      - formId
+      - locales
+  - name: Offer / Model
+    schema: OffersResponse
+    identity: modelCode
+    description: >-
+      A manufacturer-model view for electronics-style catalogs, splitting onlineRetailers from
+      localRetailers and carrying variants, attributes and a backupProductsSummary. Parallel to
+      Availability rather than derived from it.
+    fields:
+      - countryCode
+      - modelCode
+      - modelName
+      - ean
+      - upc
+      - brandProductId
+      - onlineRetailers
+      - localRetailers
+      - variants
+      - attributes
+    operations:
+      - GET /commerce/v1/productcatalog/offers/models/{id}
+  - name: Retailer / Store
+    schema: undefined
+    identity: retailerId
+    description: >-
+      Returned inside availabilities, carts, offers and experience configuration, and filterable
+      by retailer_ids - but MikMak never defines a Retailer or Store schema in the Commerce
+      OpenAPI. The most important join in the model is the one the contract does not describe.
+    gap: true
+relationships:
+  - from: Experience
+    to: Retailer
+    type: has_many
+    via: pinnedRetailerIds, retailers
+  - from: Experience
+    to: Product
+    type: has_many
+    via: attached product catalog (implied; no explicit field)
+  - from: ProductsResponse
+    to: Location
+    type: has_one
+    via: location
+  - from: ProductsResponse
+    to: Product
+    type: has_many
+    via: products
+  - from: AvailabilitiesResponse
+    to: Location
+    type: has_one
+    via: location
+  - from: AvailabilitiesResponse
+    to: Product
+    type: has_many
+    via: products ($ref CatalogProduct)
+  - from: AvailabilitiesResponse
+    to: Voucher
+    type: has_many
+    via: availabilities[].voucher ($ref Voucher)
+  - from: CartResponse
+    to: Location
+    type: has_one
+    via: location
+  - from: CartResponse
+    to: Product
+    type: has_many
+    via: products ($ref CatalogProduct)
+  - from: CartResponse
+    to: CartStoreGroup
+    type: has_many
+    via: carts ($ref CartStoreGroup)
+  - from: CartStoreGroup
+    to: CartAvailabilityLine
+    type: has_many
+    via: availabilities ($ref CartAvailabilityLine)
+  - from: CartAvailabilityLine
+    to: Product
+    type: belongs_to
+    via: productId / gtin
+  - from: CartAvailabilityLine
+    to: Voucher
+    type: has_one
+    via: voucher ($ref Voucher)
+  - from: Voucher
+    to: Retailer
+    type: belongs_to
+    via: retailerId
+  - from: Voucher
+    to: Product
+    type: has_many
+    via: gtins
+  - from: ProductsSearchResponse
+    to: ProductsSearchProduct
+    type: has_many
+    via: products ($ref ProductsSearchProduct)
+  - from: OffersResponse
+    to: Retailer
+    type: has_many
+    via: onlineRetailers, localRetailers
+domain_notes:
+  - >-
+    Two near-duplicate product schemas exist - CatalogProduct (availability and detail responses)
+    and ProductsSearchProduct (search results). They differ only in that search drops the plural
+    `gtins`. A client must model both or normalise.
+  - >-
+    sessionId appears on AvailabilitiesResponse, CartResponse and OffersResponse but is never
+    defined as an entity or documented; it is the attribution handle that ties a shopper journey
+    back into MikMak Insights.
+  - >-
+    Every clickUrl has a doNotTrackClickUrl twin (and addToCartUrl a doNotTrackAddToCartUrl),
+    which is how consent state is expressed in the data model rather than in a header or flag.
+  - >-
+    alcoholSettings and isTiedHouseLaw are first-class response fields - US alcohol
+    three-tier-law compliance is modelled directly into the commerce payload.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

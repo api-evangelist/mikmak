@@ -1,0 +1,63 @@
+generated: '2026-08-12'
+method: generated
+source: openapi/mikmak-commerce-api-openapi.yml, openapi/mikmak-insights-api-openapi.yml, https://docs.mikmak.ai/docs/tools-1
+provider: MikMak
+providerId: mikmak
+summary: >-
+  Three packaged Agent Skills covering MikMak's two callable APIs. Every operation named is real
+  and present in a published MikMak OpenAPI; the Commerce spec declares no operationIds, so
+  operations are addressed by method and path, and the operationIds contributed by
+  overlays/mikmak-commerce-api-overlay.yaml are marked as our enhancement wherever they appear.
+  MikMak publishes no AGENTS.md and no skills of its own - searched 2026-08-12.
+provider_published_skills: none
+skill_count: 3
+skills:
+  - name: mikmak-where-to-buy
+    file: mikmak-where-to-buy.md
+    api: MikMak Headless Commerce API (v1)
+    description: >-
+      Resolve a product name to a GTIN, then return ranked retailers with price, stock, delivery
+      mode and a click-through URL for one location. MikMak's marquee flow.
+    operations:
+      - GET /commerce/v1/search/products
+      - GET /commerce/v1/availabilities/{id}
+    mcp_tools:
+      - search_products
+      - search_availabilities
+  - name: mikmak-product-detail
+    file: mikmak-product-detail.md
+    api: MikMak Headless Commerce API (v1)
+    description: >-
+      Fetch product metadata - title, brand, description, packaging, imagery - without pulling
+      retailer availability.
+    operations:
+      - GET /commerce/v1/search/products
+      - GET /commerce/v1/products/{id}
+    mcp_tools:
+      - search_products
+      - get_products
+  - name: mikmak-insights-report
+    file: mikmak-insights-report.md
+    api: MikMak Insights API
+    description: >-
+      Discover a report's fields and filters, then run or export it. Covers custom reports,
+      historical pricing intelligence and shoppable recipe performance.
+    operations:
+      - POST /reporting/authenticate
+      - POST /reporting/v1/custom_report_fields
+      - POST /reporting/v1/custom_report_filters
+      - POST /reporting/v1/custom_report_advanced_filters
+      - POST /reporting/v1/custom_report_single_filter
+      - POST /reporting/v1/custom_report
+      - POST /reporting/v1/custom_report/export
+    mcp_tools: []
+cross_references:
+  authentication: authentication/mikmak-authentication.yml
+  conventions: conventions/mikmak-conventions.yml
+  errors: errors/mikmak-problem-types.yml
+  rate_limits: rate-limits/mikmak-rate-limits.yml
+  crosswalk: mcp/mikmak-tool-crosswalk.yml
+  data_model: data-model/mikmak-data-model.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
