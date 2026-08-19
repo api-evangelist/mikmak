@@ -41,7 +41,7 @@ tags:
 created: '2025-02-21'
 modified: '2026-08-12'
 url: https://raw.githubusercontent.com/api-evangelist/mikmak/refs/heads/main/apis.yml
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: mikmak:mikmak-commerce
   name: MikMak Headless Commerce API
