@@ -1,0 +1,858 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce API (v1)",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cart",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /commerce/v1/availabilities/cart/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mikmak.ai/commerce/v1/availabilities/cart/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "0048001353855,0048001213586",
+                "type": "path",
+                "description": "The list of the requested product ids separated by a comma"
+              },
+              {
+                "name": "idType",
+                "value": "",
+                "type": "query",
+                "description": "The type of the unique product identifier (default - MikMak default Product Id, gtin, mpn, product_id). (eg: gtin)"
+              },
+              {
+                "name": "wtbId",
+                "value": "54511c2f827bef6f9c68f29a",
+                "type": "query",
+                "description": "The experience id"
+              },
+              {
+                "name": "draft",
+                "value": "",
+                "type": "query",
+                "description": "True to use the draft experience configuration"
+              },
+              {
+                "name": "maxDistance",
+                "value": "5",
+                "type": "query",
+                "description": "Max search distance (radius) in km, this parameter can override subaccount default setting"
+              },
+              {
+                "name": "maxReturnedStores",
+                "value": "10",
+                "type": "query",
+                "description": "Maximum number of returned stores"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Requested language or locale for the product and retailers"
+              },
+              {
+                "name": "latitude",
+                "value": "48.8640493",
+                "type": "query",
+                "description": "Search location latitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "longitude",
+                "value": "2.331052600000021",
+                "type": "query",
+                "description": "Search location longitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "country",
+                "value": "US",
+                "type": "query",
+                "description": "Search location country code (2-letters)  (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "zipCode",
+                "value": "20004",
+                "type": "query",
+                "description": "Search location zip code (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "city",
+                "value": "Washington D.C",
+                "type": "query",
+                "description": "Search location city"
+              },
+              {
+                "name": "address",
+                "value": "401 9th St NW",
+                "type": "query",
+                "description": "Search location address"
+              },
+              {
+                "name": "state",
+                "value": "DC",
+                "type": "query",
+                "description": "Search location state"
+              },
+              {
+                "name": "requestedCountry",
+                "value": "US",
+                "type": "query",
+                "description": "Requested country code (2-letters). Only for multiple countries experience. If the location country is different from the requestedCountry, the location falls back to default location for the requested country."
+              },
+              {
+                "name": "sessionId",
+                "value": "1234abcd",
+                "type": "query",
+                "description": "Id for the current session so the events can be properly tracked."
+              },
+              {
+                "name": "currentUrl",
+                "value": "https://www.mikmak.com/",
+                "type": "query",
+                "description": "The full URL visible in the shopper's browser as they interact with the Experience. It must include all query parameters. This is necessary to report on UTM parameters."
+              },
+              {
+                "name": "sessionUrl",
+                "value": "https://www.mikmak.com/",
+                "type": "query",
+                "description": "The full URL visible in the shopper's browser when they first arrived on the website. This has to be persisted throughout the session. It must include all query parameters. This is necessary to report on UTM parameters."
+              },
+              {
+                "name": "includeOutOfStock",
+                "value": "true",
+                "type": "query",
+                "description": "True to include out of stock products"
+              },
+              {
+                "name": "hideOutOfStockOfflineStores",
+                "value": "true",
+                "type": "query",
+                "description": "True to hide out of stock offline stores"
+              },
+              {
+                "name": "applyTiedHouseLaw",
+                "value": "true",
+                "type": "query",
+                "description": "To override the experience setting for applying tied house law"
+              },
+              {
+                "name": "retailerIds",
+                "value": "1,2,3",
+                "type": "query",
+                "description": "Comma-separated list of retailer IDs to filter availability results. Only stores from the specified retailers will be returned. If omitted, all in-scope retailers are returned."
+              },
+              {
+                "name": "modes",
+                "value": "delivery",
+                "type": "query",
+                "description": "Delivery mode filter (delivery, clickAndCollect, brickAndMortar). Filters availability results to only include stores that support the specified delivery modes"
+              },
+              {
+                "name": "src",
+                "value": "",
+                "type": "query",
+                "description": "Source identifier for tracking where the request originated from"
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "query",
+                "description": "Instance identifier for multi-tenant or distributed system tracking"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns store-level cart availability grouped by store. Distances are in the metric system (m)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Availabilities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /commerce/v1/availabilities/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mikmak.ai/commerce/v1/availabilities/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "0048001353855,0048001213586",
+                "type": "path",
+                "description": "The list of the requested product ids separated by a comma"
+              },
+              {
+                "name": "idType",
+                "value": "",
+                "type": "query",
+                "description": "The type of the unique product identifier (default - MikMak default Product Id, gtin, mpn, product_id). (eg: gtin)"
+              },
+              {
+                "name": "wtbId",
+                "value": "54511c2f827bef6f9c68f29a",
+                "type": "query",
+                "description": "The experience id"
+              },
+              {
+                "name": "draft",
+                "value": "",
+                "type": "query",
+                "description": "True to use the draft experience configuration"
+              },
+              {
+                "name": "maxDistance",
+                "value": "5",
+                "type": "query",
+                "description": "Max search distance (radius) in km, this parameter can override subaccount default setting"
+              },
+              {
+                "name": "maxReturnedStores",
+                "value": "10",
+                "type": "query",
+                "description": "Maximum number of returned stores"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Requested language or locale for the product and retailers"
+              },
+              {
+                "name": "latitude",
+                "value": "48.8640493",
+                "type": "query",
+                "description": "Search location latitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "longitude",
+                "value": "2.331052600000021",
+                "type": "query",
+                "description": "Search location longitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "country",
+                "value": "US",
+                "type": "query",
+                "description": "Search location country code (2-letters)  (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "zipCode",
+                "value": "20004",
+                "type": "query",
+                "description": "Search location zip code (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "city",
+                "value": "Washington D.C",
+                "type": "query",
+                "description": "Search location city"
+              },
+              {
+                "name": "address",
+                "value": "401 9th St NW",
+                "type": "query",
+                "description": "Search location address"
+              },
+              {
+                "name": "state",
+                "value": "DC",
+                "type": "query",
+                "description": "Search location state"
+              },
+              {
+                "name": "requestedCountry",
+                "value": "US",
+                "type": "query",
+                "description": "Requested country code (2-letters). Only for multiple countries experience. If the location country is different from the requestedCountry, the location falls back to default location for the requested country."
+              },
+              {
+                "name": "sessionId",
+                "value": "1234abcd",
+                "type": "query",
+                "description": "Id for the current session so the events can be properly tracked."
+              },
+              {
+                "name": "currentUrl",
+                "value": "https://www.mikmak.com/",
+                "type": "query",
+                "description": "The full URL visible in the shopper's browser as they interact with the Experience. It must include all query parameters. This is necessary to report on UTM parameters."
+              },
+              {
+                "name": "sessionUrl",
+                "value": "https://www.mikmak.com/",
+                "type": "query",
+                "description": "The full URL visible in the shopper's browser when they first arrived on the website. This has to be persisted throughout the session. It must include all query parameters. This is necessary to report on UTM parameters."
+              },
+              {
+                "name": "includeOutOfStock",
+                "value": "true",
+                "type": "query",
+                "description": "True to include out of stock products"
+              },
+              {
+                "name": "hideOutOfStockOfflineStores",
+                "value": "true",
+                "type": "query",
+                "description": "True to hide out of stock offline stores"
+              },
+              {
+                "name": "applyTiedHouseLaw",
+                "value": "true",
+                "type": "query",
+                "description": "To override the experience setting for applying tied house law"
+              },
+              {
+                "name": "retailerIds",
+                "value": "1,2,3",
+                "type": "query",
+                "description": "Comma-separated list of retailer IDs to filter availability results. Only stores from the specified retailers will be returned. If omitted, all in-scope retailers are returned."
+              },
+              {
+                "name": "modes",
+                "value": "delivery",
+                "type": "query",
+                "description": "Delivery mode filter (delivery, clickAndCollect, brickAndMortar). Filters availability results to only include stores that support the specified delivery modes"
+              },
+              {
+                "name": "src",
+                "value": "",
+                "type": "query",
+                "description": "Source identifier for tracking where the request originated from"
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "query",
+                "description": "Instance identifier for multi-tenant or distributed system tracking"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of store availability. Distances are in the metric system (m)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Experiences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /commerce/v1/experiences/config/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mikmak.ai/commerce/v1/experiences/config/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "54511c2f827bef6f9c68f29a",
+                "type": "path",
+                "description": "The experience ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns configuration metadata for a specific experience, including retailer sort order and pinned retailers."
+        },
+        {
+          "info": {
+            "name": "GET /commerce/v1/experiences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mikmak.ai/commerce/v1/experiences",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of experiences available for the authenticated account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Offers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /commerce/v1/productcatalog/offers/models/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mikmak.ai/commerce/v1/productcatalog/offers/models/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "3600530901197",
+                "type": "path",
+                "description": "The requested product GTIN"
+              },
+              {
+                "name": "wtbId",
+                "value": "54511c2f827bef6f9c68f29a",
+                "type": "query",
+                "description": "The experience id"
+              },
+              {
+                "name": "draft",
+                "value": "",
+                "type": "query",
+                "description": "True to use the draft experience configuration"
+              },
+              {
+                "name": "idType",
+                "value": "gtin",
+                "type": "query",
+                "description": "The type of the product identifier (gtin, upc, ean, brandProductId). Default is gtin"
+              },
+              {
+                "name": "countryCode",
+                "value": "US",
+                "type": "query",
+                "description": "Search location country code (2-letters)"
+              },
+              {
+                "name": "state",
+                "value": "DC",
+                "type": "query",
+                "description": "Search location state (2-letters)"
+              },
+              {
+                "name": "address",
+                "value": "401 9th St NW",
+                "type": "query",
+                "description": "Search location address"
+              },
+              {
+                "name": "city",
+                "value": "Washington D.C",
+                "type": "query",
+                "description": "Search location city"
+              },
+              {
+                "name": "postalCode",
+                "value": "20001",
+                "type": "query",
+                "description": "Search location postal code"
+              },
+              {
+                "name": "latitude",
+                "value": "38.254238",
+                "type": "query",
+                "description": "Search location latitude"
+              },
+              {
+                "name": "longitude",
+                "value": "-85.759407",
+                "type": "query",
+                "description": "Search location longitude"
+              },
+              {
+                "name": "language",
+                "value": "en",
+                "type": "query",
+                "description": "Requested language or locale for the product and retailers"
+              },
+              {
+                "name": "maxLocationsPerRetailer",
+                "value": "",
+                "type": "query",
+                "description": "Default = 25. The maximum number of store locations that will be returned for a retailer"
+              },
+              {
+                "name": "maxReturnedStores",
+                "value": "",
+                "type": "query",
+                "description": "Default = 100. The maximum number of store locations that will be returned in total"
+              },
+              {
+                "name": "distanceRange",
+                "value": "",
+                "type": "query",
+                "description": "Max search distance (radius)"
+              },
+              {
+                "name": "distanceUnit",
+                "value": "",
+                "type": "query",
+                "description": "'miles' or 'kilometers'. Default = 'miles'"
+              },
+              {
+                "name": "retailerNames",
+                "value": "Walmart.com|Target.com",
+                "type": "query",
+                "description": "Pipe ( '|' ) separated list of Retailer names to include"
+              },
+              {
+                "name": "backupProductStrategy",
+                "value": "",
+                "type": "query",
+                "description": "Default = 'none'. When 'onlineOnly' if the requested product is not in stock in any Online Retailer variant models will be returned instead"
+              },
+              {
+                "name": "sessionId",
+                "value": "1234abcd",
+                "type": "query",
+                "description": "Id for the current session so the events can be properly tracked."
+              },
+              {
+                "name": "currentUrl",
+                "value": "https://www.mikmak.com/",
+                "type": "query",
+                "description": "The full URL visible in the shopper's browser as they interact with the Experience. It must include all query parameters. This is necessary to report on UTM parameters."
+              },
+              {
+                "name": "sessionUrl",
+                "value": "https://www.mikmak.com/",
+                "type": "query",
+                "description": "The full URL visible in the shopper's browser when they first arrived on the website. This has to be persisted throughout the session. It must include all query parameters. This is necessary to report on UTM parameters."
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "Source identifier for tracking where the request originated from"
+              },
+              {
+                "name": "includeOutOfStock",
+                "value": "true",
+                "type": "query",
+                "description": "True to include out of stock products"
+              },
+              {
+                "name": "hideOutOfStockOfflineStores",
+                "value": "true",
+                "type": "query",
+                "description": "True to hide out of stock offline stores"
+              },
+              {
+                "name": "applyTiedHouseLaw",
+                "value": "true",
+                "type": "query",
+                "description": "To override the experience setting for applying tied house law"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The Offers endpoint is used to search both Online and Local retailers of a product. When Offer Location is not provided, only Online information is searched."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Facet",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /commerce/v1/products/facet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mikmak.ai/commerce/v1/products/facet",
+            "params": [
+              {
+                "name": "wtbid",
+                "value": "",
+                "type": "query",
+                "description": "The experience id"
+              },
+              {
+                "name": "country",
+                "value": "US",
+                "type": "query",
+                "description": "Target country (2-letters)"
+              },
+              {
+                "name": "lang",
+                "value": "en",
+                "type": "query",
+                "description": "Requested language or locale"
+              },
+              {
+                "name": "cascading",
+                "value": "true",
+                "type": "query",
+                "description": "Enable cascading facets"
+              },
+              {
+                "name": "auto",
+                "value": "true",
+                "type": "query",
+                "description": "Automatically select facet values and return productIds"
+              },
+              {
+                "name": "filters",
+                "value": "{\"productLine\":[\"Limited Release\"]}",
+                "type": "query",
+                "description": "JSON object (as string) of selected filters"
+              },
+              {
+                "name": "defaultProductId",
+                "value": "",
+                "type": "query",
+                "description": "Default product id to prefer when auto is enabled"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns product facets and optionally a productIds selection."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Product",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /commerce/v1/products/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mikmak.ai/commerce/v1/products/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "3600530901197,3600530901173,3600530901210",
+                "type": "path",
+                "description": "The list of the requested product ids (GTIN, UPC, EAN) separated by a comma"
+              },
+              {
+                "name": "idType",
+                "value": "",
+                "type": "query",
+                "description": "The type of the product identifier (gtin, mpn, group, product_id, matching_id). (eg: gtin)"
+              },
+              {
+                "name": "wtbId",
+                "value": "54511c2f827bef6f9c68f29a",
+                "type": "query",
+                "description": "The experience id"
+              },
+              {
+                "name": "draft",
+                "value": "",
+                "type": "query",
+                "description": "True to use the draft experience configuration"
+              },
+              {
+                "name": "latitude",
+                "value": "48.8640493",
+                "type": "query",
+                "description": "Search location latitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "longitude",
+                "value": "2.331052600000021",
+                "type": "query",
+                "description": "Search location longitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "country",
+                "value": "US",
+                "type": "query",
+                "description": "Search location country code (2-letters)  (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "zipCode",
+                "value": "20004",
+                "type": "query",
+                "description": "Search location zip code (any combination of Latitude + Longitude OR ZipCode + Country must be provided)"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Requested language or locale for the product and retailers"
+              },
+              {
+                "name": "requestedCountry",
+                "value": "US",
+                "type": "query",
+                "description": "Requested country code (2-letters). Only for multiple countries experience. If the location country is different from the requestedCountry, the location falls back to default location for the requested country."
+              },
+              {
+                "name": "maxDistance",
+                "value": "5",
+                "type": "query",
+                "description": "Max search distance (radius) in km, this parameter can override subaccount default setting"
+              },
+              {
+                "name": "address",
+                "value": "401 9th St NW",
+                "type": "query",
+                "description": "Search location address"
+              },
+              {
+                "name": "city",
+                "value": "Washington D.C",
+                "type": "query",
+                "description": "Search location city"
+              },
+              {
+                "name": "state",
+                "value": "DC",
+                "type": "query",
+                "description": "Search location state"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of products."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Product Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /commerce/v1/search/products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mikmak.ai/commerce/v1/search/products",
+            "params": [
+              {
+                "name": "wtbid",
+                "value": "54511c2f827bef6f9c68f29a",
+                "type": "query",
+                "description": "The experience id"
+              },
+              {
+                "name": "module",
+                "value": "",
+                "type": "query",
+                "description": "Request module type"
+              },
+              {
+                "name": "draft",
+                "value": "0",
+                "type": "query",
+                "description": "Set to 1 to use draft experience configuration"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Requested language or locale. Examples: `en` (English), `fr` (French), `es` (Spanish), or `en-US`.\nIf omitted, the API falls back to the `Accept-Language` header; if neither is present, the request fails.\n"
+              },
+              {
+                "name": "country",
+                "value": "US",
+                "type": "query",
+                "description": "Target country (2-letters)"
+              },
+              {
+                "name": "filters",
+                "value": "{\"brand\":[\"HEINZ\"],\"categoryName\":[\"Ketchup\"]}",
+                "type": "query",
+                "description": "JSON object (as string) of selected filters"
+              },
+              {
+                "name": "offset",
+                "value": "0",
+                "type": "query",
+                "description": "Pagination offset (zero-based)"
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "description": "Number of products returned per page"
+              },
+              {
+                "name": "q",
+                "value": "ketchup",
+                "type": "query",
+                "description": "Free-text search term"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns paginated products matching the provided filters and optional free-text query."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

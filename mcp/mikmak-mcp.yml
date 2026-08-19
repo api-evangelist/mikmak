@@ -28,22 +28,19 @@ x-evidence:
     body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
     http_status: 401
     content_type: application/problem+json
-    response: >-
-      {"type":"about:blank","title":"Unauthorized","status":401,"detail":"Missing or invalid
-      Authorization header","instance":"/commerce/v1?","code":"AUTH_UNAUTHORIZED","source":"AUTH"}
+    response: '{"type":"about:blank","title":"Unauthorized","status":401,"detail":"Missing or invalid
+      Authorization header","instance":"/commerce/v1?","code":"AUTH_UNAUTHORIZED","source":"AUTH"}'
   health:
     method: GET
     url: https://mcp.mikmak.ai/health
     http_status: 200
     response: '{"status":"ok","version":"1.0.0"}'
-  note: >-
-    The server is live and answers unauthenticated probes with an RFC 7807 problem document, so
-    tools/list could not be introspected. It did NOT advertise an OAuth challenge, and
-    /.well-known/oauth-authorization-server and /.well-known/oauth-protected-resource both 404
-    on mcp.mikmak.ai — discovery is manual, via credentials MikMak hands over at onboarding.
-    The tool list below is transcribed from the provider's own Tools reference page, not
-    fabricated; argument schemas are the documented ones, and the live JSON Schemas require
-    authenticated introspection to confirm.
+  note: The server is live and answers unauthenticated probes with an RFC 7807 problem document, so tools/list
+    could not be introspected. It did NOT advertise an OAuth challenge, and /.well-known/oauth-authorization-server
+    and /.well-known/oauth-protected-resource both 404 on mcp.mikmak.ai — discovery is manual, via credentials
+    MikMak hands over at onboarding. The tool list below is transcribed from the provider's own Tools
+    reference page, not fabricated; argument schemas are the documented ones, and the live JSON Schemas
+    require authenticated introspection to confirm.
 authentication:
   required: true
   scheme: Auth0 JWT via OAuth 2.0 client-credentials
@@ -52,15 +49,15 @@ authentication:
   token_url: supplied by MikMak (not published)
   token_lifetime_seconds: 86400
   additional_headers:
-    - name: x-api-key
-      required: conditional
-      note: MikMak commerce API key, unless the deployment injects it server-side.
-    - name: x-wtb-id
-      required: conditional
-      note: WTB (experience) identifier, unless injected server-side.
-    - name: X-Request-Id
-      required: false
-      note: Optional client trace id echoed into MikMak server logs.
+  - name: x-api-key
+    required: conditional
+    note: MikMak commerce API key, unless the deployment injects it server-side.
+  - name: x-wtb-id
+    required: conditional
+    note: WTB (experience) identifier, unless injected server-side.
+  - name: X-Request-Id
+    required: false
+    note: Optional client trace id echoed into MikMak server logs.
 annotations:
   readOnlyHint: true
   destructiveHint: false
@@ -68,177 +65,193 @@ annotations:
   note: All three tools are advertised read-only, non-destructive and open-world.
 tool_count: 3
 tools:
-  - name: search_products
-    title: Search products
-    description: >-
-      Find products by name or keyword and return ranked catalog matches with identifiers,
-      titles, brands and images. Entry point for every discovery flow.
-    backing_rest: GET /commerce/v1/search/products
-    arguments:
-      - name: product_query
-        type: string
-        required: true
-        note: Pass the user's exact words; do not rephrase or expand.
-      - name: country
-        type: string
-        required: true
-        note: >-
-          ISO 3166-1 alpha-2. Infer only from explicit clues in the message; ask the user
-          rather than guessing a default.
-      - name: wtb_id
-        type: string
-        required: false
-        note: Usually omitted when x-wtb-id is set.
-      - name: api_key
-        type: string
-        required: false
-        note: Usually omitted when x-api-key is set.
-      - name: language
-        type: string
-        required: false
-        note: e.g. en-US, only when the user asked for a specific language.
-    constraints:
-      - Call once per user intent; do not auto-retry with different keywords.
-      - Zero or many results means stop and wait for the user to choose.
-      - Pagination is server-controlled; the tool exposes no limit/offset arguments.
-      - Unknown top-level properties may be rejected.
-  - name: search_availabilities
-    title: Search retailer availability
-    description: >-
-      For one or more product ids and a location, return retailers and offers with price, stock,
-      delivery mode and a clickUrl for the shopper journey.
-    backing_rest: GET /commerce/v1/availabilities/{id}
-    arguments:
-      - name: id
-        type: string
-        required: true
-        note: GTIN/UPC, or comma-separated ids. Must come from search or the user, never invented.
-      - name: postal_code
-        type: string
-        required: conditional
-        note: Postal location mode; pair with country.
-      - name: country
-        type: string
-        required: conditional
-        note: ISO 3166-1 alpha-2; pair with postal_code.
-      - name: latitude
-        type: number
-        required: conditional
-        note: Coordinate location mode, -90..90; pair with longitude.
-      - name: longitude
-        type: number
-        required: conditional
-        note: Coordinate location mode, -180..180; pair with latitude.
-      - name: id_type
-        type: string
-        required: false
-        enum: [DEFAULT, GTIN, MPN, PRODUCT_ID, MODEL_NAME, ACCOUNT_PRODUCT_UID]
-      - name: state
-        type: string
-        required: false
-        note: Postal mode refinement only.
-      - name: city
-        type: string
-        required: false
-        note: Postal mode refinement only.
-      - name: max_distance
-        type: number
-        required: false
-        note: Radius in kilometres, > 0.
-      - name: max_stores
-        type: integer
-        required: false
-      - name: delivery_modes
-        type: array
-        required: false
-        enum: [HomeDelivery, Drive, CollectInStore, Brick]
-      - name: include_out_of_stock
-        type: boolean
-        required: false
-      - name: retailer_ids
-        type: string
-        required: false
-        note: Comma-separated retailer ids.
-      - name: language
-        type: string
-        required: false
-      - name: requested_country
-        type: string
-        required: false
-        note: Only when the user explicitly wants a country other than the location's country.
-      - name: wtb_id
-        type: string
-        required: false
-      - name: api_key
-        type: string
-        required: false
-    constraints:
-      - >-
-        Supply exactly one location mode. Mixing postal and coordinates is rejected by the
-        server's input-schema validation with "Do not mix location methods."
-      - Do not call until a single product id has been chosen.
-      - Do not pass optional filters unless the user asked for them.
-  - name: get_products
-    title: Get product details
-    description: >-
-      Return descriptive product metadata — title, brand, imagery, packaging, description — for
-      one or more product ids, scoped to a location. Metadata only; no retailer availability.
-    backing_rest: GET /commerce/v1/products/{id}
-    arguments:
-      - name: id
-        type: string
-        required: true
-      - name: postal_code
-        type: string
-        required: conditional
-      - name: country
-        type: string
-        required: conditional
-      - name: latitude
-        type: number
-        required: conditional
-      - name: longitude
-        type: number
-        required: conditional
-      - name: id_type
-        type: string
-        required: false
-        enum: [DEFAULT, GTIN, MPN, PRODUCT_ID, MODEL_NAME, ACCOUNT_PRODUCT_UID]
-      - name: state
-        type: string
-        required: false
-      - name: city
-        type: string
-        required: false
-      - name: language
-        type: string
-        required: false
-      - name: requested_country
-        type: string
-        required: false
-      - name: wtb_id
-        type: string
-        required: false
-      - name: api_key
-        type: string
-        required: false
-    constraints:
-      - Same one-of location rule as search_availabilities.
-      - Unknown top-level properties may be rejected.
+- name: search_products
+  title: Search products
+  description: Find products by name or keyword and return ranked catalog matches with identifiers, titles,
+    brands and images. Entry point for every discovery flow.
+  backing_rest: GET /commerce/v1/search/products
+  arguments:
+  - name: product_query
+    type: string
+    required: true
+    note: Pass the user's exact words; do not rephrase or expand.
+  - name: country
+    type: string
+    required: true
+    note: ISO 3166-1 alpha-2. Infer only from explicit clues in the message; ask the user rather than
+      guessing a default.
+  - name: wtb_id
+    type: string
+    required: false
+    note: Usually omitted when x-wtb-id is set.
+  - name: api_key
+    type: string
+    required: false
+    note: Usually omitted when x-api-key is set.
+  - name: language
+    type: string
+    required: false
+    note: e.g. en-US, only when the user asked for a specific language.
+  constraints:
+  - Call once per user intent; do not auto-retry with different keywords.
+  - Zero or many results means stop and wait for the user to choose.
+  - Pagination is server-controlled; the tool exposes no limit/offset arguments.
+  - Unknown top-level properties may be rejected.
+- name: search_availabilities
+  title: Search retailer availability
+  description: For one or more product ids and a location, return retailers and offers with price, stock,
+    delivery mode and a clickUrl for the shopper journey.
+  backing_rest: GET /commerce/v1/availabilities/{id}
+  arguments:
+  - name: id
+    type: string
+    required: true
+    note: GTIN/UPC, or comma-separated ids. Must come from search or the user, never invented.
+  - name: postal_code
+    type: string
+    required: conditional
+    note: Postal location mode; pair with country.
+  - name: country
+    type: string
+    required: conditional
+    note: ISO 3166-1 alpha-2; pair with postal_code.
+  - name: latitude
+    type: number
+    required: conditional
+    note: Coordinate location mode, -90..90; pair with longitude.
+  - name: longitude
+    type: number
+    required: conditional
+    note: Coordinate location mode, -180..180; pair with latitude.
+  - name: id_type
+    type: string
+    required: false
+    enum:
+    - DEFAULT
+    - GTIN
+    - MPN
+    - PRODUCT_ID
+    - MODEL_NAME
+    - ACCOUNT_PRODUCT_UID
+  - name: state
+    type: string
+    required: false
+    note: Postal mode refinement only.
+  - name: city
+    type: string
+    required: false
+    note: Postal mode refinement only.
+  - name: max_distance
+    type: number
+    required: false
+    note: Radius in kilometres, > 0.
+  - name: max_stores
+    type: integer
+    required: false
+  - name: delivery_modes
+    type: array
+    required: false
+    enum:
+    - HomeDelivery
+    - Drive
+    - CollectInStore
+    - Brick
+  - name: include_out_of_stock
+    type: boolean
+    required: false
+  - name: retailer_ids
+    type: string
+    required: false
+    note: Comma-separated retailer ids.
+  - name: language
+    type: string
+    required: false
+  - name: requested_country
+    type: string
+    required: false
+    note: Only when the user explicitly wants a country other than the location's country.
+  - name: wtb_id
+    type: string
+    required: false
+  - name: api_key
+    type: string
+    required: false
+  constraints:
+  - Supply exactly one location mode. Mixing postal and coordinates is rejected by the server's input-schema
+    validation with "Do not mix location methods."
+  - Do not call until a single product id has been chosen.
+  - Do not pass optional filters unless the user asked for them.
+- name: get_products
+  title: Get product details
+  description: Return descriptive product metadata — title, brand, imagery, packaging, description — for
+    one or more product ids, scoped to a location. Metadata only; no retailer availability.
+  backing_rest: GET /commerce/v1/products/{id}
+  arguments:
+  - name: id
+    type: string
+    required: true
+  - name: postal_code
+    type: string
+    required: conditional
+  - name: country
+    type: string
+    required: conditional
+  - name: latitude
+    type: number
+    required: conditional
+  - name: longitude
+    type: number
+    required: conditional
+  - name: id_type
+    type: string
+    required: false
+    enum:
+    - DEFAULT
+    - GTIN
+    - MPN
+    - PRODUCT_ID
+    - MODEL_NAME
+    - ACCOUNT_PRODUCT_UID
+  - name: state
+    type: string
+    required: false
+  - name: city
+    type: string
+    required: false
+  - name: language
+    type: string
+    required: false
+  - name: requested_country
+    type: string
+    required: false
+  - name: wtb_id
+    type: string
+    required: false
+  - name: api_key
+    type: string
+    required: false
+  constraints:
+  - Same one-of location rule as search_availabilities.
+  - Unknown top-level properties may be rejected.
 result_shape:
   content_type: text
   encoding: pretty-printed JSON of the MikMak v1 response body inside result.content[0].text
   error_flag: isError
-  note: >-
-    Some upstream 400s (no product catalog configured for the experience, requested country out
-    of the experience's scope) are returned as normal text with isError false and guidance,
-    rather than as tool errors.
+  note: Some upstream 400s (no product catalog configured for the experience, requested country out of
+    the experience's scope) are returned as normal text with isError false and guidance, rather than as
+    tool errors.
 rate_limits:
   see: rate-limits/mikmak-rate-limits.yml
 clients_documented:
-  - Cursor (streamable-http, ~/.cursor/mcp.json)
-  - Claude Desktop (via mcp-remote)
-  - Any server-side agent over direct HTTPS JSON-RPC
+- Cursor (streamable-http, ~/.cursor/mcp.json)
+- Claude Desktop (via mcp-remote)
+- Any server-side agent over direct HTTPS JSON-RPC
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+deployment:
+  mode: remote
+  verified: searched
+  tools: 3
+  checked: '2026-08-12'
+  source: catalog MCP census

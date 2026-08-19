@@ -1,0 +1,323 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "MikMak Insights API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate user and get access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate user and get access token"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Custom Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve dimensions and metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/custom_report_fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns eligible dimensions and metrics for the current selection. Which dimensions are eligible also depends on metric compatibility rules (e.g. Commerce Loads excludes many catalog and shopper dimensions that remain available with Purchase Intent Clicks alone). Set fieldDetails to 'yes' to include tooltip and category on each dimension and metric value; omit fieldDetails for a lighter response (label, code, and startDate when configured). When fieldDetails is 'yes', pass startDate to condition"
+        },
+        {
+          "info": {
+            "name": "Retrieve filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/custom_report_filters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint retrieves filters and valid filter values based on selected date range, dimensions, metrics and filters. The same rules as custom_report apply for choosing the backend data source from row dimensions, metrics, and dimension keys in the filters map; incompatible combinations return 422. The response includes base filter dimensions only."
+        },
+        {
+          "info": {
+            "name": "Retrieve advanced filter metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/custom_report_advanced_filters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is called when the UI initializes the advanced filter component for the Custom Report Builder. It returns dimension and metric metadata (name, displayName, operators, dataType) without filter values. Each operators item has code (same keys as the custom_report filters map: includes, excludes, contains, notContains for dimensions; isHigherThan, isLowerThan for metrics) and label (UI text). It does not require a filters section in the request body. The date dimension is not returned."
+        },
+        {
+          "info": {
+            "name": "Retrieve filter values for a single dimension",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/custom_report_single_filter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns all possible filter values for a single dimension across a date range. Uses the same response structure as the custom_report_filters endpoint (a `filters` object with one dimension). By design, this endpoint ignores other filters and does not guarantee a non-empty intersection; it is intended for the Advanced Filter component when using Is or Is Not operators. Lighter and more scalable than the full custom_report_filters endpoint."
+        },
+        {
+          "info": {
+            "name": "Retrieve custom report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/custom_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint retrieves a custom report based on selected date range, dimensions, metrics and filters. The report is paginated and must be passed a count and offset. The maximum number of records that can be returned on one page is 5000. The report is sorted by the provided sortBy and sortDir parameters. **Backend data source:** the backend selects a dataset that supports all row dimensions, all metrics, and every dimension key present in the filters map (including advanced filters); if no singl"
+        },
+        {
+          "info": {
+            "name": "Export custom report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/custom_report/export",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint exports a custom report based on selected date range, dimensions, metrics and filters. The report is sorted by the provided sortBy and sortDir parameters. Accepts the same filters map as custom_report (including optional metric isHigherThan / isLowerThan bounds) and the same backend table selection; incompatible combinations return 422."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Historical Pricing Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve dimensions and metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/pricing_intelligence_report_fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint retrieves valid dimensions and metrics based on selected dimensions, metrics and filters."
+        },
+        {
+          "info": {
+            "name": "Retrieve filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/pricing_intelligence_filters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint retrieves filters and valid filter values based on selected date range, dimensions, metrics and filters."
+        },
+        {
+          "info": {
+            "name": "Retrieve custom report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/pricing_intelligence",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint retrieves a historical pricing report based on selected date range, dimensions, metrics and filters. The report is paginated and must be passed a count and offset. The maximum number of records that can be returned on one page is 5000. The report is sorted by the provided sortBy and sortDir parameters."
+        },
+        {
+          "info": {
+            "name": "Export custom report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/pricing_intelligence/export",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint retrieves a historical pricing report based on selected date range, dimensions, metrics and filters. The report is paginated and must be passed a count and offset. The report is sorted by the provided sortBy and sortDir parameters."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Shoppable Recipe Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve dimensions and metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/shoppable_recipe_report_fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint retrieves valid dimensions and metrics based on selected dimensions, metrics and filters."
+        },
+        {
+          "info": {
+            "name": "Retrieve filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/shoppable_recipe_report_filters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint retrieves filters and valid filter values based on selected date range, dimensions, metrics and filters."
+        },
+        {
+          "info": {
+            "name": "Retrieve custom report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/shoppable_recipe_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint retrieves a custom report based on selected date range, dimensions, metrics and filters. The report is paginated and must be passed a count and offset. The maximum number of records that can be returned on one page is 5000. The report is sorted by the provided sortBy and sortDir parameters."
+        },
+        {
+          "info": {
+            "name": "Export custom report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reporting/v1/shoppable_recipe_report/export",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint retrieves a custom report based on selected date range, dimensions, metrics and filters. The report is sorted by the provided sortBy and sortDir parameters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
