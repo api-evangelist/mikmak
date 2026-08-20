@@ -28,6 +28,19 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/mikmak.png
 tags:
 - Analytics
 - Commerce
+- E-Commerce
+- Multi-Channel
+- Retail Media
+- Where to Buy
+- Shoppable Media
+- Product Availability
+- MCP
+- agent-native
+- Reporting
+- CPG
+tags_raw:
+- Analytics
+- Commerce
 - eCommerce
 - Multichannel
 - Retail Media
@@ -52,6 +65,14 @@ apis:
     configuration. Use requires contractual approval; deployment on third-party sites is prohibited.'
   humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
   tags:
+  - Commerce
+  - Checkout
+  - Where to Buy
+  - Product Availability
+  - Retailer Network
+  - Multi-Channel
+  - Headless
+  tags_raw:
   - Commerce
   - Checkout
   - Where to Buy
@@ -87,6 +108,10 @@ apis:
     channels to actual sales performance at retailers.
   humanURL: https://www.mikmak.com/products/aura
   tags:
+  - Artificial Intelligence
+  - Analytics
+  - Marketing Intelligence
+  tags_raw:
   - AI
   - Analytics
   - Marketing Intelligence
@@ -139,6 +164,14 @@ apis:
   baseURL: https://mcp.mikmak.ai/commerce/v1
   tags:
   - MCP
+  - agent-native
+  - Commerce
+  - Where to Buy
+  - Product Availability
+  - AI Agents
+  - Tools
+  tags_raw:
+  - MCP
   - Agent Native
   - Commerce
   - Where to Buy
@@ -171,6 +204,13 @@ apis:
   humanURL: https://docs.mikmak.ai/docs/developer-guide
   baseURL: https://wtb-tag.mikmak.ai
   tags:
+  - Web Components
+  - Widget
+  - Where to Buy
+  - Brand.com
+  - Tag
+  - Client-Side
+  tags_raw:
   - Web Components
   - Widget
   - Where to Buy
