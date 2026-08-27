@@ -56,56 +56,11 @@ modified: '2026-08-12'
 url: https://raw.githubusercontent.com/api-evangelist/mikmak/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
-- aid: mikmak:mikmak-commerce
-  name: MikMak Headless Commerce API
-  description: 'The MikMak Headless Commerce API (v1) lets brands and their authorized agencies power
-    commerce experiences on brand-owned websites and media ad units with MikMak''s retailer network: product
-    lookup by GTIN/UPC/EAN, location-scoped retailer availability with price, stock and delivery mode,
-    multi-product cart availability, online and local offers, product search with facets, and experience
-    configuration. Use requires contractual approval; deployment on third-party sites is prohibited.'
-  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
-  tags:
-  - Commerce
-  - Checkout
-  - Where to Buy
-  - Product Availability
-  - Retailer Network
-  - Multi-Channel
-  - Headless
-  tags_raw:
-  - Commerce
-  - Checkout
-  - Where to Buy
-  - Product Availability
-  - Retailer Network
-  - Multichannel
-  - Headless
-  properties:
-  - type: Documentation
-    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
-  - type: APIReference
-    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
-  - type: OpenAPI
-    url: openapi/mikmak-commerce-api-openapi.yml
-  - type: Overlay
-    url: overlays/mikmak-commerce-api-overlay.yaml
-  - type: Authentication
-    url: authentication/mikmak-authentication.yml
-  - type: OAuthScopes
-    url: scopes/mikmak-scopes.yml
-  - type: ErrorCatalog
-    url: errors/mikmak-problem-types.yml
-  - type: DataModel
-    url: data-model/mikmak-data-model.yml
-  - type: RateLimits
-    url: rate-limits/mikmak-rate-limits.yml
-  - type: Help Center
-    url: https://help.mikmak.ai/hc
-  baseURL: https://api.mikmak.ai
 - aid: mikmak:mikmak-aura
   name: MikMak Aura
-  description: MikMak Aura provides real-time intelligence, fueled by AI, to connect marketing spend across
-    channels to actual sales performance at retailers.
+  description: >-
+    MikMak Aura provides real-time intelligence, fueled by AI, to connect marketing spend across channels
+    to actual sales performance at retailers.
   humanURL: https://www.mikmak.com/products/aura
   tags:
   - Artificial Intelligence
@@ -120,42 +75,11 @@ apis:
     url: https://www.mikmak.com/products/aura
   - type: Help Center
     url: https://help.mikmak.ai/hc
-- aid: mikmak:mikmak-insights
-  name: MikMak Insights API
-  description: The MikMak Insights API is a reporting API that pushes MikMak commerce intelligence — Purchase
-    Intent, Attributable Sales, historical pricing intelligence and shoppable-recipe performance — into
-    data lakes, analytics platforms and BI tools such as Tableau, Power BI and Google Looker Studio. Callers
-    authenticate against a single account, discover the available report fields and filters, then run
-    or export custom reports.
-  humanURL: https://api.mikmak.ai/reporting/docs
-  tags:
-  - Analytics
-  - Reporting
-  - Commerce Analytics
-  - Insights
-  - Business Intelligence
-  - Pricing Intelligence
-  - Attribution
-  properties:
-  - type: Documentation
-    url: https://docs.mikmak.ai/reference/mikmak-insights-api
-  - type: APIReference
-    url: https://api.mikmak.ai/reporting/docs
-  - type: OpenAPI
-    url: openapi/mikmak-insights-api-openapi.yml
-  - type: Overlay
-    url: overlays/mikmak-insights-api-overlay.yaml
-  - type: Authentication
-    url: authentication/mikmak-authentication.yml
-  - type: ErrorCatalog
-    url: errors/mikmak-problem-types.yml
-  - type: Help Center
-    url: https://help.mikmak.ai/hc
-  baseURL: https://api.mikmak.ai
 - aid: mikmak:mikmak-commerce-mcp
   name: MikMak Commerce MCP Server
-  description: The MikMak Commerce MCP Server is a hosted Model Context Protocol surface in front of the
-    Headless Commerce API (v1). It exposes three strictly-typed, read-only, non-destructive tools — search_products,
+  description: >-
+    The MikMak Commerce MCP Server is a hosted Model Context Protocol surface in front of the Headless
+    Commerce API (v1). It exposes three strictly-typed, read-only, non-destructive tools — search_products,
     search_availabilities and get_products — over the streamable-http transport, adding JSON-Schema argument
     validation, Auth0 JWT enforcement, per-key/per-IP/global rate limiting and request-id propagation
     so any MCP-compatible client can reason about products, retailers and availability without a bespoke
@@ -197,9 +121,10 @@ apis:
     url: skills/_index.yml
 - aid: mikmak:mikmak-brand-com-tag
   name: MikMak Commerce for Brand.com (WTB Tag)
-  description: The MikMak where-to-buy tag is the client-side distribution of MikMak Commerce for brand-owned
-    websites. A single async script loaded from wtb-tag.mikmak.ai renders buy-now buttons, in-page containers
-    and sticky widgets from HTML data attributes, driven by a window.swnDataLayer object, with a JavaScript
+  description: >-
+    The MikMak where-to-buy tag is the client-side distribution of MikMak Commerce for brand-owned websites.
+    A single async script loaded from wtb-tag.mikmak.ai renders buy-now buttons, in-page containers and
+    sticky widgets from HTML data attributes, driven by a window.swnDataLayer object, with a JavaScript
     callback surface and Google Tag Manager event and variable definitions for analytics.
   humanURL: https://docs.mikmak.ai/docs/developer-guide
   baseURL: https://wtb-tag.mikmak.ai
@@ -224,6 +149,338 @@ apis:
     url: components/mikmak-components.yml
   - type: Packages
     url: packages/mikmak-packages.yml
+- aid: mikmak:mikmak-authentication-api
+  name: MikMak Authentication API
+  description: The Authentication API from MikMak — 1 operation(s) for authentication.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+- aid: mikmak:mikmak-availabilities-api
+  name: MikMak Availabilities API
+  description: The Availabilities API from MikMak — 1 operation(s) for availabilities.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Availabilities
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-availabilities-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+- aid: mikmak:mikmak-cart-api
+  name: MikMak Cart API
+  description: The Cart API from MikMak — 1 operation(s) for cart.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Cart
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-cart-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+- aid: mikmak:mikmak-custom-reports-api
+  name: MikMak Custom Reports API
+  description: The Custom Reports API from MikMak — 6 operation(s) for custom reports.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Custom Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-custom-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+- aid: mikmak:mikmak-experiences-api
+  name: MikMak Experiences API
+  description: The Experiences API from MikMak — 2 operation(s) for experiences.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Experiences
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-experiences-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+- aid: mikmak:mikmak-facet-api
+  name: MikMak Facet API
+  description: The Facet API from MikMak — 1 operation(s) for facet.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Facet
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-facet-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+- aid: mikmak:mikmak-historical-pricing-reports-api
+  name: MikMak Historical Pricing Reports API
+  description: >-
+    The Historical Pricing Reports API from MikMak — 4 operation(s) for historical pricing reports.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Historical Pricing Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-historical-pricing-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+- aid: mikmak:mikmak-offers-api
+  name: MikMak Offers API
+  description: The Offers API from MikMak — 1 operation(s) for offers.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Offers
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-offers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+- aid: mikmak:mikmak-product-api
+  name: MikMak Product API
+  description: The Product API from MikMak — 1 operation(s) for product.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Product
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-product-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+- aid: mikmak:mikmak-product-search-api
+  name: MikMak Product Search API
+  description: The Product Search API from MikMak — 1 operation(s) for product search.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Product Search
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-product-search-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
+- aid: mikmak:mikmak-shoppable-recipe-reports-api
+  name: MikMak Shoppable Recipe Reports API
+  description: >-
+    The Shoppable Recipe Reports API from MikMak — 4 operation(s) for shoppable recipe reports.
+  humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  baseURL: https://api.mikmak.ai
+  tags:
+  - Shoppable Recipe Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/mikmak-shoppable-recipe-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: APIReference
+    url: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
+  - type: Authentication
+    url: authentication/mikmak-authentication.yml
+  - type: OAuthScopes
+    url: scopes/mikmak-scopes.yml
+  - type: ErrorCatalog
+    url: errors/mikmak-problem-types.yml
+  - type: DataModel
+    url: data-model/mikmak-data-model.yml
+  - type: RateLimits
+    url: rate-limits/mikmak-rate-limits.yml
+  - type: Help Center
+    url: https://help.mikmak.ai/hc
+  - type: Documentation
+    url: https://docs.mikmak.ai/reference/mikmak-insights-api
+  - type: APIReference
+    url: https://api.mikmak.ai/reporting/docs
 common:
 - type: DeveloperPortal
   url: https://docs.mikmak.ai/docs/developer-portal
