@@ -9,6 +9,18 @@ description: MikMak is an eCommerce enablement and analytics platform for multic
   shoppable-media company Swaven in 2021, whose where-to-buy tag technology still powers the brand.com
   widget and whose name persists in the platform's asset hosts.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: contact-sales
   onboarding: contract
