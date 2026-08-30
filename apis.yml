@@ -41,13 +41,13 @@ tags:
 - Analytics
 - Commerce
 - E-Commerce
-- Multi-Channel
+- Multichannel
 - Retail Media
 - Where to Buy
 - Shoppable Media
 - Product Availability
 - MCP
-- agent-native
+- Agent Native
 - Reporting
 - CPG
 tags_raw:
@@ -100,7 +100,7 @@ apis:
   baseURL: https://mcp.mikmak.ai/commerce/v1
   tags:
   - MCP
-  - agent-native
+  - Agent Native
   - Commerce
   - Where to Buy
   - Product Availability
@@ -146,7 +146,7 @@ apis:
   - Where to Buy
   - Brand.com
   - Tag
-  - Client-Side
+  - Client Side
   tags_raw:
   - Web Components
   - Widget
@@ -287,6 +287,8 @@ apis:
   humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
   baseURL: https://api.mikmak.ai
   tags:
+  - Experience
+  tags_raw:
   - Experiences
   properties:
   - type: OpenAPI
