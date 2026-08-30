@@ -1,0 +1,327 @@
+openapi: 3.2.0
+info:
+  version: '1.0'
+  title: Commerce API (v1) Product API
+servers:
+- url: https://api.mikmak.ai
+security:
+- ApiKeyAuth: []
+tags:
+- name: Product
+paths:
+  /commerce/v1/products/{id}:
+    get:
+      tags:
+      - Product
+      security:
+      - ApiKeyAuth: []
+      - JWTBearerAuth: []
+      description: Returns a list of products.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The list of the requested product ids (GTIN, UPC, EAN) separated by a comma
+        schema:
+          type: string
+        example: 3600530901197,3600530901173,3600530901210
+      - name: idType
+        in: query
+        description: 'The type of the product identifier (gtin, mpn, group, product_id, matching_id). (eg: gtin)'
+        schema:
+          type: string
+          default: gtin
+          enum:
+          - gtin
+          - mpn
+          - group
+          - product_id
+          - matching_id
+      - name: wtbId
+        in: query
+        required: true
+        description: The experience id
+        schema:
+          type: string
+        example: 54511c2f827bef6f9c68f29a
+      - name: draft
+        in: query
+        description: True to use the draft experience configuration
+        schema:
+          type: boolean
+      - name: latitude
+        in: query
+        description: Search location latitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        required: true
+        schema:
+          type: number
+        example: 48.8640493
+      - name: longitude
+        in: query
+        required: true
+        description: Search location longitude (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        schema:
+          type: number
+        example: 2.331052600000021
+      - name: country
+        in: query
+        required: true
+        description: Search location country code (2-letters)  (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        schema:
+          type: string
+        example: US
+      - name: zipCode
+        in: query
+        required: true
+        description: Search location zip code (any combination of Latitude + Longitude OR ZipCode + Country must be provided)
+        schema:
+          type: string
+        example: 20004
+      - name: language
+        in: query
+        description: Requested language or locale for the product and retailers
+        schema:
+          type: string
+        examples:
+          language:
+            value: en
+            summary: Language code
+          lcoale:
+            value: en-US
+            summary: Locale code
+      - name: requestedCountry
+        in: query
+        description: Requested country code (2-letters). Only for multiple countries experience. If the location country is different from the requestedCountry, the location falls back to default location for the requested country.
+        schema:
+          type: string
+        example: US
+      - name: maxDistance
+        in: query
+        description: Max search distance (radius) in km, this parameter can override subaccount default setting
+        schema:
+          type: integer
+        example: 5
+      - name: address
+        in: query
+        description: Search location address
+        schema:
+          type: string
+        example: 401 9th St NW
+      - name: city
+        in: query
+        description: Search location city
+        schema:
+          type: string
+        example: Washington D.C
+      - name: state
+        in: query
+        description: Search location state
+        schema:
+          type: string
+        example: DC
+      responses:
+        '200':
+          description: OK. A list of products.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsResponse'
+              example:
+                location:
+                  latitude: 38.89512
+                  longitude: -77.03637
+                  address: Washington D.C
+                  city: Washington D.C
+                  country: US
+                  state: DC
+                  zipCode: '20001'
+                  placetype: null
+                  isMetricRegion: false
+                products:
+                - gtin: '0013000626057'
+                  gtins:
+                  - '0013000626057'
+                  imageUrl: https://img.static-swaven.com/v7/http%3A%2F%2Fimages.salsify.com%2Fimage%2Fupload%2Fs--K4Lol3R0--%2Fbbevayk74kski6ouiac4.jpg?width=500&org_if_sml=1&ci_url_encoded=1
+                  thumbnailImageUrl: https://img.static-swaven.com/v7/http%3A%2F%2Fimages.salsify.com%2Fimage%2Fupload%2Fs--K4Lol3R0--%2Fbbevayk74kski6ouiac4.jpg?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+                  brand: HEINZ
+                  title: Heinz Organic Tomato Ketchup
+                  subtitle: ''
+                  description: ''
+                  packaging: 32 OZ
+                  review: null
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators, or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+components:
+  schemas:
+    Location:
+      type: object
+      description: Resolved or requested search location (shared across products, availabilities, and cart responses).
+      properties:
+        latitude:
+          type: number
+          description: Latitude
+        longitude:
+          type: number
+          description: Longitude
+        address:
+          type:
+          - string
+          - 'null'
+          description: Address
+        city:
+          type: string
+          description: City
+        country:
+          type: string
+          description: Country
+        state:
+          type: string
+          description: State
+        zipCode:
+          type: string
+          description: Zip code
+        placeType:
+          type:
+          - string
+          - 'null'
+          description: Place type
+        isMetricRegion:
+          type: boolean
+          description: Country is standard metric system (m) or not (miles)
+    ProductsResponse:
+      type: object
+      description: List of products
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        products:
+          type: object
+          description: List of products
+          properties:
+            gtin:
+              type: string
+              description: GTIN
+            gtins:
+              type: array
+              description: List of GTINs
+              items:
+                type: string
+                description: GTIN
+            imageUrl:
+              type: string
+              description: Product image URL
+            thumbnailImageUrl:
+              type: string
+              description: Product thumbnail image URL (optimized for small displays, 144px width)
+            brand:
+              type: string
+              description: Brand
+            title:
+              type: string
+              description: Title
+            subtitle:
+              type: string
+              description: Subtitle
+            description:
+              type: string
+              description: Product description (empty by default)
+            packaging:
+              type: string
+              description: Containing or color
+            review:
+              type: object
+              description: Review
+              properties:
+                count:
+                  type: number
+                  description: Count
+                averageRating:
+                  type: number
+                  description: Rating
+                roundedAverageRating:
+                  type: number
+                  description: Rounded rating
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API Key for authentication
+    JWTBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token for authentication
+x-sharedDocumentationSamples:
+  locationDallas:
+    latitude: 32.781339
+    longitude: -96.799759
+    address: null
+    city: Dallas
+    country: US
+    state: TX
+    zipCode: '75270'
+    placeType: null
+    isMetricRegion: false
+  productsHellmannTwo:
+  - id: 0048001353855
+    ids:
+    - 0048001353855
+    gtin: 0048001353855
+    gtins:
+    - 0048001353855
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Mayonnaise Dressing with Olive Oil
+    subtitle: null
+    description: Hellmann's Mayonnaise Dressing with Olive Oil combines the creamy, rich taste you love from Hellmann's with the delicious goodness of olive oil.
+    packaging: 20 oz
+    review: null
+  - id: 0048001213586
+    ids:
+    - 0048001213586
+    gtin: 0048001213586
+    gtins:
+    - 0048001213586
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Light Mayonnaise
+    subtitle: null
+    description: Looking for a lighter mayonnaise? Hellmann's Light Mayo has half the calories & half the fat of our Real Mayonnaise with the same rich, creamy taste!
+    packaging: 30 oz
+    review: null

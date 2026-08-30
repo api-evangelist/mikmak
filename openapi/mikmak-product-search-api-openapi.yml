@@ -1,0 +1,273 @@
+openapi: 3.2.0
+info:
+  version: '1.0'
+  title: Commerce API (v1) Product Search API
+servers:
+- url: https://api.mikmak.ai
+security:
+- ApiKeyAuth: []
+tags:
+- name: Product Search
+paths:
+  /commerce/v1/search/products:
+    get:
+      tags:
+      - Product Search
+      security:
+      - ApiKeyAuth: []
+      - JWTBearerAuth: []
+      description: Returns paginated products matching the provided filters and optional free-text query.
+      parameters:
+      - name: wtbid
+        in: query
+        required: true
+        description: The experience id
+        schema:
+          type: string
+        example: 54511c2f827bef6f9c68f29a
+      - name: module
+        in: query
+        description: Request module type
+        schema:
+          type: string
+      - name: draft
+        in: query
+        description: Set to 1 to use draft experience configuration
+        schema:
+          type: integer
+          enum:
+          - 0
+          - 1
+        example: 0
+      - name: language
+        in: query
+        required: true
+        description: 'Requested language or locale. Examples: `en` (English), `fr` (French), `es` (Spanish), or `en-US`.
+
+          If omitted, the API falls back to the `Accept-Language` header; if neither is present, the request fails.
+
+          '
+        schema:
+          type: string
+        examples:
+          language:
+            value: en
+            summary: Language code (English)
+          locale:
+            value: en-US
+            summary: Locale code
+      - name: country
+        in: query
+        required: true
+        description: Target country (2-letters)
+        schema:
+          type: string
+        example: US
+      - name: filters
+        in: query
+        description: JSON object (as string) of selected filters
+        schema:
+          type: string
+        example: '{"brand":["HEINZ"],"categoryName":["Ketchup"]}'
+      - name: offset
+        in: query
+        description: Pagination offset (zero-based)
+        schema:
+          type: integer
+          default: 0
+        example: 0
+      - name: limit
+        in: query
+        description: Number of products returned per page
+        schema:
+          type: integer
+          default: 10
+        example: 10
+      - name: q
+        in: query
+        description: Free-text search term
+        schema:
+          type: string
+        example: ketchup
+      responses:
+        '200':
+          description: OK. Paginated list of products.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsSearchResponse'
+              example:
+                offset: 0
+                limit: 10
+                total: 2
+                products:
+                - id: '0013000626057'
+                  ids:
+                  - '0013000626057'
+                  gtin: '0013000626057'
+                  imageUrl: https://img.static-swaven.com/v7/http%3A%2F%2Fimages.salsify.com%2Fimage%2Fupload%2Fs--K4Lol3R0--%2Fbbevayk74kski6ouiac4.jpg?width=500&org_if_sml=1&ci_url_encoded=1
+                  thumbnailImageUrl: https://img.static-swaven.com/v7/http%3A%2F%2Fimages.salsify.com%2Fimage%2Fupload%2Fs--K4Lol3R0--%2Fbbevayk74kski6ouiac4.jpg?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+                  brand: HEINZ
+                  title: Heinz Organic Tomato Ketchup
+                  subtitle: ''
+                  description: ''
+                  packaging: 32 OZ
+                  review:
+                    count: 12
+                    averageRating: 4.2
+                    roundedAverageRating: 4
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid country, malformed filters JSON, or invalid query parameters).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators, or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+components:
+  schemas:
+    ProductsSearchResponse:
+      type: object
+      description: Paginated product search response
+      properties:
+        offset:
+          type: integer
+          description: Pagination offset (zero-based)
+        limit:
+          type: integer
+          description: Number of products returned per page
+        total:
+          type: integer
+          description: Total number of matching products
+        products:
+          type: array
+          description: Product list for the current page
+          items:
+            $ref: '#/components/schemas/ProductsSearchProduct'
+    ProductsSearchProduct:
+      type: object
+      description: Product item returned by product search
+      properties:
+        id:
+          type: string
+          description: Primary product identifier (UPC or account product UID)
+        ids:
+          type: array
+          description: List of product identifiers (UPCs or account product UIDs)
+          items:
+            type: string
+        gtin:
+          type: string
+          description: GTIN for backward compatibility
+        imageUrl:
+          type: string
+          description: Product image URL
+        thumbnailImageUrl:
+          type: string
+          description: Product thumbnail image URL (optimized for small displays, 144px width)
+        brand:
+          type: string
+          description: Product brand
+        title:
+          type: string
+          description: Product title
+        subtitle:
+          type: string
+          description: Product subtitle
+        description:
+          type: string
+          description: Product description
+        packaging:
+          type: string
+          description: Product packaging
+        review:
+          type: object
+          description: Product review metadata
+          properties:
+            count:
+              type: number
+              description: Number of reviews
+            averageRating:
+              type: number
+              description: Average rating
+            roundedAverageRating:
+              type: number
+              description: Rounded average rating
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API Key for authentication
+    JWTBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token for authentication
+x-sharedDocumentationSamples:
+  locationDallas:
+    latitude: 32.781339
+    longitude: -96.799759
+    address: null
+    city: Dallas
+    country: US
+    state: TX
+    zipCode: '75270'
+    placeType: null
+    isMetricRegion: false
+  productsHellmannTwo:
+  - id: 0048001353855
+    ids:
+    - 0048001353855
+    gtin: 0048001353855
+    gtins:
+    - 0048001353855
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Mayonnaise Dressing with Olive Oil
+    subtitle: null
+    description: Hellmann's Mayonnaise Dressing with Olive Oil combines the creamy, rich taste you love from Hellmann's with the delicious goodness of olive oil.
+    packaging: 20 oz
+    review: null
+  - id: 0048001213586
+    ids:
+    - 0048001213586
+    gtin: 0048001213586
+    gtins:
+    - 0048001213586
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Light Mayonnaise
+    subtitle: null
+    description: Looking for a lighter mayonnaise? Hellmann's Light Mayo has half the calories & half the fat of our Real Mayonnaise with the same rich, creamy taste!
+    packaging: 30 oz
+    review: null

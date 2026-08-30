@@ -1,0 +1,74 @@
+openapi: 3.2.0
+info:
+  title: MikMak Insights Authentication API
+  description: '
+
+    ## Introduction
+
+    An API for querying reports and report-related data. A set of API credentials is tied to one account; each request
+
+    to the API will return data specific to that account.'
+  version: 1.0.0
+servers:
+- url: https://api.mikmak.ai
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Authentication
+paths:
+  /reporting/authenticate:
+    post:
+      tags:
+      - Authentication
+      summary: Authenticate user and get access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  description: The client ID for authentication.
+                client_secret:
+                  type: string
+                  description: The client secret for authentication.
+              required:
+              - client_id
+              - client_secret
+      responses:
+        '200':
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: The JWT access token.
+                  expires_in:
+                    type: integer
+                    description: Expiration time in seconds.
+                  token_type:
+                    type: string
+                    description: The token type (e.g., Bearer).
+                  expires_at:
+                    type: string
+                    format: date-time
+                    description: The timestamp when the token expires.
+        '400':
+          description: Invalid client credentials
+        '500':
+          description: Internal server error
+components:
+  securitySchemes:
+    authorization:
+      type: http
+      scheme: bearer
+      description: 'Enter your API key as a normal token. This will send a header that looks like  "Authorization: Bearer {your_api_key}"'
+    x-api-key:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: 'Enter your API key as a normal token. This will send a header that looks like  "x-api-key: {your_api_key}"'

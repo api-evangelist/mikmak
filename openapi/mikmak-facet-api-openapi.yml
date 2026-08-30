@@ -1,0 +1,214 @@
+openapi: 3.2.0
+info:
+  version: '1.0'
+  title: Commerce API (v1) Facet API
+servers:
+- url: https://api.mikmak.ai
+security:
+- ApiKeyAuth: []
+tags:
+- name: Facet
+paths:
+  /commerce/v1/products/facet:
+    get:
+      tags:
+      - Facet
+      security:
+      - ApiKeyAuth: []
+      description: Returns product facets and optionally a productIds selection.
+      parameters:
+      - name: wtbid
+        in: query
+        required: true
+        description: The experience id
+        schema:
+          type: string
+      - name: country
+        in: query
+        required: true
+        description: Target country (2-letters)
+        schema:
+          type: string
+        example: US
+      - name: lang
+        in: query
+        description: Requested language or locale
+        schema:
+          type: string
+        example: en
+      - name: cascading
+        in: query
+        description: Enable cascading facets
+        schema:
+          type: boolean
+        example: true
+      - name: auto
+        in: query
+        description: Automatically select facet values and return productIds
+        schema:
+          type: boolean
+        example: true
+      - name: filters
+        in: query
+        description: JSON object (as string) of selected filters
+        schema:
+          type: string
+        example: '{"productLine":["Limited Release"]}'
+      - name: defaultProductId
+        in: query
+        description: Default product id to prefer when auto is enabled
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK. Facets and optional productIds selection.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tooks:
+                    type: number
+                  facets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                        name:
+                          type: string
+                        values:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                              count:
+                                type: number
+                              selected:
+                                type: boolean
+                  productIds:
+                    type: array
+                    items:
+                      type: string
+                  defaultProductId:
+                    type: string
+              example:
+                tooks: 2323
+                facets:
+                - key: categoryName
+                  name: Category
+                  values:
+                  - value: Caramel Dips
+                    count: 5
+                  - value: Chocolate Dip
+                    count: 2
+                  - value: Classic Refrigerated Dressings
+                    count: 22
+                    selected: true
+                  - value: Croutons
+                    count: 5
+                  - value: Fruit Dips
+                    count: 5
+                  - value: Non-Refrigerated Dressings
+                    count: 7
+                  - value: Simply
+                    count: 10
+                  - value: Slaw Dressings
+                    count: 8
+                  - value: Veggie Dips
+                    count: 9
+                productIds:
+                - 0070200504219
+                - '0070200504226'
+                - '0070200504240'
+                defaultProductId: 0070200504394
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators, or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API Key for authentication
+    JWTBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token for authentication
+x-sharedDocumentationSamples:
+  locationDallas:
+    latitude: 32.781339
+    longitude: -96.799759
+    address: null
+    city: Dallas
+    country: US
+    state: TX
+    zipCode: '75270'
+    placeType: null
+    isMetricRegion: false
+  productsHellmannTwo:
+  - id: 0048001353855
+    ids:
+    - 0048001353855
+    gtin: 0048001353855
+    gtins:
+    - 0048001353855
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Mayonnaise Dressing with Olive Oil
+    subtitle: null
+    description: Hellmann's Mayonnaise Dressing with Olive Oil combines the creamy, rich taste you love from Hellmann's with the delicious goodness of olive oil.
+    packaging: 20 oz
+    review: null
+  - id: 0048001213586
+    ids:
+    - 0048001213586
+    gtin: 0048001213586
+    gtins:
+    - 0048001213586
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Light Mayonnaise
+    subtitle: null
+    description: Looking for a lighter mayonnaise? Hellmann's Light Mayo has half the calories & half the fat of our Real Mayonnaise with the same rich, creamy taste!
+    packaging: 30 oz
+    review: null

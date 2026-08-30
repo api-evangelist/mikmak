@@ -1,0 +1,351 @@
+openapi: 3.2.0
+info:
+  version: '1.0'
+  title: Commerce API (v1) Experiences API
+servers:
+- url: https://api.mikmak.ai
+security:
+- ApiKeyAuth: []
+tags:
+- name: Experiences
+paths:
+  /commerce/v1/experiences/config/{id}:
+    get:
+      tags:
+      - Experiences
+      security:
+      - ApiKeyAuth: []
+      - JWTBearerAuth: []
+      description: Returns configuration metadata for a specific experience, including retailer sort order and pinned retailers.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The experience ID
+        schema:
+          type: string
+        example: 54511c2f827bef6f9c68f29a
+      responses:
+        '200':
+          description: OK. Configuration metadata for the experience.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationResponse'
+              example:
+                experienceId: 54511c2f827bef6f9c68f29a
+                retailerSortType: manual
+                pinnedRetailerIds:
+                - 1
+                - 2
+                - 3
+                retailers:
+                - id: 1
+                  name: Amazon.com
+                - id: 2
+                  name: Walmart
+                - id: 3
+                  name: Target
+                - id: 245
+                  name: CVS Pharmacy
+                - id: 265
+                  name: Walgreens
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators, or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+  /commerce/v1/experiences:
+    get:
+      tags:
+      - Experiences
+      security:
+      - JWTBearerAuth: []
+      description: Returns a list of experiences available for the authenticated account.
+      responses:
+        '200':
+          description: OK. A list of experiences.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExperiencesResponse'
+              example:
+              - accountName: Brand A
+                subAccountName: US Region
+                api:
+                - id: 54511c2f827bef6f9c68f29a
+                  name: US E-commerce API
+                - id: 54511c2f827bef6f9c68f29c
+                  name: US Store Locator API
+                media:
+                - id: 54511c2f827bef6f9c68f29b
+                  name: US Media Experience
+                  url: https://media.mikmak.com/experience/54511c2f827bef6f9c68f29b
+                  showPrice: true
+                  products:
+                  - id: '0013000626057'
+                    idType: gtin
+                    title: Product A
+                    imageUrl: https://example.com/productA.jpg
+              - accountName: Brand A
+                subAccountName: EU Region
+                api:
+                - id: 54511c2f827bef6f9c68f29d
+                  name: EU E-commerce API
+                media:
+                - id: 54511c2f827bef6f9c68f29e
+                  name: EU Media Experience
+                  url: https://media.mikmak.com/experience/54511c2f827bef6f9c68f29e
+                  showPrice: false
+                  products:
+                  - id: '5901234123457'
+                    idType: gtin
+                    title: Product B
+                    imageUrl: https://example.com/productB.jpg
+                  - id: '4007817327326'
+                    idType: gtin
+                    title: Product C
+                    imageUrl: https://example.com/productC.jpg
+              - accountName: Brand B
+                subAccountName: US Operations
+                api:
+                - id: 54511c2f827bef6f9c68f30a
+                  name: US Store Finder
+                media:
+                - id: 54511c2f827bef6f9c68f30b
+                  name: US Product Locator
+                  url: https://media.mikmak.com/experience/54511c2f827bef6f9c68f30b
+                  showPrice: true
+                  products:
+                  - id: 0074780197609
+                    idType: gtin
+                    title: Product X
+                    imageUrl: https://example.com/productX.jpg
+                  - id: 0074780197616
+                    idType: gtin
+                    title: Product Y
+                    imageUrl: https://example.com/productY.jpg
+                  - id: 0074780197623
+                    idType: gtin
+                    title: Product Z
+                    imageUrl: https://example.com/productZ.jpg
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators, or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+components:
+  schemas:
+    ExperiencesResponse:
+      type: object
+      description: List of experiences for an account
+      properties:
+        accountName:
+          type: string
+          description: Name of the account
+        subAccountName:
+          type: string
+          description: Name of the sub-account
+        api:
+          type: array
+          description: List of API experiences
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Experience ID
+              name:
+                type: string
+                description: Experience name
+        media:
+          type: array
+          description: List of media experiences
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Experience ID
+              name:
+                type: string
+                description: Experience name
+              url:
+                type: string
+                description: Experience URL
+              showPrice:
+                type: boolean
+                description: Whether to show prices
+              products:
+                type: array
+                description: List of products associated with the experience
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Product ID
+                    idType:
+                      type: string
+                      description: Type of product ID (e.g. gtin)
+                    title:
+                      type: string
+                      description: Product title
+                    imageUrl:
+                      type: string
+                      description: Product image URL
+                    thumbnailImageUrl:
+                      type: string
+                      description: Product thumbnail image URL (optimized for small displays, 144px width)
+    ConfigurationResponse:
+      type: object
+      description: Configuration metadata for an experience
+      properties:
+        experienceId:
+          type: string
+          description: The experience ID
+          example: 54511c2f827bef6f9c68f29a
+        retailerSortType:
+          type: string
+          description: How retailers should be sorted in availabilities
+          enum:
+          - manual
+          - random
+          - price_low_to_high
+          example: manual
+        pinnedRetailerIds:
+          type: array
+          description: List of retailer IDs that should be pinned/featured at the top
+          items:
+            type: integer
+          example:
+          - 1
+          - 2
+          - 3
+        retailers:
+          type: array
+          description: List of retailers in the experience configuration
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Retailer ID
+                example: 245
+              name:
+                type: string
+                description: Retailer name
+                example: Walmart
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API Key for authentication
+    JWTBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token for authentication
+x-sharedDocumentationSamples:
+  locationDallas:
+    latitude: 32.781339
+    longitude: -96.799759
+    address: null
+    city: Dallas
+    country: US
+    state: TX
+    zipCode: '75270'
+    placeType: null
+    isMetricRegion: false
+  productsHellmannTwo:
+  - id: 0048001353855
+    ids:
+    - 0048001353855
+    gtin: 0048001353855
+    gtins:
+    - 0048001353855
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Mayonnaise Dressing with Olive Oil
+    subtitle: null
+    description: Hellmann's Mayonnaise Dressing with Olive Oil combines the creamy, rich taste you love from Hellmann's with the delicious goodness of olive oil.
+    packaging: 20 oz
+    review: null
+  - id: 0048001213586
+    ids:
+    - 0048001213586
+    gtin: 0048001213586
+    gtins:
+    - 0048001213586
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Light Mayonnaise
+    subtitle: null
+    description: Looking for a lighter mayonnaise? Hellmann's Light Mayo has half the calories & half the fat of our Real Mayonnaise with the same rich, creamy taste!
+    packaging: 30 oz
+    review: null

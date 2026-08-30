@@ -1,0 +1,548 @@
+openapi: 3.2.0
+info:
+  version: '1.0'
+  title: Commerce API (v1) Offers API
+servers:
+- url: https://api.mikmak.ai
+security:
+- ApiKeyAuth: []
+tags:
+- name: Offers
+paths:
+  /commerce/v1/productcatalog/offers/models/{id}:
+    get:
+      tags:
+      - Offers
+      security:
+      - ApiKeyAuth: []
+      - JWTBearerAuth: []
+      description: The Offers endpoint is used to search both Online and Local retailers of a product. When Offer Location is not provided, only Online information is searched.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The requested product GTIN
+        schema:
+          type: string
+        example: 3600530901197
+      - name: wtbId
+        in: query
+        required: true
+        description: The experience id
+        schema:
+          type: string
+        example: 54511c2f827bef6f9c68f29a
+      - name: draft
+        in: query
+        description: True to use the draft experience configuration
+        schema:
+          type: boolean
+      - name: idType
+        in: query
+        description: The type of the product identifier (gtin, upc, ean, brandProductId). Default is gtin
+        schema:
+          type: string
+        example: gtin
+      - name: countryCode
+        in: query
+        description: Search location country code (2-letters)
+        schema:
+          type: string
+        example: US
+      - name: state
+        in: query
+        description: Search location state (2-letters)
+        schema:
+          type: string
+        example: DC
+      - name: address
+        in: query
+        description: Search location address
+        schema:
+          type: string
+        example: 401 9th St NW
+      - name: city
+        in: query
+        description: Search location city
+        schema:
+          type: string
+        example: Washington D.C
+      - name: postalCode
+        in: query
+        description: Search location postal code
+        schema:
+          type: string
+        example: 20001
+      - name: latitude
+        in: query
+        description: Search location latitude
+        schema:
+          type: number
+        example: 38.254238
+      - name: longitude
+        in: query
+        description: Search location longitude
+        schema:
+          type: number
+        example: -85.759407
+      - name: language
+        in: query
+        description: Requested language or locale for the product and retailers
+        schema:
+          type: string
+        example: en
+      - name: maxLocationsPerRetailer
+        in: query
+        description: Default = 25. The maximum number of store locations that will be returned for a retailer
+        schema:
+          type: number
+      - name: maxReturnedStores
+        in: query
+        description: Default = 100. The maximum number of store locations that will be returned in total
+        schema:
+          type: number
+      - name: distanceRange
+        in: query
+        description: Max search distance (radius)
+        schema:
+          type: number
+      - name: distanceUnit
+        in: query
+        description: '''miles'' or ''kilometers''. Default = ''miles'''
+        schema:
+          type: string
+      - name: retailerNames
+        in: query
+        description: Pipe ( '|' ) separated list of Retailer names to include
+        schema:
+          type: string
+        example: Walmart.com|Target.com
+      - name: backupProductStrategy
+        in: query
+        description: Default = 'none'. When 'onlineOnly' if the requested product is not in stock in any Online Retailer variant models will be returned instead
+        schema:
+          type: string
+      - name: sessionId
+        in: query
+        description: Id for the current session so the events can be properly tracked.
+        schema:
+          type: string
+        example: 1234abcd
+      - name: currentUrl
+        in: query
+        description: The full URL visible in the shopper's browser as they interact with the Experience. It must include all query parameters. This is necessary to report on UTM parameters.
+        schema:
+          type: string
+        example: https://www.mikmak.com/
+      - name: sessionUrl
+        in: query
+        description: The full URL visible in the shopper's browser when they first arrived on the website. This has to be persisted throughout the session. It must include all query parameters. This is necessary to report on UTM parameters.
+        schema:
+          type: string
+        example: https://www.mikmak.com/
+      - name: source
+        in: query
+        description: Source identifier for tracking where the request originated from
+        schema:
+          type: string
+      - name: includeOutOfStock
+        in: query
+        description: True to include out of stock products
+        schema:
+          type: boolean
+        example: true
+      - name: hideOutOfStockOfflineStores
+        in: query
+        description: True to hide out of stock offline stores
+        schema:
+          type: boolean
+        example: true
+      - name: applyTiedHouseLaw
+        in: query
+        description: To override the experience setting for applying tied house law
+        schema:
+          type: boolean
+        example: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OffersResponse'
+        '400':
+          description: '**Bad Request.** The request is invalid and cannot be processed.
+
+
+            > **When:** Returned when required parameters are missing, malformed, or fail validation (e.g., invalid IDs, query parameters, or location data).
+
+            '
+        '401':
+          description: '**Unauthorized.** Authentication failed.
+
+
+            > **When:** Returned when the request is missing a valid API key or JWT, or when the token is expired or invalid.
+
+            '
+        '403':
+          description: '**Forbidden.** The request is authenticated but not allowed.
+
+
+            > **When:** Returned when access is restricted due to configuration rules, disallowed countries, disabled operators, or unauthorized products.
+
+            '
+        '404':
+          description: '**Not Found.** The requested resource does not exist.
+
+
+            > **When:** Returned when a configuration, product, experience, or continuation token cannot be found.
+
+            '
+        '500':
+          description: '**Internal Server Error.** An unexpected server error occurred.
+
+
+            > **When:** Returned when the server encounters an unhandled error while processing the request.
+
+            '
+components:
+  schemas:
+    OffersResponse:
+      type: object
+      description: Offers response
+      properties:
+        countryCode:
+          type: string
+          description: Country code
+        modelCode:
+          type: string
+          description: Product model code
+        modelName:
+          type: string
+          description: Product model name
+        ean:
+          type: string
+          description: Product EAN
+        upc:
+          type: string
+          description: Product UPC
+        brandProductId:
+          type: string
+          description: Product ID
+        marketingModelName:
+          type: string
+          description: Product marketing model name
+        description:
+          type: string
+          description: Product description
+        additionalInformation:
+          type: string
+          description: Product additional information
+        productImage:
+          type: string
+          description: Product image
+        productThumbnailImage:
+          type: string
+          description: Product thumbnail image (optimized for small displays, 144px width)
+        categoryName:
+          type: string
+          description: Product category
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Product attributes
+        backupProductsSummary:
+          type: object
+          description: The array of replaced products, informing of each Requested Product and its replaced Backup Product
+          properties:
+            replacedProducts:
+              type: array
+              description: List of replaced products
+              items:
+                properties:
+                  requestedProduct:
+                    type: string
+                    description: The requested product GTIN
+                  backupProduct:
+                    type: string
+                    description: The backup product GTIN
+        onlineRetailers:
+          type: array
+          description: Online retailers
+          items:
+            properties:
+              name:
+                type: string
+                description: Retailer name
+              homepageUrl:
+                type: string
+                description: Retailer homepage url
+              availability:
+                type: string
+                description: Retailer product availability. 'Available' or 'NotAvailable'
+              logoUrl:
+                type: string
+                description: Retailer logo url
+              retailerId:
+                type: number
+                description: Retailer ID
+              productLink:
+                type: string
+                description: Retailer product link
+              cartLink:
+                type: string
+                description: Add to cart link
+              price:
+                type: number
+                description: Retailer product price
+              currencyCode:
+                type: string
+                description: Retailer product currency code
+              currencySymbol:
+                type: string
+                description: Retailer product currency symbol
+              sku:
+                type: string
+                description: Retailer product sku
+              promotions:
+                type: array
+                description: Retailer product promotions
+                items:
+                  properties:
+                    promotionalMessage:
+                      type: string
+                      description: Promotion message
+                    promotionalType:
+                      type: string
+                      description: Promotion type
+              priceFormatted:
+                type: string
+                description: Price formatted
+              priceFormattedWithCurrency:
+                type: string
+                description: Price formatted with currency symbol
+              lastUpdatedUtc:
+                type: string
+                description: The last time the retailer product was updated
+              priceDetails:
+                type: object
+                description: Price details
+                properties:
+                  price:
+                    type: number
+                    description: Retailer product price
+                  priceFormatted:
+                    type: string
+                    description: Price formatted
+                  priceFormattedWithCurrency:
+                    type: string
+                    description: Price formatted with currency symbol
+              altPriceDetails:
+                type: object
+                description: Price details
+                properties:
+                  price:
+                    type: number
+                    description: Alternative price
+                  priceFormatted:
+                    type: string
+                    description: Alternative price formatted
+                  priceFormattedWithCurrency:
+                    type: string
+                    description: Alternative price formatted with currency symbol
+              isTiedHouseLaw:
+                type: boolean
+                description: Is tied house law
+        localRetailers:
+          type: array
+          description: Local retailers
+          items:
+            properties:
+              locationName:
+                type: string
+                description: Location name
+              locationUrl:
+                type: string
+                description: Location URL
+              sourceLocationId:
+                type: string
+                description: Location ID
+              retailerName:
+                type: string
+                description: Retailer name
+              retailerId:
+                type: number
+                description: Retailer ID
+              retailerLogoUrl:
+                type: string
+                description: Retailer logo URL
+              hours:
+                type: string
+                description: Location opening hours
+              address:
+                type: string
+                description: Location address
+              city:
+                type: string
+                description: Location city
+              state:
+                type: string
+                description: Location state
+              postalCode:
+                type: string
+                description: Location postal code
+              phone:
+                type: string
+                description: Location phone number
+              latitude:
+                type: number
+                description: Location latitude
+              longitude:
+                type: number
+                description: Location longitude
+              distanceFromUserLocation:
+                type: number
+                description: Distance from user location
+              distanceUnit:
+                type: string
+                description: Distance unit. 'Miles' or 'Kilometers'
+              countryCode:
+                type: string
+                description: Country code
+              availability:
+                type: string
+                description: Availability. 'Available' or 'NotAvailable'
+              price:
+                type: number
+                description: Retailer product price
+              currencyCode:
+                type: string
+                description: Retailer product currency code
+              promotions:
+                type: array
+                description: Retailer product promotions
+                items:
+                  properties:
+                    promotionalMessage:
+                      type: string
+                      description: Promotion message
+                    promotionalType:
+                      type: string
+                      description: Promotion type
+              open24:
+                type: boolean
+                description: Is location open 24 hours
+              googleMapsUrl:
+                type: string
+                description: Location Google Maps URL
+              appointmentUrl:
+                type: string
+                description: Location appointment URL
+              timeZone:
+                type: string
+                description: Location time zone
+              internationalPhoneNumber:
+                type: string
+                description: Location international phone number
+              whatsAppNumber:
+                type: string
+                description: Location WhatsApp phone Number
+              isTiedHouseLaw:
+                type: boolean
+                description: Is tied house law
+        variants:
+          type: array
+          description: Product variants
+          items:
+            properties:
+              modelCode:
+                type: string
+                description: Variant model code
+              modelName:
+                type: string
+                description: Variant model name
+              description:
+                type: string
+                description: Variant description
+              imageUrl:
+                type: string
+                description: Variant image URL
+              thumbnailImageUrl:
+                type: string
+                description: Variant thumbnail image URL (optimized for small displays, 144px width)
+              attributes:
+                type: object
+                additionalProperties:
+                  type: string
+                description: Variant attributes
+        brand:
+          type: string
+          description: Product brand
+        subtitle:
+          type: string
+          description: Product subtitle
+        review:
+          type: object
+          description: Review details
+          properties:
+            count:
+              type: number
+              description: Review count
+            averageRating:
+              type: number
+              description: Review average rating
+        sessionId:
+          type: string
+          description: SessionID value
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API Key for authentication
+    JWTBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token for authentication
+x-sharedDocumentationSamples:
+  locationDallas:
+    latitude: 32.781339
+    longitude: -96.799759
+    address: null
+    city: Dallas
+    country: US
+    state: TX
+    zipCode: '75270'
+    placeType: null
+    isMetricRegion: false
+  productsHellmannTwo:
+  - id: 0048001353855
+    ids:
+    - 0048001353855
+    gtin: 0048001353855
+    gtins:
+    - 0048001353855
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F1195565.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Mayonnaise Dressing with Olive Oil
+    subtitle: null
+    description: Hellmann's Mayonnaise Dressing with Olive Oil combines the creamy, rich taste you love from Hellmann's with the delicious goodness of olive oil.
+    packaging: 20 oz
+    review: null
+  - id: 0048001213586
+    ids:
+    - 0048001213586
+    gtin: 0048001213586
+    gtins:
+    - 0048001213586
+    imageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=500&org_if_sml=1&ci_url_encoded=1
+    thumbnailImageUrl: https://img.static-swaven.com/v7/https%3A%2F%2Fassets.unileversolutions.com%2Fv1%2F116893611.png?width=144&ci_url_encoded=1&force_format=webp,png&func=fit
+    brand: hellmann's
+    title: Light Mayonnaise
+    subtitle: null
+    description: Looking for a lighter mayonnaise? Hellmann's Light Mayo has half the calories & half the fat of our Real Mayonnaise with the same rich, creamy taste!
+    packaging: 30 oz
+    review: null
