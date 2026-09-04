@@ -34,7 +34,7 @@ accessModel:
   - https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
   generated: '2026-08-12'
   method: searched
-position: Consumer
+position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/mikmak.png
 tags:
