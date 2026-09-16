@@ -64,15 +64,14 @@ tags_raw:
 - Reporting
 - CPG
 created: '2025-02-21'
-modified: '2026-08-12'
+modified: '2026-09-16'
 url: https://raw.githubusercontent.com/api-evangelist/mikmak/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
 - aid: mikmak:mikmak-aura
   name: MikMak Aura
-  description: >-
-    MikMak Aura provides real-time intelligence, fueled by AI, to connect marketing spend across channels
-    to actual sales performance at retailers.
+  description: MikMak Aura provides real-time intelligence, fueled by AI, to connect marketing spend across
+    channels to actual sales performance at retailers.
   humanURL: https://www.mikmak.com/products/aura
   tags:
   - Artificial Intelligence
@@ -89,9 +88,8 @@ apis:
     url: https://help.mikmak.ai/hc
 - aid: mikmak:mikmak-commerce-mcp
   name: MikMak Commerce MCP Server
-  description: >-
-    The MikMak Commerce MCP Server is a hosted Model Context Protocol surface in front of the Headless
-    Commerce API (v1). It exposes three strictly-typed, read-only, non-destructive tools — search_products,
+  description: The MikMak Commerce MCP Server is a hosted Model Context Protocol surface in front of the
+    Headless Commerce API (v1). It exposes three strictly-typed, read-only, non-destructive tools — search_products,
     search_availabilities and get_products — over the streamable-http transport, adding JSON-Schema argument
     validation, Auth0 JWT enforcement, per-key/per-IP/global rate limiting and request-id propagation
     so any MCP-compatible client can reason about products, retailers and availability without a bespoke
@@ -133,10 +131,9 @@ apis:
     url: skills/_index.yml
 - aid: mikmak:mikmak-brand-com-tag
   name: MikMak Commerce for Brand.com (WTB Tag)
-  description: >-
-    The MikMak where-to-buy tag is the client-side distribution of MikMak Commerce for brand-owned websites.
-    A single async script loaded from wtb-tag.mikmak.ai renders buy-now buttons, in-page containers and
-    sticky widgets from HTML data attributes, driven by a window.swnDataLayer object, with a JavaScript
+  description: The MikMak where-to-buy tag is the client-side distribution of MikMak Commerce for brand-owned
+    websites. A single async script loaded from wtb-tag.mikmak.ai renders buy-now buttons, in-page containers
+    and sticky widgets from HTML data attributes, driven by a window.swnDataLayer object, with a JavaScript
     callback surface and Google Tag Manager event and variable definitions for analytics.
   humanURL: https://docs.mikmak.ai/docs/developer-guide
   baseURL: https://wtb-tag.mikmak.ai
@@ -345,8 +342,8 @@ apis:
     url: https://api.mikmak.ai/reporting/docs
 - aid: mikmak:mikmak-historical-pricing-reports-api
   name: MikMak Historical Pricing Reports API
-  description: >-
-    The Historical Pricing Reports API from MikMak — 4 operation(s) for historical pricing reports.
+  description: The Historical Pricing Reports API from MikMak — 4 operation(s) for historical pricing
+    reports.
   humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
   baseURL: https://api.mikmak.ai
   tags:
@@ -466,8 +463,7 @@ apis:
     url: https://api.mikmak.ai/reporting/docs
 - aid: mikmak:mikmak-shoppable-recipe-reports-api
   name: MikMak Shoppable Recipe Reports API
-  description: >-
-    The Shoppable Recipe Reports API from MikMak — 4 operation(s) for shoppable recipe reports.
+  description: The Shoppable Recipe Reports API from MikMak — 4 operation(s) for shoppable recipe reports.
   humanURL: https://docs.mikmak.ai/reference/mikmak-headless-commerce-api
   baseURL: https://api.mikmak.ai
   tags:
@@ -573,9 +569,9 @@ common:
 - type: Overlay
   url: overlays/mikmak-insights-api-overlay.yaml
 - type: OpenAPI
-  url: openapi/mikmak-commerce-api-openapi.yml
+  url: openapi/_original/mikmak-commerce-api-openapi.yml
 - type: OpenAPI
-  url: openapi/mikmak-insights-api-openapi.yml
+  url: openapi/_original/mikmak-insights-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
