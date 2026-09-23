@@ -1,17 +1,12 @@
 openapi: 3.2.0
 info:
   title: MikMak Insights Custom Reports API
-  description: '
-
-    ## Introduction
+  description: '## Introduction
 
     An API for querying reports and report-related data. A set of API credentials is tied to one account; each request
 
     to the API will return data specific to that account.'
   version: 1.0.0
-servers:
-- url: https://api.mikmak.ai
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Custom Reports
 paths:
@@ -334,2467 +329,6 @@ paths:
       - x-api-key: []
 components:
   schemas:
-    ReportAdvancedFiltersResponse:
-      properties:
-        dimensions:
-          items:
-            $ref: '#/components/schemas/AdvancedFilterDimension'
-          type: array
-          title: Dimensions
-        metrics:
-          items:
-            $ref: '#/components/schemas/AdvancedFilterMetric'
-          type: array
-          title: Metrics
-      type: object
-      required:
-      - dimensions
-      - metrics
-      title: ReportAdvancedFiltersResponse
-      description: 'Response for advanced filter component: dimensions and metrics with operators, no filter values.'
-    ObjectIdFilters:
-      additionalProperties: false
-      description: Filter by MongoDB ObjectId strings (24-character hex).
-      properties:
-        includes:
-          description: Include rows where the dimension matches any of these 24-character hex ObjectId strings (IN).
-          items:
-            type: string
-          title: Includes
-          type: array
-        excludes:
-          description: Exclude rows where the dimension matches any of these 24-character hex ObjectId strings (NOT IN).
-          items:
-            type: string
-          title: Excludes
-          type: array
-      title: ObjectIdFilters
-      type: object
-    CustomReportFacetsRequestBody:
-      properties:
-        dimensions:
-          items:
-            $ref: '#/components/schemas/Dimensions'
-          type: array
-          title: Dimensions
-        metrics:
-          items:
-            $ref: '#/components/schemas/Metrics'
-          type: array
-          title: Metrics
-        filters:
-          properties:
-            alternateProductName:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Alternate Product Name filter. Alternate product name from the Catalog.
-            brandEntity:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Reporting Brand filter. The Brand Entity associated with MikMak metrics.
-            commerceType:
-              anyOf:
-              - $ref: '#/components/schemas/CommerceTypeFilters'
-              - type: 'null'
-              description: Commerce Type filter. Type of MikMak Commerce Experience (Brand.com, Media, etc.)
-            country:
-              anyOf:
-              - $ref: '#/components/schemas/CountryFilters'
-              - type: 'null'
-              description: Country filter. Geographic country associated with the Commerce Experience.
-            deviceType:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Device Type filter. The category of the visitor's hardware (Desktop, Mobile, Tablet, or Others), detected via the user agent associated with the metric.
-            domainUrl:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Domain URL filter. The web domain associated with the metric.
-            experience:
-              anyOf:
-              - $ref: '#/components/schemas/ObjectIdFilters'
-              - type: 'null'
-              description: Commerce Experience filter. Name of the Commerce Experience.
-            isBundle:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Bundle filter. Whether the metric is tied to a bundle of products.
-            modelName:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Model Name filter. Model name from the Catalog.
-            mpn:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: MPN filter. Manufacturer Part Number of the catalog product in the Commerce Experience.
-            pageUrl:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Page URL filter. The web page associated with the metric.
-            productBrandName:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Brand Name filter. Brand of the catalog product in the Commerce Experience.
-            productCategoryName:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Product Category Name filter. Category of the catalog product in the Commerce Experience.
-            productCustomCategory:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Custom Category filter. Custom category of the catalog product in the Commerce Experience.
-            productCustomSubcategory1:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Custom Subcategory 1 filter. Custom subcategory (level 1) of the catalog product in the Commerce Experience.
-            productCustomSubcategory2:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Custom Subcategory 2 filter. Custom subcategory (level 2) of the catalog product in the Commerce Experience.
-            productCustomSubcategory3:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Custom Subcategory 3 filter. Custom subcategory (level 3) of the catalog product in the Commerce Experience.
-            productCustomSubcategory4:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Custom Subcategory 4 filter. Custom subcategory (level 4) of the catalog product in the Commerce Experience.
-            productLine:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Product Line filter. Line of the catalog product in the Commerce Experience.
-            productName:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Name filter. Name of the catalog product in the Commerce Experience.
-            productRange:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Product Range filter. Range of the catalog product in the Commerce Experience.
-            retailer:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Retailer Name filter. Name of the online or offline retailer associated with a click or transaction.
-            shopperCity:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Shopper City filter. The city, town, or municipality where the shopper was located during the session.
-            shopperCountry:
-              anyOf:
-              - $ref: '#/components/schemas/CountryFilters'
-              - type: 'null'
-              description: Shopper Country filter. The country where the shopper was located during the session.
-            shopperRegion:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Shopper Region filter. The primary administrative division (e.g., State, Province, or Region, dependent on the country) where the shopper was located during the session.
-            shopperZipCode:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Shopper Zip Code filter. The local postal code or ZIP code associated with the shopper's location.
-            standardMedium:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Standard Medium filter. The categorized version of the utm_medium parameter, mapping various raw values into a standardized set of marketing mediums.
-            standardSource:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Standard Source filter. The categorized version of the utm_source parameter, mapping various raw values into a standardized set of traffic sources.
-            subaccountId:
-              anyOf:
-              - $ref: '#/components/schemas/ObjectIdFilters'
-              - type: 'null'
-              description: Subaccount filter. MikMak subaccount that contains the Experience associated with the metric.
-            utmAdId:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Ad ID (utm) filter. Value of the utm_adid parameter, if present, in the URL associated with the metric.
-            utmAdvertiserId:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Advertiser ID (utm) filter. Value of the utm_advertiserid parameter, if present, in the URL associated with the metric.
-            utmBu:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Business Unit (utm) filter. Value of the utm_bu parameter, if present, in the URL associated with the metric.
-            utmCampaign:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Campaign (utm) filter. Value of the utm_campaign parameter, if present, in the URL associated with the metric.
-            utmClicktype:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Click Type (utm) filter. Value of the utm_clicktype parameter, if present, in the URL associated with the metric.
-            utmConfig:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Config (utm) filter. Value of the utm_config parameter, if present, in the URL associated with the metric.
-            utmContent:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Content (utm) filter. Value of the utm_content parameter, if present, in the URL associated with the metric.
-            utmCreativeFormat:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Creative Format (utm) filter. Value of the utm_creative_format parameter, if present, in the URL associated with the metric.
-            utmCreativeid:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Creative ID (utm) filter. Value of the utm_creativeid parameter, if present, in the URL associated with the metric.
-            utmFormat:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Format (utm) filter. Value of the utm_format parameter, if present, in the URL associated with the metric.
-            utmId:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: ID (utm) filter. Value of the utm_id parameter, if present, in the URL associated with the metric.
-            utmMarketingTactic:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Marketing Tactic filter. This dimension can be awareness, consideration, or conversion, depending on the presence of these strings in the URL associated with the metric.
-            utmMedium:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Medium (utm) filter. Value of the utm_medium parameter, if present, in the URL associated with the metric.
-            utmPlacement:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Placement (utm) filter. Value of the utm_placement parameter, if present, in the URL associated with the metric.
-            utmPlacementId:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Placement ID (utm) filter. Value of the utm_placementid parameter, if present, in the URL associated with the metric.
-            utmSource:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Source (utm) filter. Value of the utm_source parameter, if present, in the URL associated with the metric.
-            utmSourcePlatform:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Source Platform (utm) filter. Value of the utm_source_platform parameter, if present, in the URL associated with the metric.
-            utmTerm:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Term (utm) filter. Value of the utm_term parameter, if present, in the URL associated with the metric.
-            utmVariant:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Variant (utm) filter. Value of the utm_variant parameter, if present, in the URL associated with the metric.
-            auraAdSpend:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for auraAdSpend (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            auraIncrementalContribution:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for auraIncrementalContribution (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            averageClickPrice:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for averageClickPrice (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            commerceLoadSessions:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for commerceLoadSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            commerceLoads:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for commerceLoads (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            ctaView:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for ctaView (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            ctaViewSessions:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for ctaViewSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            maxAuraRoas:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for maxAuraRoas (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            minAuraRoas:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for minAuraRoas (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            offlinePurchaseIntentClicks:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for offlinePurchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            onlinePurchaseIntentClicks:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for onlinePurchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            purchaseIntentClickSessions:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for purchaseIntentClickSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            purchaseIntentClicks:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for purchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            purchaseIntentRate:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for purchaseIntentRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            purchaseIntentRateSession:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for purchaseIntentRateSession (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            purchaseIntentValue:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for purchaseIntentValue (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            rawSalesAccountAmount:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for rawSalesAccountAmount (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            rawSalesAmount:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for rawSalesAmount (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerCTR:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerCTR (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerDisplayRate:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerDisplayRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerDisplayed:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerDisplayed (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerInStock:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerInStock (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerInStockRate:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerInStockRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerOutOfStock:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerOutOfStock (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            skuSelected:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for skuSelected (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            successfulSearches:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for successfulSearches (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            transactions:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for transactions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            unsuccessfulSearches:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for unsuccessfulSearches (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-          additionalProperties: false
-          type: object
-          title: Filters
-          description: 'Per-field filters: each dimension key uses a typed filter object (e.g. country/shopperCountry require ISO 3166-1 alpha-2 codes; commerceType uses CommerceType codes; subaccountId/experience use 24-char ObjectIds; coded dimensions expose includes/excludes only). Metrics may use is_higher_than / is_lower_than (post-aggregation).'
-        accountId:
-          type: string
-          title: Accountid
-          description: If accountId is not provided, the accountId will be taken from the token.
-        currency:
-          type: string
-          enum:
-          - AED
-          - AFN
-          - ALL
-          - AMD
-          - ANG
-          - AOA
-          - ARS
-          - AUD
-          - AWG
-          - AZN
-          - BAM
-          - BBD
-          - BDT
-          - BGN
-          - BHD
-          - BIF
-          - BMD
-          - BND
-          - BOB
-          - BOV
-          - BRL
-          - BSD
-          - BTN
-          - BWP
-          - BYN
-          - BZD
-          - CAD
-          - CDF
-          - CHE
-          - CHF
-          - CHW
-          - CLF
-          - CLP
-          - CNY
-          - COP
-          - COU
-          - CRC
-          - CUC
-          - CUP
-          - CVE
-          - CZK
-          - DJF
-          - DKK
-          - DOP
-          - DZD
-          - EGP
-          - ERN
-          - ETB
-          - EUR
-          - FJD
-          - FKP
-          - GBP
-          - GEL
-          - GHS
-          - GIP
-          - GMD
-          - GNF
-          - GTQ
-          - GYD
-          - HKD
-          - HNL
-          - HRK
-          - HTG
-          - HUF
-          - IDR
-          - ILS
-          - INR
-          - IQD
-          - IRR
-          - ISK
-          - JMD
-          - JOD
-          - JPY
-          - KES
-          - KGS
-          - KHR
-          - KMF
-          - KPW
-          - KRW
-          - KWD
-          - KYD
-          - KZT
-          - LAK
-          - LBP
-          - LKR
-          - LRD
-          - LSL
-          - LYD
-          - MAD
-          - MDL
-          - MGA
-          - MKD
-          - MMK
-          - MNT
-          - MOP
-          - MRU
-          - MUR
-          - MVR
-          - MWK
-          - MXN
-          - MXV
-          - MYR
-          - MZN
-          - NAD
-          - NGN
-          - NIO
-          - NOK
-          - NPR
-          - NZD
-          - OMR
-          - PAB
-          - PEN
-          - PGK
-          - PHP
-          - PKR
-          - PLN
-          - PYG
-          - QAR
-          - RON
-          - RSD
-          - RUB
-          - RWF
-          - SAR
-          - SBD
-          - SCR
-          - SDG
-          - SEK
-          - SGD
-          - SHP
-          - SLE
-          - SLL
-          - SOS
-          - SRD
-          - SSP
-          - STN
-          - SVC
-          - SYP
-          - SZL
-          - THB
-          - TJS
-          - TMT
-          - TND
-          - TOP
-          - TRY
-          - TTD
-          - TWD
-          - TZS
-          - UAH
-          - UGX
-          - USD
-          - USN
-          - UYI
-          - UYU
-          - UYW
-          - UZS
-          - VED
-          - VES
-          - VND
-          - VUV
-          - WST
-          - XAF
-          - XAG
-          - XAU
-          - XBA
-          - XBB
-          - XBC
-          - XBD
-          - XCD
-          - XDR
-          - XOF
-          - XPD
-          - XPF
-          - XPT
-          - XSU
-          - XTS
-          - XUA
-          - XXX
-          - YER
-          - ZAR
-          - ZMW
-          - ZWL
-          maxLength: 3
-          minLength: 3
-          title: Currency
-          description: The Currency field is required in the request body to provide the monetary metrics in the adequate currency.
-        fieldDetails:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Fielddetails
-          description: When set to 'yes', includes tooltip and category fields in the response.
-        startDate:
-          type: string
-          format: date
-          title: Startdate
-        endDate:
-          type: string
-          format: date
-          title: Enddate
-        subaccountIds:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Subaccountids
-          default: []
-        filtersJoinOperator:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Filtersjoinoperator
-          description: 'How to combine top-level filter conditions: AND (default) or OR. Case-insensitive.'
-          default: AND
-      type: object
-      required:
-      - dimensions
-      - metrics
-      - filters
-      - accountId
-      - currency
-      - startDate
-      - endDate
-      title: CustomReportFacetsRequestBody
-      description: 'POST /custom_report_filters: do not reject substring filters (not applied in SQL for these dims).'
-    MetricNumericFilterRule:
-      additionalProperties: false
-      description: 'Post-aggregation metric bounds: is_higher_than is >=, is_lower_than is <=.'
-      properties:
-        isHigherThan:
-          anyOf:
-          - type: number
-          - type: 'null'
-          default: null
-          description: Inclusive lower bound on the aggregated metric (SQL >=).
-          title: Ishigherthan
-        isLowerThan:
-          anyOf:
-          - type: number
-          - type: 'null'
-          default: null
-          description: Inclusive upper bound on the aggregated metric (SQL <=).
-          title: Islowerthan
-      title: MetricNumericFilterRule
-      type: object
-    ReportFieldsResponse:
-      properties:
-        data:
-          $ref: '#/components/schemas/ReportFields'
-      type: object
-      required:
-      - data
-      title: ReportFieldsResponse
-      description: Model for holding all the report builder configurations
-    ColumnType:
-      type: string
-      enum:
-      - count
-      - date
-      - str
-      - percent
-      - money
-      - int
-      - float
-      - distinct
-      title: ColumnType
-      description: 'UI-facing column rendering hint for report cells.
-
-
-        Members:
-
-        - count: Integer count (rendered as a plain number).
-
-        - date: Calendar date.
-
-        - str: Free-form string.
-
-        - percent: Percentage rate (rendered with % suffix).
-
-        - money: Monetary value (rendered with the report''s currency).
-
-        - int: Integer value (non-count, e.g., identifiers).
-
-        - float: Floating-point number.
-
-        - distinct: Distinct count / cardinality.'
-    CustomReportFieldsRequestBody:
-      properties:
-        dimensions:
-          items:
-            $ref: '#/components/schemas/Dimensions'
-          type: array
-          title: Dimensions
-        metrics:
-          items:
-            $ref: '#/components/schemas/Metrics'
-          type: array
-          title: Metrics
-        filters:
-          items:
-            $ref: '#/components/schemas/Dimensions'
-          type: array
-          title: Filters
-          description: Filters are used to filter the data based on the selected dimensions. Only provide the filter labels and not the filter values.
-        accountId:
-          type: string
-          title: Accountid
-          description: If accountId is not provided, the accountId will be taken from the token.
-        currency:
-          type: string
-          enum:
-          - AED
-          - AFN
-          - ALL
-          - AMD
-          - ANG
-          - AOA
-          - ARS
-          - AUD
-          - AWG
-          - AZN
-          - BAM
-          - BBD
-          - BDT
-          - BGN
-          - BHD
-          - BIF
-          - BMD
-          - BND
-          - BOB
-          - BOV
-          - BRL
-          - BSD
-          - BTN
-          - BWP
-          - BYN
-          - BZD
-          - CAD
-          - CDF
-          - CHE
-          - CHF
-          - CHW
-          - CLF
-          - CLP
-          - CNY
-          - COP
-          - COU
-          - CRC
-          - CUC
-          - CUP
-          - CVE
-          - CZK
-          - DJF
-          - DKK
-          - DOP
-          - DZD
-          - EGP
-          - ERN
-          - ETB
-          - EUR
-          - FJD
-          - FKP
-          - GBP
-          - GEL
-          - GHS
-          - GIP
-          - GMD
-          - GNF
-          - GTQ
-          - GYD
-          - HKD
-          - HNL
-          - HRK
-          - HTG
-          - HUF
-          - IDR
-          - ILS
-          - INR
-          - IQD
-          - IRR
-          - ISK
-          - JMD
-          - JOD
-          - JPY
-          - KES
-          - KGS
-          - KHR
-          - KMF
-          - KPW
-          - KRW
-          - KWD
-          - KYD
-          - KZT
-          - LAK
-          - LBP
-          - LKR
-          - LRD
-          - LSL
-          - LYD
-          - MAD
-          - MDL
-          - MGA
-          - MKD
-          - MMK
-          - MNT
-          - MOP
-          - MRU
-          - MUR
-          - MVR
-          - MWK
-          - MXN
-          - MXV
-          - MYR
-          - MZN
-          - NAD
-          - NGN
-          - NIO
-          - NOK
-          - NPR
-          - NZD
-          - OMR
-          - PAB
-          - PEN
-          - PGK
-          - PHP
-          - PKR
-          - PLN
-          - PYG
-          - QAR
-          - RON
-          - RSD
-          - RUB
-          - RWF
-          - SAR
-          - SBD
-          - SCR
-          - SDG
-          - SEK
-          - SGD
-          - SHP
-          - SLE
-          - SLL
-          - SOS
-          - SRD
-          - SSP
-          - STN
-          - SVC
-          - SYP
-          - SZL
-          - THB
-          - TJS
-          - TMT
-          - TND
-          - TOP
-          - TRY
-          - TTD
-          - TWD
-          - TZS
-          - UAH
-          - UGX
-          - USD
-          - USN
-          - UYI
-          - UYU
-          - UYW
-          - UZS
-          - VED
-          - VES
-          - VND
-          - VUV
-          - WST
-          - XAF
-          - XAG
-          - XAU
-          - XBA
-          - XBB
-          - XBC
-          - XBD
-          - XCD
-          - XDR
-          - XOF
-          - XPD
-          - XPF
-          - XPT
-          - XSU
-          - XTS
-          - XUA
-          - XXX
-          - YER
-          - ZAR
-          - ZMW
-          - ZWL
-          maxLength: 3
-          minLength: 3
-          title: Currency
-          description: The Currency field is required in the request body to provide the monetary metrics in the adequate currency.
-        fieldDetails:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Fielddetails
-          description: When set to 'yes', includes tooltip and category fields in the response.
-        startDate:
-          anyOf:
-          - type: string
-            format: date
-          - type: 'null'
-          title: Startdate
-          description: Optional report range start. When provided with field_details 'yes', tooltips for metrics/dimensions with a configured start_date include a warning only if this date is before that field's availability date.
-        useAdvancedFilters:
-          type: boolean
-          title: Useadvancedfilters
-          description: When true, filters may use advanced-only fields (e.g. utmPlacement). When false or omitted, filters may only use base filter dimensions.
-          default: false
-        subaccountIds:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Subaccountids
-          description: Optional subaccount IDs for Aura metric eligibility.
-      type: object
-      required:
-      - dimensions
-      - metrics
-      - filters
-      - accountId
-      - currency
-      title: CustomReportFieldsRequestBody
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    MetricDataType:
-      type: string
-      enum:
-      - integer
-      - percentage
-      - currency
-      - float
-      - string
-      - date
-      title: MetricDataType
-      description: 'Allowed ``dataType`` values in the advanced-filter metric metadata response.
-
-
-        Members:
-
-        - integer: Integer metric.
-
-        - percentage: Percentage rate (0.0 - 100.0 conventionally).
-
-        - currency: Monetary metric; the actual currency code comes from the request.
-
-        - float: Floating-point numeric metric.
-
-        - string: String metric (rare; string-typed aggregation).
-
-        - date: Date metric.'
-    ReportFiltersResponse:
-      properties:
-        filters:
-          additionalProperties:
-            $ref: '#/components/schemas/ListConfig'
-          type: object
-          title: Filters
-      type: object
-      required:
-      - filters
-      title: ReportFiltersResponse
-    ExportResponse:
-      properties:
-        url:
-          type: string
-          title: Url
-      type: object
-      required:
-      - url
-      title: ExportResponse
-    ReportPaginatedResponse:
-      properties:
-        total:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Total
-        nextPage:
-          type: boolean
-          title: Nextpage
-        columns:
-          items:
-            $ref: '#/components/schemas/Column'
-          type: array
-          title: Columns
-        data:
-          items:
-            $ref: '#/components/schemas/Row'
-          type: array
-          title: Data
-      type: object
-      required:
-      - nextPage
-      - columns
-      - data
-      title: ReportPaginatedResponse
-    OrderDirection:
-      type: string
-      enum:
-      - ASC
-      - DESC
-      title: OrderDirection
-      description: 'Sort direction applied to ``sort_by`` in custom reports.
-
-
-        Members:
-
-        - ASC: Ascending (smallest/earliest first).
-
-        - DESC: Descending (largest/latest first).'
-    CustomReportAdvancedFiltersRequestBody:
-      properties:
-        accountId:
-          type: string
-          title: Accountid
-          description: Account ID; if not provided, taken from the token.
-        metrics:
-          items:
-            type: string
-          type: array
-          title: Metrics
-          description: Metric identifiers for which to return filter metadata.
-        dimensions:
-          items:
-            type: string
-          type: array
-          title: Dimensions
-          description: Dimension identifiers used for exclusion rules.
-        currency:
-          type: string
-          enum:
-          - AED
-          - AFN
-          - ALL
-          - AMD
-          - ANG
-          - AOA
-          - ARS
-          - AUD
-          - AWG
-          - AZN
-          - BAM
-          - BBD
-          - BDT
-          - BGN
-          - BHD
-          - BIF
-          - BMD
-          - BND
-          - BOB
-          - BOV
-          - BRL
-          - BSD
-          - BTN
-          - BWP
-          - BYN
-          - BZD
-          - CAD
-          - CDF
-          - CHE
-          - CHF
-          - CHW
-          - CLF
-          - CLP
-          - CNY
-          - COP
-          - COU
-          - CRC
-          - CUC
-          - CUP
-          - CVE
-          - CZK
-          - DJF
-          - DKK
-          - DOP
-          - DZD
-          - EGP
-          - ERN
-          - ETB
-          - EUR
-          - FJD
-          - FKP
-          - GBP
-          - GEL
-          - GHS
-          - GIP
-          - GMD
-          - GNF
-          - GTQ
-          - GYD
-          - HKD
-          - HNL
-          - HRK
-          - HTG
-          - HUF
-          - IDR
-          - ILS
-          - INR
-          - IQD
-          - IRR
-          - ISK
-          - JMD
-          - JOD
-          - JPY
-          - KES
-          - KGS
-          - KHR
-          - KMF
-          - KPW
-          - KRW
-          - KWD
-          - KYD
-          - KZT
-          - LAK
-          - LBP
-          - LKR
-          - LRD
-          - LSL
-          - LYD
-          - MAD
-          - MDL
-          - MGA
-          - MKD
-          - MMK
-          - MNT
-          - MOP
-          - MRU
-          - MUR
-          - MVR
-          - MWK
-          - MXN
-          - MXV
-          - MYR
-          - MZN
-          - NAD
-          - NGN
-          - NIO
-          - NOK
-          - NPR
-          - NZD
-          - OMR
-          - PAB
-          - PEN
-          - PGK
-          - PHP
-          - PKR
-          - PLN
-          - PYG
-          - QAR
-          - RON
-          - RSD
-          - RUB
-          - RWF
-          - SAR
-          - SBD
-          - SCR
-          - SDG
-          - SEK
-          - SGD
-          - SHP
-          - SLE
-          - SLL
-          - SOS
-          - SRD
-          - SSP
-          - STN
-          - SVC
-          - SYP
-          - SZL
-          - THB
-          - TJS
-          - TMT
-          - TND
-          - TOP
-          - TRY
-          - TTD
-          - TWD
-          - TZS
-          - UAH
-          - UGX
-          - USD
-          - USN
-          - UYI
-          - UYU
-          - UYW
-          - UZS
-          - VED
-          - VES
-          - VND
-          - VUV
-          - WST
-          - XAF
-          - XAG
-          - XAU
-          - XBA
-          - XBB
-          - XBC
-          - XBD
-          - XCD
-          - XDR
-          - XOF
-          - XPD
-          - XPF
-          - XPT
-          - XSU
-          - XTS
-          - XUA
-          - XXX
-          - YER
-          - ZAR
-          - ZMW
-          - ZWL
-          maxLength: 3
-          minLength: 3
-          title: Currency
-          description: Currency for monetary metrics.
-        filters:
-          items:
-            type: string
-          type: array
-          title: Filters
-          description: Optional filter dimension names; used for exclusion rules. Not required.
-          default: []
-        subaccountIds:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Subaccountids
-          description: Optional subaccount IDs for Aura metric eligibility.
-      type: object
-      required:
-      - accountId
-      - metrics
-      - dimensions
-      - currency
-      title: CustomReportAdvancedFiltersRequestBody
-      description: Request body for advanced filter component init. No filters section required.
-    Dimensions:
-      type: string
-      enum:
-      - date
-      - country
-      - currency
-      - productBrandName
-      - experience
-      - commerceType
-      - productName
-      - alternateProductName
-      - modelName
-      - retailer
-      - utmSource
-      - utmMedium
-      - utmCampaign
-      - utmTerm
-      - utmContent
-      - utmAdId
-      - utmPlacement
-      - utmBu
-      - utmClicktype
-      - utmVariant
-      - utmAdvertiserId
-      - utmPlacementId
-      - utmFormat
-      - utmCreativeid
-      - utmConfig
-      - utmId
-      - utmMarketingTactic
-      - utmSourcePlatform
-      - utmCreativeFormat
-      - standardSource
-      - standardMedium
-      - productCategoryName
-      - productLine
-      - productRange
-      - productCustomCategory
-      - productCustomSubcategory1
-      - productCustomSubcategory2
-      - productCustomSubcategory3
-      - productCustomSubcategory4
-      - subaccountId
-      - ean
-      - mpn
-      - partnerId
-      - recipeName
-      - recipeRetailer
-      - recipeUtmSource
-      - recipeUtmMedium
-      - recipeUtmCampaign
-      - domain
-      - pageUrl
-      - domainUrl
-      - shopperCity
-      - shopperRegion
-      - shopperCountry
-      - shopperZipCode
-      - brandEntity
-      - isBundle
-      - deviceType
-      title: Dimensions
-      description: 'Dimensions available in custom reports (groupable columns).
-
-
-        Members:
-
-        - date: Date associated with the metric.
-
-        - country: Geographic country associated with the Commerce Experience. Filter with 2-character ISO 3166-1 alpha-2 codes (e.g. FR, US), not full names like France.
-
-        - currency: Currency code used in the report.
-
-        - productBrandName: Brand of the catalog product in the Commerce Experience.
-
-        - experience: Name of the Commerce Experience.
-
-        - commerceType: Type of MikMak Commerce Experience (Brand.com, Media, etc.); see ``CommerceType``.
-
-        - productName: Name of the catalog product in the Commerce Experience.
-
-        - retailer: Name of the online or offline retailer associated with a click or transaction.
-
-        - utmSource: Value of the utm_source URL parameter.
-
-        - utmMedium: Value of the utm_medium URL parameter.
-
-        - utmCampaign: Value of the utm_campaign URL parameter.
-
-        - utmTerm: Value of the utm_term URL parameter.
-
-        - utmContent: Value of the utm_content URL parameter.
-
-        - utmAdId: Value of the utm_adid URL parameter.
-
-        - utmPlacement: Value of the utm_placement URL parameter.
-
-        - utmBu: Value of the utm_bu (business unit) URL parameter.
-
-        - utmClicktype: Value of the utm_clicktype URL parameter.
-
-        - utmVariant: Value of the utm_variant URL parameter.
-
-        - utmAdvertiserId: Value of the utm_advertiserid URL parameter.
-
-        - utmPlacementId: Value of the utm_placementid URL parameter.
-
-        - utmFormat: Value of the utm_format URL parameter.
-
-        - utmCreativeid: Value of the utm_creativeid URL parameter.
-
-        - utmConfig: Value of the utm_config URL parameter.
-
-        - utmId: Value of the utm_id URL parameter.
-
-        - utmMarketingTactic: Marketing tactic derived from the URL (awareness / consideration / conversion).
-
-        - utmSourcePlatform: Value of the utm_source_platform URL parameter.
-
-        - utmCreativeFormat: Value of the utm_creative_format URL parameter.
-
-        - standardSource: Categorized version of utm_source mapped to a standardized traffic-source set.
-
-        - standardMedium: Categorized version of utm_medium mapped to a standardized medium set.
-
-        - productCategoryName: Category of the catalog product in the Commerce Experience.
-
-        - productLine: Product line of the catalog product.
-
-        - productRange: Product range of the catalog product.
-
-        - productCustomCategory: Account-defined custom category of the catalog product.
-
-        - productCustomSubcategory1: Account-defined custom subcategory (level 1).
-
-        - productCustomSubcategory2: Account-defined custom subcategory (level 2).
-
-        - productCustomSubcategory3: Account-defined custom subcategory (level 3).
-
-        - productCustomSubcategory4: Account-defined custom subcategory (level 4).
-
-        - subaccountId: MikMak subaccount (operator) that owns the Commerce Experience; PyObjectId-shaped.
-
-        - ean: EAN product identifier.
-
-        - partnerId: Name associated with a Recipe Partnership (shoppable recipes).
-
-        - recipeName: Title of the shoppable recipe.
-
-        - recipeRetailer: Retailer associated with a shoppable recipe click or transaction.
-
-        - recipeUtmSource: utm_source for shoppable-recipe traffic.
-
-        - recipeUtmMedium: utm_medium for shoppable-recipe traffic.
-
-        - recipeUtmCampaign: utm_campaign for shoppable-recipe traffic.
-
-        - domain: Website hosting the shoppable recipe.
-
-        - pageUrl: Web page URL associated with the metric.
-
-        - domainUrl: Web domain URL associated with the metric.
-
-        - shopperCity: City, town or municipality of the shopper during the session.
-
-        - shopperRegion: State/Province/Region of the shopper (country-dependent).
-
-        - shopperCountry: Country of the shopper during the session. Filter with 2-character ISO 3166-1 alpha-2 codes (e.g. FR, US), not full names like France.
-
-        - shopperZipCode: Local postal/ZIP code of the shopper''s location.
-
-        - brandEntity: Reporting Brand (Aura-gated).
-
-        - isBundle: Whether the experience is a bundle (Yes or No).
-
-        - deviceType: The category of the visitor''s hardware (Desktop, Mobile, Tablet, or Others), detected via the user agent associated with the metric.'
-    DateFreq:
-      type: string
-      enum:
-      - D
-      - W
-      - M
-      - Q
-      - Y
-      title: DateFreq
-      description: 'Date bucket granularity for time-series reports.
-
-
-        Members:
-
-        - D: Daily (one row per calendar day).
-
-        - W: Weekly (one row per ISO week, Monday-starting).
-
-        - M: Monthly (one row per calendar month).
-
-        - Q: Quarterly (one row per calendar quarter).
-
-        - Y: Yearly (one row per calendar year).'
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ReportFields:
-      properties:
-        dimensions:
-          anyOf:
-          - $ref: '#/components/schemas/ListConfig'
-          - type: 'null'
-        metrics:
-          anyOf:
-          - $ref: '#/components/schemas/ListConfig'
-          - type: 'null'
-      type: object
-      title: ReportFields
-      description: Report builder configuration
-    ListItem:
-      properties:
-        label:
-          type: string
-          title: Label
-        code:
-          type: string
-          title: Code
-        tooltip:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tooltip
-        category:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Category
-        startDate:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Startdate
-      type: object
-      required:
-      - label
-      - code
-      title: ListItem
-      description: Values for displaying item in a list
-    CommerceType:
-      description: 'Commerce touchpoint type (the ``commerceType`` dimension).
-
-
-        Members:
-
-        - ST: Brand.com (direct brand website touchpoint).
-
-        - LP: Landing Page.
-
-        - DP: Ad Unit (Display).
-
-        - VD: Ad Unit (Video).
-
-        - IP: Media.
-
-        - DL: Retailer Direct (Retail Media).
-
-        - AP: In-App.
-
-        - API: API (programmatic integration).'
-      enum:
-      - ST
-      - LP
-      - DP
-      - VD
-      - IP
-      - DL
-      - AP
-      - API
-      title: CommerceType
-      type: string
-    AdvancedFilterDimension:
-      properties:
-        name:
-          type: string
-          title: Name
-        displayName:
-          type: string
-          title: Displayname
-        operators:
-          items:
-            $ref: '#/components/schemas/AdvancedFilterOperator'
-          type: array
-          title: Operators
-      type: object
-      required:
-      - name
-      - displayName
-      - operators
-      title: AdvancedFilterDimension
-      description: Dimension metadata for the advanced filter component (name, displayName, and operators).
-    AdvancedFilterOperator:
-      properties:
-        code:
-          type: string
-          title: Code
-        label:
-          type: string
-          title: Label
-      type: object
-      required:
-      - code
-      - label
-      title: AdvancedFilterOperator
-      description: 'Operator option: code is the JSON key on custom_report filter bodies; label is UI copy.'
-    CustomReportSingleFilterRequestBody:
-      properties:
-        startDate:
-          type: string
-          format: date
-          title: Startdate
-          description: Start of the date range.
-        endDate:
-          type: string
-          format: date
-          title: Enddate
-          description: End of the date range.
-        filter:
-          type: string
-          title: Filter
-          description: Single dimension to get filter values for (e.g. 'country' or 'utmCampaign').
-        accountId:
-          type: string
-          title: Accountid
-          description: Account ID; if not provided, taken from the token.
-        subaccountIds:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Subaccountids
-          description: Optional list of subaccount IDs to restrict the query.
-          default: []
-      type: object
-      required:
-      - startDate
-      - endDate
-      - filter
-      - accountId
-      title: CustomReportSingleFilterRequestBody
-      description: Request body for retrieving filter values for a single dimension (ignores other filters).
-    CustomReportRequestBody:
-      properties:
-        dimensions:
-          items:
-            $ref: '#/components/schemas/Dimensions'
-          type: array
-          title: Dimensions
-        metrics:
-          items:
-            $ref: '#/components/schemas/Metrics'
-          type: array
-          title: Metrics
-        filters:
-          properties:
-            alternateProductName:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Alternate Product Name filter. Alternate product name from the Catalog.
-            brandEntity:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Reporting Brand filter. The Brand Entity associated with MikMak metrics.
-            commerceType:
-              anyOf:
-              - $ref: '#/components/schemas/CommerceTypeFilters'
-              - type: 'null'
-              description: Commerce Type filter. Type of MikMak Commerce Experience (Brand.com, Media, etc.)
-            country:
-              anyOf:
-              - $ref: '#/components/schemas/CountryFilters'
-              - type: 'null'
-              description: Country filter. Geographic country associated with the Commerce Experience.
-            deviceType:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Device Type filter. The category of the visitor's hardware (Desktop, Mobile, Tablet, or Others), detected via the user agent associated with the metric.
-            domainUrl:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Domain URL filter. The web domain associated with the metric.
-            experience:
-              anyOf:
-              - $ref: '#/components/schemas/ObjectIdFilters'
-              - type: 'null'
-              description: Commerce Experience filter. Name of the Commerce Experience.
-            isBundle:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Bundle filter. Whether the metric is tied to a bundle of products.
-            modelName:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Model Name filter. Model name from the Catalog.
-            mpn:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: MPN filter. Manufacturer Part Number of the catalog product in the Commerce Experience.
-            pageUrl:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Page URL filter. The web page associated with the metric.
-            productBrandName:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Brand Name filter. Brand of the catalog product in the Commerce Experience.
-            productCategoryName:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Product Category Name filter. Category of the catalog product in the Commerce Experience.
-            productCustomCategory:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Custom Category filter. Custom category of the catalog product in the Commerce Experience.
-            productCustomSubcategory1:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Custom Subcategory 1 filter. Custom subcategory (level 1) of the catalog product in the Commerce Experience.
-            productCustomSubcategory2:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Custom Subcategory 2 filter. Custom subcategory (level 2) of the catalog product in the Commerce Experience.
-            productCustomSubcategory3:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Custom Subcategory 3 filter. Custom subcategory (level 3) of the catalog product in the Commerce Experience.
-            productCustomSubcategory4:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Custom Subcategory 4 filter. Custom subcategory (level 4) of the catalog product in the Commerce Experience.
-            productLine:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Product Line filter. Line of the catalog product in the Commerce Experience.
-            productName:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Product Name filter. Name of the catalog product in the Commerce Experience.
-            productRange:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Product Range filter. Range of the catalog product in the Commerce Experience.
-            retailer:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Retailer Name filter. Name of the online or offline retailer associated with a click or transaction.
-            shopperCity:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Shopper City filter. The city, town, or municipality where the shopper was located during the session.
-            shopperCountry:
-              anyOf:
-              - $ref: '#/components/schemas/CountryFilters'
-              - type: 'null'
-              description: Shopper Country filter. The country where the shopper was located during the session.
-            shopperRegion:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Shopper Region filter. The primary administrative division (e.g., State, Province, or Region, dependent on the country) where the shopper was located during the session.
-            shopperZipCode:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Shopper Zip Code filter. The local postal code or ZIP code associated with the shopper's location.
-            standardMedium:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Standard Medium filter. The categorized version of the utm_medium parameter, mapping various raw values into a standardized set of marketing mediums.
-            standardSource:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Standard Source filter. The categorized version of the utm_source parameter, mapping various raw values into a standardized set of traffic sources.
-            subaccountId:
-              anyOf:
-              - $ref: '#/components/schemas/ObjectIdFilters'
-              - type: 'null'
-              description: Subaccount filter. MikMak subaccount that contains the Experience associated with the metric.
-            utmAdId:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Ad ID (utm) filter. Value of the utm_adid parameter, if present, in the URL associated with the metric.
-            utmAdvertiserId:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Advertiser ID (utm) filter. Value of the utm_advertiserid parameter, if present, in the URL associated with the metric.
-            utmBu:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Business Unit (utm) filter. Value of the utm_bu parameter, if present, in the URL associated with the metric.
-            utmCampaign:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Campaign (utm) filter. Value of the utm_campaign parameter, if present, in the URL associated with the metric.
-            utmClicktype:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Click Type (utm) filter. Value of the utm_clicktype parameter, if present, in the URL associated with the metric.
-            utmConfig:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Config (utm) filter. Value of the utm_config parameter, if present, in the URL associated with the metric.
-            utmContent:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Content (utm) filter. Value of the utm_content parameter, if present, in the URL associated with the metric.
-            utmCreativeFormat:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Creative Format (utm) filter. Value of the utm_creative_format parameter, if present, in the URL associated with the metric.
-            utmCreativeid:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Creative ID (utm) filter. Value of the utm_creativeid parameter, if present, in the URL associated with the metric.
-            utmFormat:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Format (utm) filter. Value of the utm_format parameter, if present, in the URL associated with the metric.
-            utmId:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: ID (utm) filter. Value of the utm_id parameter, if present, in the URL associated with the metric.
-            utmMarketingTactic:
-              anyOf:
-              - $ref: '#/components/schemas/CodedStrFilters'
-              - type: 'null'
-              description: Marketing Tactic filter. This dimension can be awareness, consideration, or conversion, depending on the presence of these strings in the URL associated with the metric.
-            utmMedium:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Medium (utm) filter. Value of the utm_medium parameter, if present, in the URL associated with the metric.
-            utmPlacement:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Placement (utm) filter. Value of the utm_placement parameter, if present, in the URL associated with the metric.
-            utmPlacementId:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Placement ID (utm) filter. Value of the utm_placementid parameter, if present, in the URL associated with the metric.
-            utmSource:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Source (utm) filter. Value of the utm_source parameter, if present, in the URL associated with the metric.
-            utmSourcePlatform:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Source Platform (utm) filter. Value of the utm_source_platform parameter, if present, in the URL associated with the metric.
-            utmTerm:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Term (utm) filter. Value of the utm_term parameter, if present, in the URL associated with the metric.
-            utmVariant:
-              anyOf:
-              - $ref: '#/components/schemas/StrFilters'
-              - type: 'null'
-              description: Variant (utm) filter. Value of the utm_variant parameter, if present, in the URL associated with the metric.
-            auraAdSpend:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for auraAdSpend (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            auraIncrementalContribution:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for auraIncrementalContribution (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            averageClickPrice:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for averageClickPrice (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            commerceLoadSessions:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for commerceLoadSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            commerceLoads:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for commerceLoads (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            ctaView:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for ctaView (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            ctaViewSessions:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for ctaViewSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            maxAuraRoas:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for maxAuraRoas (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            minAuraRoas:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for minAuraRoas (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            offlinePurchaseIntentClicks:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for offlinePurchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            onlinePurchaseIntentClicks:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for onlinePurchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            purchaseIntentClickSessions:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for purchaseIntentClickSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            purchaseIntentClicks:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for purchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            purchaseIntentRate:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for purchaseIntentRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            purchaseIntentRateSession:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for purchaseIntentRateSession (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            purchaseIntentValue:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for purchaseIntentValue (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            rawSalesAccountAmount:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for rawSalesAccountAmount (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            rawSalesAmount:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for rawSalesAmount (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerCTR:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerCTR (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerDisplayRate:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerDisplayRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerDisplayed:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerDisplayed (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerInStock:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerInStock (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerInStockRate:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerInStockRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            retailerOutOfStock:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for retailerOutOfStock (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            skuSelected:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for skuSelected (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            successfulSearches:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for successfulSearches (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            transactions:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for transactions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-            unsuccessfulSearches:
-              anyOf:
-              - $ref: '#/components/schemas/MetricNumericFilterRule'
-              - type: 'null'
-              description: Post-aggregation numeric bounds for unsuccessfulSearches (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
-          additionalProperties: false
-          type: object
-          title: Filters
-          description: 'Per-field filters: each dimension key uses a typed filter object (e.g. country/shopperCountry require ISO 3166-1 alpha-2 codes; commerceType uses CommerceType codes; subaccountId/experience use 24-char ObjectIds; coded dimensions expose includes/excludes only). Metrics may use is_higher_than / is_lower_than (post-aggregation).'
-        accountId:
-          type: string
-          title: Accountid
-          description: If accountId is not provided, the accountId will be taken from the token.
-        currency:
-          type: string
-          enum:
-          - AED
-          - AFN
-          - ALL
-          - AMD
-          - ANG
-          - AOA
-          - ARS
-          - AUD
-          - AWG
-          - AZN
-          - BAM
-          - BBD
-          - BDT
-          - BGN
-          - BHD
-          - BIF
-          - BMD
-          - BND
-          - BOB
-          - BOV
-          - BRL
-          - BSD
-          - BTN
-          - BWP
-          - BYN
-          - BZD
-          - CAD
-          - CDF
-          - CHE
-          - CHF
-          - CHW
-          - CLF
-          - CLP
-          - CNY
-          - COP
-          - COU
-          - CRC
-          - CUC
-          - CUP
-          - CVE
-          - CZK
-          - DJF
-          - DKK
-          - DOP
-          - DZD
-          - EGP
-          - ERN
-          - ETB
-          - EUR
-          - FJD
-          - FKP
-          - GBP
-          - GEL
-          - GHS
-          - GIP
-          - GMD
-          - GNF
-          - GTQ
-          - GYD
-          - HKD
-          - HNL
-          - HRK
-          - HTG
-          - HUF
-          - IDR
-          - ILS
-          - INR
-          - IQD
-          - IRR
-          - ISK
-          - JMD
-          - JOD
-          - JPY
-          - KES
-          - KGS
-          - KHR
-          - KMF
-          - KPW
-          - KRW
-          - KWD
-          - KYD
-          - KZT
-          - LAK
-          - LBP
-          - LKR
-          - LRD
-          - LSL
-          - LYD
-          - MAD
-          - MDL
-          - MGA
-          - MKD
-          - MMK
-          - MNT
-          - MOP
-          - MRU
-          - MUR
-          - MVR
-          - MWK
-          - MXN
-          - MXV
-          - MYR
-          - MZN
-          - NAD
-          - NGN
-          - NIO
-          - NOK
-          - NPR
-          - NZD
-          - OMR
-          - PAB
-          - PEN
-          - PGK
-          - PHP
-          - PKR
-          - PLN
-          - PYG
-          - QAR
-          - RON
-          - RSD
-          - RUB
-          - RWF
-          - SAR
-          - SBD
-          - SCR
-          - SDG
-          - SEK
-          - SGD
-          - SHP
-          - SLE
-          - SLL
-          - SOS
-          - SRD
-          - SSP
-          - STN
-          - SVC
-          - SYP
-          - SZL
-          - THB
-          - TJS
-          - TMT
-          - TND
-          - TOP
-          - TRY
-          - TTD
-          - TWD
-          - TZS
-          - UAH
-          - UGX
-          - USD
-          - USN
-          - UYI
-          - UYU
-          - UYW
-          - UZS
-          - VED
-          - VES
-          - VND
-          - VUV
-          - WST
-          - XAF
-          - XAG
-          - XAU
-          - XBA
-          - XBB
-          - XBC
-          - XBD
-          - XCD
-          - XDR
-          - XOF
-          - XPD
-          - XPF
-          - XPT
-          - XSU
-          - XTS
-          - XUA
-          - XXX
-          - YER
-          - ZAR
-          - ZMW
-          - ZWL
-          maxLength: 3
-          minLength: 3
-          title: Currency
-          description: The Currency field is required in the request body to provide the monetary metrics in the adequate currency.
-        fieldDetails:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Fielddetails
-          description: When set to 'yes', includes tooltip and category fields in the response.
-        startDate:
-          type: string
-          format: date
-          title: Startdate
-        endDate:
-          type: string
-          format: date
-          title: Enddate
-        subaccountIds:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Subaccountids
-          default: []
-        filtersJoinOperator:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Filtersjoinoperator
-          description: 'How to combine top-level filter conditions: AND (default) or OR. Case-insensitive.'
-          default: AND
-        useAdvancedFilters:
-          type: boolean
-          title: Useadvancedfilters
-          description: When true, filters may use advanced-only fields (e.g. utmPlacement). When false or omitted, filters may only use base filter dimensions.
-          default: false
-        sortBy:
-          type: string
-          enum:
-          - date
-          - country
-          - currency
-          - productBrandName
-          - experience
-          - commerceType
-          - productName
-          - alternateProductName
-          - modelName
-          - retailer
-          - utmSource
-          - utmMedium
-          - utmCampaign
-          - utmTerm
-          - utmContent
-          - utmAdId
-          - utmPlacement
-          - utmBu
-          - utmClicktype
-          - utmVariant
-          - utmAdvertiserId
-          - utmPlacementId
-          - utmFormat
-          - utmCreativeid
-          - utmConfig
-          - utmId
-          - utmMarketingTactic
-          - utmSourcePlatform
-          - utmCreativeFormat
-          - standardSource
-          - standardMedium
-          - productCategoryName
-          - productLine
-          - productRange
-          - productCustomCategory
-          - productCustomSubcategory1
-          - productCustomSubcategory2
-          - productCustomSubcategory3
-          - productCustomSubcategory4
-          - subaccountId
-          - ean
-          - mpn
-          - partnerId
-          - recipeName
-          - recipeRetailer
-          - recipeUtmSource
-          - recipeUtmMedium
-          - recipeUtmCampaign
-          - domain
-          - pageUrl
-          - domainUrl
-          - shopperCity
-          - shopperRegion
-          - shopperCountry
-          - shopperZipCode
-          - brandEntity
-          - isBundle
-          - deviceType
-          - purchaseIntentValue
-          - averageClickPrice
-          - purchaseIntentClicks
-          - ctaView
-          - rawSalesAccountAmount
-          - rawSalesAmount
-          - commerceLoads
-          - purchaseIntentRate
-          - ctaViewSessions
-          - commerceLoadSessions
-          - purchaseIntentClickSessions
-          - purchaseIntentRateSession
-          - transactions
-          - skuSelected
-          - successfulSearches
-          - unsuccessfulSearches
-          - onlinePurchaseIntentClicks
-          - offlinePurchaseIntentClicks
-          - avgPriceLocalCurrency
-          - minPriceLocalCurrency
-          - maxPriceLocalCurrency
-          - medianPriceLocalCurrency
-          - inStock
-          - outOfStock
-          - retailerOpportunities
-          - missedRetailerOpportunities
-          - retailerImpressions
-          - retailerDisplayed
-          - retailerInStock
-          - retailerOutOfStock
-          - retailerInStockRate
-          - retailerDisplayRate
-          - retailerCTR
-          - transactionValue
-          - commerceLoadedRate
-          - shoppableCommerceLoadedRate
-          - visitorConversionRate
-          - shoppableTransactionConversionRate
-          - shoppableTransactionValueConversionRate
-          - minAuraRoas
-          - maxAuraRoas
-          - auraAdSpend
-          - auraIncrementalContribution
-          title: Sortby
-        sortDir:
-          $ref: '#/components/schemas/OrderDirection'
-        dateFreq:
-          $ref: '#/components/schemas/DateFreq'
-          default: D
-      type: object
-      required:
-      - dimensions
-      - metrics
-      - filters
-      - accountId
-      - currency
-      - startDate
-      - endDate
-      - sortBy
-      - sortDir
-      title: CustomReportRequestBody
-    Column:
-      properties:
-        key:
-          anyOf:
-          - $ref: '#/components/schemas/Dimensions'
-          - $ref: '#/components/schemas/Metrics'
-          title: Key
-        type:
-          $ref: '#/components/schemas/ColumnType'
-        displayName:
-          type: string
-          title: Displayname
-          description: Human-readable column title. When the report date range starts before a metric or dimension availability date (see startDate on custom_report_fields), the API appends a parenthetical suffix with Unicode U+26A0, either 'Metric start date' or 'Dimension start date', and an ISO YYYY-MM-DD date.
-        tooltip:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tooltip
-      type: object
-      required:
-      - key
-      - type
-      - displayName
-      title: Column
-    StrFilters:
-      additionalProperties: false
-      properties:
-        includes:
-          description: Include rows where value is in this list (IN).
-          items:
-            type: string
-          title: Includes
-          type: array
-        excludes:
-          description: Exclude rows where value is in this list (NOT IN).
-          items:
-            type: string
-          title: Excludes
-          type: array
-        contains:
-          description: Include rows where value contains any of these strings (case-insensitive LIKE %...%). Combined with OR. Max 5 values.
-          items:
-            type: string
-          maxItems: 5
-          title: Contains
-          type: array
-        notContains:
-          description: Exclude rows where value contains any of these strings (case-insensitive NOT LIKE %...%). Combined with AND. Max 5 values.
-          items:
-            type: string
-          maxItems: 5
-          title: Notcontains
-          type: array
-      title: StrFilters
-      type: object
     Row:
       properties:
         date:
@@ -3145,6 +679,220 @@ components:
           title: Auraincrementalcontribution
       type: object
       title: Row
+    ObjectIdFilters:
+      additionalProperties: false
+      description: Filter by MongoDB ObjectId strings (24-character hex).
+      properties:
+        includes:
+          description: Include rows where the dimension matches any of these 24-character hex ObjectId strings (IN).
+          items:
+            type: string
+          title: Includes
+          type: array
+        excludes:
+          description: Exclude rows where the dimension matches any of these 24-character hex ObjectId strings (NOT IN).
+          items:
+            type: string
+          title: Excludes
+          type: array
+      title: ObjectIdFilters
+      type: object
+    MetricNumericFilterRule:
+      additionalProperties: false
+      description: 'Post-aggregation metric bounds: is_higher_than is >=, is_lower_than is <=.'
+      properties:
+        isHigherThan:
+          anyOf:
+          - type: number
+          - type: 'null'
+          default: null
+          description: Inclusive lower bound on the aggregated metric (SQL >=).
+          title: Ishigherthan
+        isLowerThan:
+          anyOf:
+          - type: number
+          - type: 'null'
+          default: null
+          description: Inclusive upper bound on the aggregated metric (SQL <=).
+          title: Islowerthan
+      title: MetricNumericFilterRule
+      type: object
+    Dimensions:
+      type: string
+      enum:
+      - date
+      - country
+      - currency
+      - productBrandName
+      - experience
+      - commerceType
+      - productName
+      - alternateProductName
+      - modelName
+      - retailer
+      - utmSource
+      - utmMedium
+      - utmCampaign
+      - utmTerm
+      - utmContent
+      - utmAdId
+      - utmPlacement
+      - utmBu
+      - utmClicktype
+      - utmVariant
+      - utmAdvertiserId
+      - utmPlacementId
+      - utmFormat
+      - utmCreativeid
+      - utmConfig
+      - utmId
+      - utmMarketingTactic
+      - utmSourcePlatform
+      - utmCreativeFormat
+      - standardSource
+      - standardMedium
+      - productCategoryName
+      - productLine
+      - productRange
+      - productCustomCategory
+      - productCustomSubcategory1
+      - productCustomSubcategory2
+      - productCustomSubcategory3
+      - productCustomSubcategory4
+      - subaccountId
+      - ean
+      - mpn
+      - partnerId
+      - recipeName
+      - recipeRetailer
+      - recipeUtmSource
+      - recipeUtmMedium
+      - recipeUtmCampaign
+      - domain
+      - pageUrl
+      - domainUrl
+      - shopperCity
+      - shopperRegion
+      - shopperCountry
+      - shopperZipCode
+      - brandEntity
+      - isBundle
+      - deviceType
+      title: Dimensions
+      description: 'Dimensions available in custom reports (groupable columns).
+
+
+        Members:
+
+        - date: Date associated with the metric.
+
+        - country: Geographic country associated with the Commerce Experience. Filter with 2-character ISO 3166-1 alpha-2 codes (e.g. FR, US), not full names like France.
+
+        - currency: Currency code used in the report.
+
+        - productBrandName: Brand of the catalog product in the Commerce Experience.
+
+        - experience: Name of the Commerce Experience.
+
+        - commerceType: Type of MikMak Commerce Experience (Brand.com, Media, etc.); see ``CommerceType``.
+
+        - productName: Name of the catalog product in the Commerce Experience.
+
+        - retailer: Name of the online or offline retailer associated with a click or transaction.
+
+        - utmSource: Value of the utm_source URL parameter.
+
+        - utmMedium: Value of the utm_medium URL parameter.
+
+        - utmCampaign: Value of the utm_campaign URL parameter.
+
+        - utmTerm: Value of the utm_term URL parameter.
+
+        - utmContent: Value of the utm_content URL parameter.
+
+        - utmAdId: Value of the utm_adid URL parameter.
+
+        - utmPlacement: Value of the utm_placement URL parameter.
+
+        - utmBu: Value of the utm_bu (business unit) URL parameter.
+
+        - utmClicktype: Value of the utm_clicktype URL parameter.
+
+        - utmVariant: Value of the utm_variant URL parameter.
+
+        - utmAdvertiserId: Value of the utm_advertiserid URL parameter.
+
+        - utmPlacementId: Value of the utm_placementid URL parameter.
+
+        - utmFormat: Value of the utm_format URL parameter.
+
+        - utmCreativeid: Value of the utm_creativeid URL parameter.
+
+        - utmConfig: Value of the utm_config URL parameter.
+
+        - utmId: Value of the utm_id URL parameter.
+
+        - utmMarketingTactic: Marketing tactic derived from the URL (awareness / consideration / conversion).
+
+        - utmSourcePlatform: Value of the utm_source_platform URL parameter.
+
+        - utmCreativeFormat: Value of the utm_creative_format URL parameter.
+
+        - standardSource: Categorized version of utm_source mapped to a standardized traffic-source set.
+
+        - standardMedium: Categorized version of utm_medium mapped to a standardized medium set.
+
+        - productCategoryName: Category of the catalog product in the Commerce Experience.
+
+        - productLine: Product line of the catalog product.
+
+        - productRange: Product range of the catalog product.
+
+        - productCustomCategory: Account-defined custom category of the catalog product.
+
+        - productCustomSubcategory1: Account-defined custom subcategory (level 1).
+
+        - productCustomSubcategory2: Account-defined custom subcategory (level 2).
+
+        - productCustomSubcategory3: Account-defined custom subcategory (level 3).
+
+        - productCustomSubcategory4: Account-defined custom subcategory (level 4).
+
+        - subaccountId: MikMak subaccount (operator) that owns the Commerce Experience; PyObjectId-shaped.
+
+        - ean: EAN product identifier.
+
+        - partnerId: Name associated with a Recipe Partnership (shoppable recipes).
+
+        - recipeName: Title of the shoppable recipe.
+
+        - recipeRetailer: Retailer associated with a shoppable recipe click or transaction.
+
+        - recipeUtmSource: utm_source for shoppable-recipe traffic.
+
+        - recipeUtmMedium: utm_medium for shoppable-recipe traffic.
+
+        - recipeUtmCampaign: utm_campaign for shoppable-recipe traffic.
+
+        - domain: Website hosting the shoppable recipe.
+
+        - pageUrl: Web page URL associated with the metric.
+
+        - domainUrl: Web domain URL associated with the metric.
+
+        - shopperCity: City, town or municipality of the shopper during the session.
+
+        - shopperRegion: State/Province/Region of the shopper (country-dependent).
+
+        - shopperCountry: Country of the shopper during the session. Filter with 2-character ISO 3166-1 alpha-2 codes (e.g. FR, US), not full names like France.
+
+        - shopperZipCode: Local postal/ZIP code of the shopper''s location.
+
+        - brandEntity: Reporting Brand (Aura-gated).
+
+        - isBundle: Whether the experience is a bundle (Yes or No).
+
+        - deviceType: The category of the visitor''s hardware (Desktop, Mobile, Tablet, or Others), detected via the user agent associated with the metric.'
     ListConfig:
       properties:
         apiFilterParam:
@@ -3171,6 +919,295 @@ components:
       - displayName
       title: ListConfig
       description: Menu item for providing a dropdown list of values with a display name
+    Metrics:
+      type: string
+      enum:
+      - purchaseIntentValue
+      - averageClickPrice
+      - purchaseIntentClicks
+      - ctaView
+      - rawSalesAccountAmount
+      - rawSalesAmount
+      - commerceLoads
+      - purchaseIntentRate
+      - ctaViewSessions
+      - commerceLoadSessions
+      - purchaseIntentClickSessions
+      - purchaseIntentRateSession
+      - transactions
+      - skuSelected
+      - successfulSearches
+      - unsuccessfulSearches
+      - onlinePurchaseIntentClicks
+      - offlinePurchaseIntentClicks
+      - avgPriceLocalCurrency
+      - minPriceLocalCurrency
+      - maxPriceLocalCurrency
+      - medianPriceLocalCurrency
+      - inStock
+      - outOfStock
+      - retailerOpportunities
+      - missedRetailerOpportunities
+      - retailerImpressions
+      - retailerDisplayed
+      - retailerInStock
+      - retailerOutOfStock
+      - retailerInStockRate
+      - retailerDisplayRate
+      - retailerCTR
+      - transactionValue
+      - commerceLoadedRate
+      - shoppableCommerceLoadedRate
+      - visitorConversionRate
+      - shoppableTransactionConversionRate
+      - shoppableTransactionValueConversionRate
+      - minAuraRoas
+      - maxAuraRoas
+      - auraAdSpend
+      - auraIncrementalContribution
+      title: Metrics
+      description: 'Metrics available in custom reports (aggregated numeric values).
+
+
+        Members:
+
+        - purchaseIntentValue: Total financial value of Purchase Intent Clicks (price x clicks), in the selected currency.
+
+        - averageClickPrice: Average listed price of clicked products (Purchase Intent Value / Total Purchase Intent Clicks).
+
+        - purchaseIntentClicks: Total number of clicks-through to a retailer from a MikMak Commerce Experience (online + offline).
+
+        - ctaView: Times the MikMak button was present on a page (or immediately before an auto-loaded Experience).
+
+        - rawSalesAccountAmount: Transaction value attributed to Purchase Intent Clicks, restricted to products associated with the account.
+
+        - rawSalesAmount: Transaction value attributed to Purchase Intent Clicks across all products (including other brands'').
+
+        - commerceLoads: Number of times a MikMak Commerce Experience was fully initialized.
+
+        - purchaseIntentRate: Percentage of shoppers who opened an Experience and then clicked through to a retailer.
+
+        - ctaViewSessions: Unique user sessions containing at least one CTA View.
+
+        - commerceLoadSessions: Unique user sessions containing at least one Commerce Load.
+
+        - purchaseIntentClickSessions: Unique user sessions containing at least one Purchase Intent Click.
+
+        - purchaseIntentRateSession: Purchase Intent Click Sessions divided by Commerce Load Sessions.
+
+        - transactions: Number of attributable, unique orders within the retailer-defined attribution window.
+
+        - skuSelected: Number of times a product was selected within a Commerce Experience.
+
+        - onlinePurchaseIntentClicks: Purchase Intent Clicks targeting online stores (e.g., retailer PDPs).
+
+        - offlinePurchaseIntentClicks: Purchase Intent Clicks targeting physical stores (e.g., store cards).
+
+        - avgPriceLocalCurrency: Average product price in the product''s local currency (historical pricing).
+
+        - minPriceLocalCurrency: Minimum product price in the product''s local currency (historical pricing).
+
+        - maxPriceLocalCurrency: Maximum product price in the product''s local currency (historical pricing).
+
+        - medianPriceLocalCurrency: Median product price in the product''s local currency (historical pricing).
+
+        - inStock: Count of in-stock observations for the product at the retailer (historical pricing).
+
+        - outOfStock: Count of out-of-stock observations for the product at the retailer (historical pricing).
+
+        - retailerOpportunities: Count of retailer-display opportunities in the window.
+
+        - missedRetailerOpportunities: Opportunities where no retailer was actually displayed.
+
+        - retailerImpressions: Count of times a retailer was an option to checkout for a recipe.
+
+        - retailerDisplayed: Times at least one store of a retailer was visible in an Experience (logo on-screen).
+
+        - retailerInStock: Times at least one store of a retailer had stock available as a click-through option.
+
+        - retailerOutOfStock: Times an eligible retailer had only out-of-stock stores in the Experience.
+
+        - retailerInStockRate: retailerInStock / (retailerInStock + retailerOutOfStock).
+
+        - retailerDisplayRate: retailerDisplayed / (retailerInStock + retailerOutOfStock).
+
+        - retailerCTR: purchaseIntentClicks / retailerDisplayed (retailer click-through rate).
+
+        - transactionValue: Attributed transaction value (shoppable recipes), in the selected currency.
+
+        - commerceLoadedRate: Commerce-load rate for custom reports (ratio).
+
+        - shoppableCommerceLoadedRate: Percentage of CTA Views that resulted in a Commerce Load (shoppable).
+
+        - visitorConversionRate: purchaseIntentClicks / ctaView.
+
+        - shoppableTransactionConversionRate: transactions / purchaseIntentClicks (shoppable).
+
+        - shoppableTransactionValueConversionRate: transactionValue / purchaseIntentValue (shoppable).'
+    ListItem:
+      properties:
+        label:
+          type: string
+          title: Label
+        code:
+          type: string
+          title: Code
+        tooltip:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tooltip
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+        startDate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Startdate
+      type: object
+      required:
+      - label
+      - code
+      title: ListItem
+      description: Values for displaying item in a list
+    CountryFilters:
+      additionalProperties: false
+      description: 'Filter by ISO 3166-1 alpha-2 country codes (e.g. ``US``, ``FR``).
+
+
+        Full country names (e.g. ``France``) are rejected; use the 2-character code.'
+      properties:
+        includes:
+          description: Include rows where the country dimension matches any of these 2-character ISO 3166-1 alpha-2 codes (e.g. 'FR', 'US'). Do not use full country names like 'France'.
+          items:
+            pattern: ^\w{2}$
+            type: string
+          title: Includes
+          type: array
+        excludes:
+          description: Exclude rows where the country dimension matches any of these 2-character ISO 3166-1 alpha-2 codes (e.g. 'FR', 'US'). Do not use full country names like 'France'.
+          items:
+            pattern: ^\w{2}$
+            type: string
+          title: Excludes
+          type: array
+      title: CountryFilters
+      type: object
+    ReportFields:
+      properties:
+        dimensions:
+          anyOf:
+          - $ref: '#/components/schemas/ListConfig'
+          - type: 'null'
+        metrics:
+          anyOf:
+          - $ref: '#/components/schemas/ListConfig'
+          - type: 'null'
+      type: object
+      title: ReportFields
+      description: Report builder configuration
+    ReportAdvancedFiltersResponse:
+      properties:
+        dimensions:
+          items:
+            $ref: '#/components/schemas/AdvancedFilterDimension'
+          type: array
+          title: Dimensions
+        metrics:
+          items:
+            $ref: '#/components/schemas/AdvancedFilterMetric'
+          type: array
+          title: Metrics
+      type: object
+      required:
+      - dimensions
+      - metrics
+      title: ReportAdvancedFiltersResponse
+      description: 'Response for advanced filter component: dimensions and metrics with operators, no filter values.'
+    ReportPaginatedResponse:
+      properties:
+        total:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Total
+        nextPage:
+          type: boolean
+          title: Nextpage
+        columns:
+          items:
+            $ref: '#/components/schemas/Column'
+          type: array
+          title: Columns
+        data:
+          items:
+            $ref: '#/components/schemas/Row'
+          type: array
+          title: Data
+      type: object
+      required:
+      - nextPage
+      - columns
+      - data
+      title: ReportPaginatedResponse
+    AdvancedFilterMetric:
+      properties:
+        name:
+          type: string
+          title: Name
+        displayName:
+          type: string
+          title: Displayname
+        operators:
+          items:
+            $ref: '#/components/schemas/AdvancedFilterOperator'
+          type: array
+          title: Operators
+        dataType:
+          $ref: '#/components/schemas/MetricDataType'
+          description: Data type for formatting/validation (e.g. integer, percentage, currency). Actual currency code comes from the request.
+      type: object
+      required:
+      - name
+      - displayName
+      - operators
+      - dataType
+      title: AdvancedFilterMetric
+      description: Metric metadata for the advanced filter component (name, displayName, operators, dataType).
+    StrFilters:
+      additionalProperties: false
+      properties:
+        includes:
+          description: Include rows where value is in this list (IN).
+          items:
+            type: string
+          title: Includes
+          type: array
+        excludes:
+          description: Exclude rows where value is in this list (NOT IN).
+          items:
+            type: string
+          title: Excludes
+          type: array
+        contains:
+          description: Include rows where value contains any of these strings (case-insensitive LIKE %...%). Combined with OR. Max 5 values.
+          items:
+            type: string
+          maxItems: 5
+          title: Contains
+          type: array
+        notContains:
+          description: Exclude rows where value contains any of these strings (case-insensitive NOT LIKE %...%). Combined with AND. Max 5 values.
+          items:
+            type: string
+          maxItems: 5
+          title: Notcontains
+          type: array
+      title: StrFilters
+      type: object
     CustomReportPaginatedRequestBody:
       properties:
         dimensions:
@@ -3928,196 +1965,284 @@ components:
       - offset
       - count
       title: CustomReportPaginatedRequestBody
-    CountryFilters:
-      additionalProperties: false
-      description: 'Filter by ISO 3166-1 alpha-2 country codes (e.g. ``US``, ``FR``).
-
-
-        Full country names (e.g. ``France``) are rejected; use the 2-character code.'
+    ExportResponse:
       properties:
-        includes:
-          description: Include rows where the country dimension matches any of these 2-character ISO 3166-1 alpha-2 codes (e.g. 'FR', 'US'). Do not use full country names like 'France'.
-          items:
-            pattern: ^\w{2}$
-            type: string
-          title: Includes
-          type: array
-        excludes:
-          description: Exclude rows where the country dimension matches any of these 2-character ISO 3166-1 alpha-2 codes (e.g. 'FR', 'US'). Do not use full country names like 'France'.
-          items:
-            pattern: ^\w{2}$
-            type: string
-          title: Excludes
-          type: array
-      title: CountryFilters
-      type: object
-    AdvancedFilterMetric:
-      properties:
-        name:
+        url:
           type: string
-          title: Name
-        displayName:
-          type: string
-          title: Displayname
-        operators:
-          items:
-            $ref: '#/components/schemas/AdvancedFilterOperator'
-          type: array
-          title: Operators
-        dataType:
-          $ref: '#/components/schemas/MetricDataType'
-          description: Data type for formatting/validation (e.g. integer, percentage, currency). Actual currency code comes from the request.
+          title: Url
       type: object
       required:
-      - name
-      - displayName
-      - operators
-      - dataType
-      title: AdvancedFilterMetric
-      description: Metric metadata for the advanced filter component (name, displayName, operators, dataType).
-    CodedStrFilters:
-      additionalProperties: false
-      description: Equality-only string filters for coded / non-UTF8 dimensions (no contains).
+      - url
+      title: ExportResponse
+    CustomReportFieldsRequestBody:
       properties:
-        includes:
-          description: Include rows where value is in this list (IN).
+        dimensions:
           items:
-            type: string
-          title: Includes
+            $ref: '#/components/schemas/Dimensions'
           type: array
-        excludes:
-          description: Exclude rows where value is in this list (NOT IN).
+          title: Dimensions
+        metrics:
           items:
-            type: string
-          title: Excludes
+            $ref: '#/components/schemas/Metrics'
           type: array
-      title: CodedStrFilters
+          title: Metrics
+        filters:
+          items:
+            $ref: '#/components/schemas/Dimensions'
+          type: array
+          title: Filters
+          description: Filters are used to filter the data based on the selected dimensions. Only provide the filter labels and not the filter values.
+        accountId:
+          type: string
+          title: Accountid
+          description: If accountId is not provided, the accountId will be taken from the token.
+        currency:
+          type: string
+          enum:
+          - AED
+          - AFN
+          - ALL
+          - AMD
+          - ANG
+          - AOA
+          - ARS
+          - AUD
+          - AWG
+          - AZN
+          - BAM
+          - BBD
+          - BDT
+          - BGN
+          - BHD
+          - BIF
+          - BMD
+          - BND
+          - BOB
+          - BOV
+          - BRL
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
+          - CAD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
+          - CLF
+          - CLP
+          - CNY
+          - COP
+          - COU
+          - CRC
+          - CUC
+          - CUP
+          - CVE
+          - CZK
+          - DJF
+          - DKK
+          - DOP
+          - DZD
+          - EGP
+          - ERN
+          - ETB
+          - EUR
+          - FJD
+          - FKP
+          - GBP
+          - GEL
+          - GHS
+          - GIP
+          - GMD
+          - GNF
+          - GTQ
+          - GYD
+          - HKD
+          - HNL
+          - HRK
+          - HTG
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - IQD
+          - IRR
+          - ISK
+          - JMD
+          - JOD
+          - JPY
+          - KES
+          - KGS
+          - KHR
+          - KMF
+          - KPW
+          - KRW
+          - KWD
+          - KYD
+          - KZT
+          - LAK
+          - LBP
+          - LKR
+          - LRD
+          - LSL
+          - LYD
+          - MAD
+          - MDL
+          - MGA
+          - MKD
+          - MMK
+          - MNT
+          - MOP
+          - MRU
+          - MUR
+          - MVR
+          - MWK
+          - MXN
+          - MXV
+          - MYR
+          - MZN
+          - NAD
+          - NGN
+          - NIO
+          - NOK
+          - NPR
+          - NZD
+          - OMR
+          - PAB
+          - PEN
+          - PGK
+          - PHP
+          - PKR
+          - PLN
+          - PYG
+          - QAR
+          - RON
+          - RSD
+          - RUB
+          - RWF
+          - SAR
+          - SBD
+          - SCR
+          - SDG
+          - SEK
+          - SGD
+          - SHP
+          - SLE
+          - SLL
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
+          - SYP
+          - SZL
+          - THB
+          - TJS
+          - TMT
+          - TND
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
+          - UAH
+          - UGX
+          - USD
+          - USN
+          - UYI
+          - UYU
+          - UYW
+          - UZS
+          - VED
+          - VES
+          - VND
+          - VUV
+          - WST
+          - XAF
+          - XAG
+          - XAU
+          - XBA
+          - XBB
+          - XBC
+          - XBD
+          - XCD
+          - XDR
+          - XOF
+          - XPD
+          - XPF
+          - XPT
+          - XSU
+          - XTS
+          - XUA
+          - XXX
+          - YER
+          - ZAR
+          - ZMW
+          - ZWL
+          maxLength: 3
+          minLength: 3
+          title: Currency
+          description: The Currency field is required in the request body to provide the monetary metrics in the adequate currency.
+        fieldDetails:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Fielddetails
+          description: When set to 'yes', includes tooltip and category fields in the response.
+        startDate:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Startdate
+          description: Optional report range start. When provided with field_details 'yes', tooltips for metrics/dimensions with a configured start_date include a warning only if this date is before that field's availability date.
+        useAdvancedFilters:
+          type: boolean
+          title: Useadvancedfilters
+          description: When true, filters may use advanced-only fields (e.g. utmPlacement). When false or omitted, filters may only use base filter dimensions.
+          default: false
+        subaccountIds:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Subaccountids
+          description: Optional subaccount IDs for Aura metric eligibility.
       type: object
-    Metrics:
+      required:
+      - dimensions
+      - metrics
+      - filters
+      - accountId
+      - currency
+      title: CustomReportFieldsRequestBody
+    ReportFiltersResponse:
+      properties:
+        filters:
+          additionalProperties:
+            $ref: '#/components/schemas/ListConfig'
+          type: object
+          title: Filters
+      type: object
+      required:
+      - filters
+      title: ReportFiltersResponse
+    OrderDirection:
       type: string
       enum:
-      - purchaseIntentValue
-      - averageClickPrice
-      - purchaseIntentClicks
-      - ctaView
-      - rawSalesAccountAmount
-      - rawSalesAmount
-      - commerceLoads
-      - purchaseIntentRate
-      - ctaViewSessions
-      - commerceLoadSessions
-      - purchaseIntentClickSessions
-      - purchaseIntentRateSession
-      - transactions
-      - skuSelected
-      - successfulSearches
-      - unsuccessfulSearches
-      - onlinePurchaseIntentClicks
-      - offlinePurchaseIntentClicks
-      - avgPriceLocalCurrency
-      - minPriceLocalCurrency
-      - maxPriceLocalCurrency
-      - medianPriceLocalCurrency
-      - inStock
-      - outOfStock
-      - retailerOpportunities
-      - missedRetailerOpportunities
-      - retailerImpressions
-      - retailerDisplayed
-      - retailerInStock
-      - retailerOutOfStock
-      - retailerInStockRate
-      - retailerDisplayRate
-      - retailerCTR
-      - transactionValue
-      - commerceLoadedRate
-      - shoppableCommerceLoadedRate
-      - visitorConversionRate
-      - shoppableTransactionConversionRate
-      - shoppableTransactionValueConversionRate
-      - minAuraRoas
-      - maxAuraRoas
-      - auraAdSpend
-      - auraIncrementalContribution
-      title: Metrics
-      description: 'Metrics available in custom reports (aggregated numeric values).
+      - ASC
+      - DESC
+      title: OrderDirection
+      description: 'Sort direction applied to ``sort_by`` in custom reports.
 
 
         Members:
 
-        - purchaseIntentValue: Total financial value of Purchase Intent Clicks (price x clicks), in the selected currency.
+        - ASC: Ascending (smallest/earliest first).
 
-        - averageClickPrice: Average listed price of clicked products (Purchase Intent Value / Total Purchase Intent Clicks).
-
-        - purchaseIntentClicks: Total number of clicks-through to a retailer from a MikMak Commerce Experience (online + offline).
-
-        - ctaView: Times the MikMak button was present on a page (or immediately before an auto-loaded Experience).
-
-        - rawSalesAccountAmount: Transaction value attributed to Purchase Intent Clicks, restricted to products associated with the account.
-
-        - rawSalesAmount: Transaction value attributed to Purchase Intent Clicks across all products (including other brands'').
-
-        - commerceLoads: Number of times a MikMak Commerce Experience was fully initialized.
-
-        - purchaseIntentRate: Percentage of shoppers who opened an Experience and then clicked through to a retailer.
-
-        - ctaViewSessions: Unique user sessions containing at least one CTA View.
-
-        - commerceLoadSessions: Unique user sessions containing at least one Commerce Load.
-
-        - purchaseIntentClickSessions: Unique user sessions containing at least one Purchase Intent Click.
-
-        - purchaseIntentRateSession: Purchase Intent Click Sessions divided by Commerce Load Sessions.
-
-        - transactions: Number of attributable, unique orders within the retailer-defined attribution window.
-
-        - skuSelected: Number of times a product was selected within a Commerce Experience.
-
-        - onlinePurchaseIntentClicks: Purchase Intent Clicks targeting online stores (e.g., retailer PDPs).
-
-        - offlinePurchaseIntentClicks: Purchase Intent Clicks targeting physical stores (e.g., store cards).
-
-        - avgPriceLocalCurrency: Average product price in the product''s local currency (historical pricing).
-
-        - minPriceLocalCurrency: Minimum product price in the product''s local currency (historical pricing).
-
-        - maxPriceLocalCurrency: Maximum product price in the product''s local currency (historical pricing).
-
-        - medianPriceLocalCurrency: Median product price in the product''s local currency (historical pricing).
-
-        - inStock: Count of in-stock observations for the product at the retailer (historical pricing).
-
-        - outOfStock: Count of out-of-stock observations for the product at the retailer (historical pricing).
-
-        - retailerOpportunities: Count of retailer-display opportunities in the window.
-
-        - missedRetailerOpportunities: Opportunities where no retailer was actually displayed.
-
-        - retailerImpressions: Count of times a retailer was an option to checkout for a recipe.
-
-        - retailerDisplayed: Times at least one store of a retailer was visible in an Experience (logo on-screen).
-
-        - retailerInStock: Times at least one store of a retailer had stock available as a click-through option.
-
-        - retailerOutOfStock: Times an eligible retailer had only out-of-stock stores in the Experience.
-
-        - retailerInStockRate: retailerInStock / (retailerInStock + retailerOutOfStock).
-
-        - retailerDisplayRate: retailerDisplayed / (retailerInStock + retailerOutOfStock).
-
-        - retailerCTR: purchaseIntentClicks / retailerDisplayed (retailer click-through rate).
-
-        - transactionValue: Attributed transaction value (shoppable recipes), in the selected currency.
-
-        - commerceLoadedRate: Commerce-load rate for custom reports (ratio).
-
-        - shoppableCommerceLoadedRate: Percentage of CTA Views that resulted in a Commerce Load (shoppable).
-
-        - visitorConversionRate: purchaseIntentClicks / ctaView.
-
-        - shoppableTransactionConversionRate: transactions / purchaseIntentClicks (shoppable).
-
-        - shoppableTransactionValueConversionRate: transactionValue / purchaseIntentValue (shoppable).'
+        - DESC: Descending (largest/latest first).'
     CommerceTypeFilters:
       additionalProperties: false
       description: Filter by Commerce touchpoint type; see :class:`CommerceType` for allowed codes.
@@ -4136,6 +2261,1876 @@ components:
           type: array
       title: CommerceTypeFilters
       type: object
+    CodedStrFilters:
+      additionalProperties: false
+      description: Equality-only string filters for coded / non-UTF8 dimensions (no contains).
+      properties:
+        includes:
+          description: Include rows where value is in this list (IN).
+          items:
+            type: string
+          title: Includes
+          type: array
+        excludes:
+          description: Exclude rows where value is in this list (NOT IN).
+          items:
+            type: string
+          title: Excludes
+          type: array
+      title: CodedStrFilters
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AdvancedFilterOperator:
+      properties:
+        code:
+          type: string
+          title: Code
+        label:
+          type: string
+          title: Label
+      type: object
+      required:
+      - code
+      - label
+      title: AdvancedFilterOperator
+      description: 'Operator option: code is the JSON key on custom_report filter bodies; label is UI copy.'
+    ColumnType:
+      type: string
+      enum:
+      - count
+      - date
+      - str
+      - percent
+      - money
+      - int
+      - float
+      - distinct
+      title: ColumnType
+      description: 'UI-facing column rendering hint for report cells.
+
+
+        Members:
+
+        - count: Integer count (rendered as a plain number).
+
+        - date: Calendar date.
+
+        - str: Free-form string.
+
+        - percent: Percentage rate (rendered with % suffix).
+
+        - money: Monetary value (rendered with the report''s currency).
+
+        - int: Integer value (non-count, e.g., identifiers).
+
+        - float: Floating-point number.
+
+        - distinct: Distinct count / cardinality.'
+    AdvancedFilterDimension:
+      properties:
+        name:
+          type: string
+          title: Name
+        displayName:
+          type: string
+          title: Displayname
+        operators:
+          items:
+            $ref: '#/components/schemas/AdvancedFilterOperator'
+          type: array
+          title: Operators
+      type: object
+      required:
+      - name
+      - displayName
+      - operators
+      title: AdvancedFilterDimension
+      description: Dimension metadata for the advanced filter component (name, displayName, and operators).
+    CustomReportAdvancedFiltersRequestBody:
+      properties:
+        accountId:
+          type: string
+          title: Accountid
+          description: Account ID; if not provided, taken from the token.
+        metrics:
+          items:
+            type: string
+          type: array
+          title: Metrics
+          description: Metric identifiers for which to return filter metadata.
+        dimensions:
+          items:
+            type: string
+          type: array
+          title: Dimensions
+          description: Dimension identifiers used for exclusion rules.
+        currency:
+          type: string
+          enum:
+          - AED
+          - AFN
+          - ALL
+          - AMD
+          - ANG
+          - AOA
+          - ARS
+          - AUD
+          - AWG
+          - AZN
+          - BAM
+          - BBD
+          - BDT
+          - BGN
+          - BHD
+          - BIF
+          - BMD
+          - BND
+          - BOB
+          - BOV
+          - BRL
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
+          - CAD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
+          - CLF
+          - CLP
+          - CNY
+          - COP
+          - COU
+          - CRC
+          - CUC
+          - CUP
+          - CVE
+          - CZK
+          - DJF
+          - DKK
+          - DOP
+          - DZD
+          - EGP
+          - ERN
+          - ETB
+          - EUR
+          - FJD
+          - FKP
+          - GBP
+          - GEL
+          - GHS
+          - GIP
+          - GMD
+          - GNF
+          - GTQ
+          - GYD
+          - HKD
+          - HNL
+          - HRK
+          - HTG
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - IQD
+          - IRR
+          - ISK
+          - JMD
+          - JOD
+          - JPY
+          - KES
+          - KGS
+          - KHR
+          - KMF
+          - KPW
+          - KRW
+          - KWD
+          - KYD
+          - KZT
+          - LAK
+          - LBP
+          - LKR
+          - LRD
+          - LSL
+          - LYD
+          - MAD
+          - MDL
+          - MGA
+          - MKD
+          - MMK
+          - MNT
+          - MOP
+          - MRU
+          - MUR
+          - MVR
+          - MWK
+          - MXN
+          - MXV
+          - MYR
+          - MZN
+          - NAD
+          - NGN
+          - NIO
+          - NOK
+          - NPR
+          - NZD
+          - OMR
+          - PAB
+          - PEN
+          - PGK
+          - PHP
+          - PKR
+          - PLN
+          - PYG
+          - QAR
+          - RON
+          - RSD
+          - RUB
+          - RWF
+          - SAR
+          - SBD
+          - SCR
+          - SDG
+          - SEK
+          - SGD
+          - SHP
+          - SLE
+          - SLL
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
+          - SYP
+          - SZL
+          - THB
+          - TJS
+          - TMT
+          - TND
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
+          - UAH
+          - UGX
+          - USD
+          - USN
+          - UYI
+          - UYU
+          - UYW
+          - UZS
+          - VED
+          - VES
+          - VND
+          - VUV
+          - WST
+          - XAF
+          - XAG
+          - XAU
+          - XBA
+          - XBB
+          - XBC
+          - XBD
+          - XCD
+          - XDR
+          - XOF
+          - XPD
+          - XPF
+          - XPT
+          - XSU
+          - XTS
+          - XUA
+          - XXX
+          - YER
+          - ZAR
+          - ZMW
+          - ZWL
+          maxLength: 3
+          minLength: 3
+          title: Currency
+          description: Currency for monetary metrics.
+        filters:
+          items:
+            type: string
+          type: array
+          title: Filters
+          description: Optional filter dimension names; used for exclusion rules. Not required.
+          default: []
+        subaccountIds:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Subaccountids
+          description: Optional subaccount IDs for Aura metric eligibility.
+      type: object
+      required:
+      - accountId
+      - metrics
+      - dimensions
+      - currency
+      title: CustomReportAdvancedFiltersRequestBody
+      description: Request body for advanced filter component init. No filters section required.
+    CustomReportFacetsRequestBody:
+      properties:
+        dimensions:
+          items:
+            $ref: '#/components/schemas/Dimensions'
+          type: array
+          title: Dimensions
+        metrics:
+          items:
+            $ref: '#/components/schemas/Metrics'
+          type: array
+          title: Metrics
+        filters:
+          properties:
+            alternateProductName:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Alternate Product Name filter. Alternate product name from the Catalog.
+            brandEntity:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Reporting Brand filter. The Brand Entity associated with MikMak metrics.
+            commerceType:
+              anyOf:
+              - $ref: '#/components/schemas/CommerceTypeFilters'
+              - type: 'null'
+              description: Commerce Type filter. Type of MikMak Commerce Experience (Brand.com, Media, etc.)
+            country:
+              anyOf:
+              - $ref: '#/components/schemas/CountryFilters'
+              - type: 'null'
+              description: Country filter. Geographic country associated with the Commerce Experience.
+            deviceType:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Device Type filter. The category of the visitor's hardware (Desktop, Mobile, Tablet, or Others), detected via the user agent associated with the metric.
+            domainUrl:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Domain URL filter. The web domain associated with the metric.
+            experience:
+              anyOf:
+              - $ref: '#/components/schemas/ObjectIdFilters'
+              - type: 'null'
+              description: Commerce Experience filter. Name of the Commerce Experience.
+            isBundle:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Bundle filter. Whether the metric is tied to a bundle of products.
+            modelName:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Model Name filter. Model name from the Catalog.
+            mpn:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: MPN filter. Manufacturer Part Number of the catalog product in the Commerce Experience.
+            pageUrl:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Page URL filter. The web page associated with the metric.
+            productBrandName:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Brand Name filter. Brand of the catalog product in the Commerce Experience.
+            productCategoryName:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Product Category Name filter. Category of the catalog product in the Commerce Experience.
+            productCustomCategory:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Custom Category filter. Custom category of the catalog product in the Commerce Experience.
+            productCustomSubcategory1:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Custom Subcategory 1 filter. Custom subcategory (level 1) of the catalog product in the Commerce Experience.
+            productCustomSubcategory2:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Custom Subcategory 2 filter. Custom subcategory (level 2) of the catalog product in the Commerce Experience.
+            productCustomSubcategory3:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Custom Subcategory 3 filter. Custom subcategory (level 3) of the catalog product in the Commerce Experience.
+            productCustomSubcategory4:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Custom Subcategory 4 filter. Custom subcategory (level 4) of the catalog product in the Commerce Experience.
+            productLine:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Product Line filter. Line of the catalog product in the Commerce Experience.
+            productName:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Name filter. Name of the catalog product in the Commerce Experience.
+            productRange:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Product Range filter. Range of the catalog product in the Commerce Experience.
+            retailer:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Retailer Name filter. Name of the online or offline retailer associated with a click or transaction.
+            shopperCity:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Shopper City filter. The city, town, or municipality where the shopper was located during the session.
+            shopperCountry:
+              anyOf:
+              - $ref: '#/components/schemas/CountryFilters'
+              - type: 'null'
+              description: Shopper Country filter. The country where the shopper was located during the session.
+            shopperRegion:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Shopper Region filter. The primary administrative division (e.g., State, Province, or Region, dependent on the country) where the shopper was located during the session.
+            shopperZipCode:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Shopper Zip Code filter. The local postal code or ZIP code associated with the shopper's location.
+            standardMedium:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Standard Medium filter. The categorized version of the utm_medium parameter, mapping various raw values into a standardized set of marketing mediums.
+            standardSource:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Standard Source filter. The categorized version of the utm_source parameter, mapping various raw values into a standardized set of traffic sources.
+            subaccountId:
+              anyOf:
+              - $ref: '#/components/schemas/ObjectIdFilters'
+              - type: 'null'
+              description: Subaccount filter. MikMak subaccount that contains the Experience associated with the metric.
+            utmAdId:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Ad ID (utm) filter. Value of the utm_adid parameter, if present, in the URL associated with the metric.
+            utmAdvertiserId:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Advertiser ID (utm) filter. Value of the utm_advertiserid parameter, if present, in the URL associated with the metric.
+            utmBu:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Business Unit (utm) filter. Value of the utm_bu parameter, if present, in the URL associated with the metric.
+            utmCampaign:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Campaign (utm) filter. Value of the utm_campaign parameter, if present, in the URL associated with the metric.
+            utmClicktype:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Click Type (utm) filter. Value of the utm_clicktype parameter, if present, in the URL associated with the metric.
+            utmConfig:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Config (utm) filter. Value of the utm_config parameter, if present, in the URL associated with the metric.
+            utmContent:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Content (utm) filter. Value of the utm_content parameter, if present, in the URL associated with the metric.
+            utmCreativeFormat:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Creative Format (utm) filter. Value of the utm_creative_format parameter, if present, in the URL associated with the metric.
+            utmCreativeid:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Creative ID (utm) filter. Value of the utm_creativeid parameter, if present, in the URL associated with the metric.
+            utmFormat:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Format (utm) filter. Value of the utm_format parameter, if present, in the URL associated with the metric.
+            utmId:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: ID (utm) filter. Value of the utm_id parameter, if present, in the URL associated with the metric.
+            utmMarketingTactic:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Marketing Tactic filter. This dimension can be awareness, consideration, or conversion, depending on the presence of these strings in the URL associated with the metric.
+            utmMedium:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Medium (utm) filter. Value of the utm_medium parameter, if present, in the URL associated with the metric.
+            utmPlacement:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Placement (utm) filter. Value of the utm_placement parameter, if present, in the URL associated with the metric.
+            utmPlacementId:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Placement ID (utm) filter. Value of the utm_placementid parameter, if present, in the URL associated with the metric.
+            utmSource:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Source (utm) filter. Value of the utm_source parameter, if present, in the URL associated with the metric.
+            utmSourcePlatform:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Source Platform (utm) filter. Value of the utm_source_platform parameter, if present, in the URL associated with the metric.
+            utmTerm:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Term (utm) filter. Value of the utm_term parameter, if present, in the URL associated with the metric.
+            utmVariant:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Variant (utm) filter. Value of the utm_variant parameter, if present, in the URL associated with the metric.
+            auraAdSpend:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for auraAdSpend (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            auraIncrementalContribution:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for auraIncrementalContribution (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            averageClickPrice:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for averageClickPrice (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            commerceLoadSessions:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for commerceLoadSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            commerceLoads:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for commerceLoads (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            ctaView:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for ctaView (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            ctaViewSessions:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for ctaViewSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            maxAuraRoas:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for maxAuraRoas (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            minAuraRoas:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for minAuraRoas (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            offlinePurchaseIntentClicks:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for offlinePurchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            onlinePurchaseIntentClicks:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for onlinePurchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            purchaseIntentClickSessions:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for purchaseIntentClickSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            purchaseIntentClicks:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for purchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            purchaseIntentRate:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for purchaseIntentRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            purchaseIntentRateSession:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for purchaseIntentRateSession (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            purchaseIntentValue:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for purchaseIntentValue (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            rawSalesAccountAmount:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for rawSalesAccountAmount (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            rawSalesAmount:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for rawSalesAmount (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerCTR:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerCTR (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerDisplayRate:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerDisplayRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerDisplayed:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerDisplayed (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerInStock:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerInStock (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerInStockRate:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerInStockRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerOutOfStock:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerOutOfStock (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            skuSelected:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for skuSelected (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            successfulSearches:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for successfulSearches (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            transactions:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for transactions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            unsuccessfulSearches:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for unsuccessfulSearches (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+          additionalProperties: false
+          type: object
+          title: Filters
+          description: 'Per-field filters: each dimension key uses a typed filter object (e.g. country/shopperCountry require ISO 3166-1 alpha-2 codes; commerceType uses CommerceType codes; subaccountId/experience use 24-char ObjectIds; coded dimensions expose includes/excludes only). Metrics may use is_higher_than / is_lower_than (post-aggregation).'
+        accountId:
+          type: string
+          title: Accountid
+          description: If accountId is not provided, the accountId will be taken from the token.
+        currency:
+          type: string
+          enum:
+          - AED
+          - AFN
+          - ALL
+          - AMD
+          - ANG
+          - AOA
+          - ARS
+          - AUD
+          - AWG
+          - AZN
+          - BAM
+          - BBD
+          - BDT
+          - BGN
+          - BHD
+          - BIF
+          - BMD
+          - BND
+          - BOB
+          - BOV
+          - BRL
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
+          - CAD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
+          - CLF
+          - CLP
+          - CNY
+          - COP
+          - COU
+          - CRC
+          - CUC
+          - CUP
+          - CVE
+          - CZK
+          - DJF
+          - DKK
+          - DOP
+          - DZD
+          - EGP
+          - ERN
+          - ETB
+          - EUR
+          - FJD
+          - FKP
+          - GBP
+          - GEL
+          - GHS
+          - GIP
+          - GMD
+          - GNF
+          - GTQ
+          - GYD
+          - HKD
+          - HNL
+          - HRK
+          - HTG
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - IQD
+          - IRR
+          - ISK
+          - JMD
+          - JOD
+          - JPY
+          - KES
+          - KGS
+          - KHR
+          - KMF
+          - KPW
+          - KRW
+          - KWD
+          - KYD
+          - KZT
+          - LAK
+          - LBP
+          - LKR
+          - LRD
+          - LSL
+          - LYD
+          - MAD
+          - MDL
+          - MGA
+          - MKD
+          - MMK
+          - MNT
+          - MOP
+          - MRU
+          - MUR
+          - MVR
+          - MWK
+          - MXN
+          - MXV
+          - MYR
+          - MZN
+          - NAD
+          - NGN
+          - NIO
+          - NOK
+          - NPR
+          - NZD
+          - OMR
+          - PAB
+          - PEN
+          - PGK
+          - PHP
+          - PKR
+          - PLN
+          - PYG
+          - QAR
+          - RON
+          - RSD
+          - RUB
+          - RWF
+          - SAR
+          - SBD
+          - SCR
+          - SDG
+          - SEK
+          - SGD
+          - SHP
+          - SLE
+          - SLL
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
+          - SYP
+          - SZL
+          - THB
+          - TJS
+          - TMT
+          - TND
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
+          - UAH
+          - UGX
+          - USD
+          - USN
+          - UYI
+          - UYU
+          - UYW
+          - UZS
+          - VED
+          - VES
+          - VND
+          - VUV
+          - WST
+          - XAF
+          - XAG
+          - XAU
+          - XBA
+          - XBB
+          - XBC
+          - XBD
+          - XCD
+          - XDR
+          - XOF
+          - XPD
+          - XPF
+          - XPT
+          - XSU
+          - XTS
+          - XUA
+          - XXX
+          - YER
+          - ZAR
+          - ZMW
+          - ZWL
+          maxLength: 3
+          minLength: 3
+          title: Currency
+          description: The Currency field is required in the request body to provide the monetary metrics in the adequate currency.
+        fieldDetails:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Fielddetails
+          description: When set to 'yes', includes tooltip and category fields in the response.
+        startDate:
+          type: string
+          format: date
+          title: Startdate
+        endDate:
+          type: string
+          format: date
+          title: Enddate
+        subaccountIds:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Subaccountids
+          default: []
+        filtersJoinOperator:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filtersjoinoperator
+          description: 'How to combine top-level filter conditions: AND (default) or OR. Case-insensitive.'
+          default: AND
+      type: object
+      required:
+      - dimensions
+      - metrics
+      - filters
+      - accountId
+      - currency
+      - startDate
+      - endDate
+      title: CustomReportFacetsRequestBody
+      description: 'POST /custom_report_filters: do not reject substring filters (not applied in SQL for these dims).'
+    ReportFieldsResponse:
+      properties:
+        data:
+          $ref: '#/components/schemas/ReportFields'
+      type: object
+      required:
+      - data
+      title: ReportFieldsResponse
+      description: Model for holding all the report builder configurations
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    CustomReportSingleFilterRequestBody:
+      properties:
+        startDate:
+          type: string
+          format: date
+          title: Startdate
+          description: Start of the date range.
+        endDate:
+          type: string
+          format: date
+          title: Enddate
+          description: End of the date range.
+        filter:
+          type: string
+          title: Filter
+          description: Single dimension to get filter values for (e.g. 'country' or 'utmCampaign').
+        accountId:
+          type: string
+          title: Accountid
+          description: Account ID; if not provided, taken from the token.
+        subaccountIds:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Subaccountids
+          description: Optional list of subaccount IDs to restrict the query.
+          default: []
+      type: object
+      required:
+      - startDate
+      - endDate
+      - filter
+      - accountId
+      title: CustomReportSingleFilterRequestBody
+      description: Request body for retrieving filter values for a single dimension (ignores other filters).
+    Column:
+      properties:
+        key:
+          anyOf:
+          - $ref: '#/components/schemas/Dimensions'
+          - $ref: '#/components/schemas/Metrics'
+          title: Key
+        type:
+          $ref: '#/components/schemas/ColumnType'
+        displayName:
+          type: string
+          title: Displayname
+          description: Human-readable column title. When the report date range starts before a metric or dimension availability date (see startDate on custom_report_fields), the API appends a parenthetical suffix with Unicode U+26A0, either 'Metric start date' or 'Dimension start date', and an ISO YYYY-MM-DD date.
+        tooltip:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tooltip
+      type: object
+      required:
+      - key
+      - type
+      - displayName
+      title: Column
+    CustomReportRequestBody:
+      properties:
+        dimensions:
+          items:
+            $ref: '#/components/schemas/Dimensions'
+          type: array
+          title: Dimensions
+        metrics:
+          items:
+            $ref: '#/components/schemas/Metrics'
+          type: array
+          title: Metrics
+        filters:
+          properties:
+            alternateProductName:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Alternate Product Name filter. Alternate product name from the Catalog.
+            brandEntity:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Reporting Brand filter. The Brand Entity associated with MikMak metrics.
+            commerceType:
+              anyOf:
+              - $ref: '#/components/schemas/CommerceTypeFilters'
+              - type: 'null'
+              description: Commerce Type filter. Type of MikMak Commerce Experience (Brand.com, Media, etc.)
+            country:
+              anyOf:
+              - $ref: '#/components/schemas/CountryFilters'
+              - type: 'null'
+              description: Country filter. Geographic country associated with the Commerce Experience.
+            deviceType:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Device Type filter. The category of the visitor's hardware (Desktop, Mobile, Tablet, or Others), detected via the user agent associated with the metric.
+            domainUrl:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Domain URL filter. The web domain associated with the metric.
+            experience:
+              anyOf:
+              - $ref: '#/components/schemas/ObjectIdFilters'
+              - type: 'null'
+              description: Commerce Experience filter. Name of the Commerce Experience.
+            isBundle:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Bundle filter. Whether the metric is tied to a bundle of products.
+            modelName:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Model Name filter. Model name from the Catalog.
+            mpn:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: MPN filter. Manufacturer Part Number of the catalog product in the Commerce Experience.
+            pageUrl:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Page URL filter. The web page associated with the metric.
+            productBrandName:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Brand Name filter. Brand of the catalog product in the Commerce Experience.
+            productCategoryName:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Product Category Name filter. Category of the catalog product in the Commerce Experience.
+            productCustomCategory:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Custom Category filter. Custom category of the catalog product in the Commerce Experience.
+            productCustomSubcategory1:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Custom Subcategory 1 filter. Custom subcategory (level 1) of the catalog product in the Commerce Experience.
+            productCustomSubcategory2:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Custom Subcategory 2 filter. Custom subcategory (level 2) of the catalog product in the Commerce Experience.
+            productCustomSubcategory3:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Custom Subcategory 3 filter. Custom subcategory (level 3) of the catalog product in the Commerce Experience.
+            productCustomSubcategory4:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Custom Subcategory 4 filter. Custom subcategory (level 4) of the catalog product in the Commerce Experience.
+            productLine:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Product Line filter. Line of the catalog product in the Commerce Experience.
+            productName:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Product Name filter. Name of the catalog product in the Commerce Experience.
+            productRange:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Product Range filter. Range of the catalog product in the Commerce Experience.
+            retailer:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Retailer Name filter. Name of the online or offline retailer associated with a click or transaction.
+            shopperCity:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Shopper City filter. The city, town, or municipality where the shopper was located during the session.
+            shopperCountry:
+              anyOf:
+              - $ref: '#/components/schemas/CountryFilters'
+              - type: 'null'
+              description: Shopper Country filter. The country where the shopper was located during the session.
+            shopperRegion:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Shopper Region filter. The primary administrative division (e.g., State, Province, or Region, dependent on the country) where the shopper was located during the session.
+            shopperZipCode:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Shopper Zip Code filter. The local postal code or ZIP code associated with the shopper's location.
+            standardMedium:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Standard Medium filter. The categorized version of the utm_medium parameter, mapping various raw values into a standardized set of marketing mediums.
+            standardSource:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Standard Source filter. The categorized version of the utm_source parameter, mapping various raw values into a standardized set of traffic sources.
+            subaccountId:
+              anyOf:
+              - $ref: '#/components/schemas/ObjectIdFilters'
+              - type: 'null'
+              description: Subaccount filter. MikMak subaccount that contains the Experience associated with the metric.
+            utmAdId:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Ad ID (utm) filter. Value of the utm_adid parameter, if present, in the URL associated with the metric.
+            utmAdvertiserId:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Advertiser ID (utm) filter. Value of the utm_advertiserid parameter, if present, in the URL associated with the metric.
+            utmBu:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Business Unit (utm) filter. Value of the utm_bu parameter, if present, in the URL associated with the metric.
+            utmCampaign:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Campaign (utm) filter. Value of the utm_campaign parameter, if present, in the URL associated with the metric.
+            utmClicktype:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Click Type (utm) filter. Value of the utm_clicktype parameter, if present, in the URL associated with the metric.
+            utmConfig:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Config (utm) filter. Value of the utm_config parameter, if present, in the URL associated with the metric.
+            utmContent:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Content (utm) filter. Value of the utm_content parameter, if present, in the URL associated with the metric.
+            utmCreativeFormat:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Creative Format (utm) filter. Value of the utm_creative_format parameter, if present, in the URL associated with the metric.
+            utmCreativeid:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Creative ID (utm) filter. Value of the utm_creativeid parameter, if present, in the URL associated with the metric.
+            utmFormat:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Format (utm) filter. Value of the utm_format parameter, if present, in the URL associated with the metric.
+            utmId:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: ID (utm) filter. Value of the utm_id parameter, if present, in the URL associated with the metric.
+            utmMarketingTactic:
+              anyOf:
+              - $ref: '#/components/schemas/CodedStrFilters'
+              - type: 'null'
+              description: Marketing Tactic filter. This dimension can be awareness, consideration, or conversion, depending on the presence of these strings in the URL associated with the metric.
+            utmMedium:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Medium (utm) filter. Value of the utm_medium parameter, if present, in the URL associated with the metric.
+            utmPlacement:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Placement (utm) filter. Value of the utm_placement parameter, if present, in the URL associated with the metric.
+            utmPlacementId:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Placement ID (utm) filter. Value of the utm_placementid parameter, if present, in the URL associated with the metric.
+            utmSource:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Source (utm) filter. Value of the utm_source parameter, if present, in the URL associated with the metric.
+            utmSourcePlatform:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Source Platform (utm) filter. Value of the utm_source_platform parameter, if present, in the URL associated with the metric.
+            utmTerm:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Term (utm) filter. Value of the utm_term parameter, if present, in the URL associated with the metric.
+            utmVariant:
+              anyOf:
+              - $ref: '#/components/schemas/StrFilters'
+              - type: 'null'
+              description: Variant (utm) filter. Value of the utm_variant parameter, if present, in the URL associated with the metric.
+            auraAdSpend:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for auraAdSpend (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            auraIncrementalContribution:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for auraIncrementalContribution (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            averageClickPrice:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for averageClickPrice (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            commerceLoadSessions:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for commerceLoadSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            commerceLoads:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for commerceLoads (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            ctaView:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for ctaView (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            ctaViewSessions:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for ctaViewSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            maxAuraRoas:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for maxAuraRoas (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            minAuraRoas:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for minAuraRoas (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            offlinePurchaseIntentClicks:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for offlinePurchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            onlinePurchaseIntentClicks:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for onlinePurchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            purchaseIntentClickSessions:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for purchaseIntentClickSessions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            purchaseIntentClicks:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for purchaseIntentClicks (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            purchaseIntentRate:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for purchaseIntentRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            purchaseIntentRateSession:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for purchaseIntentRateSession (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            purchaseIntentValue:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for purchaseIntentValue (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            rawSalesAccountAmount:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for rawSalesAccountAmount (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            rawSalesAmount:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for rawSalesAmount (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerCTR:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerCTR (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerDisplayRate:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerDisplayRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerDisplayed:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerDisplayed (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerInStock:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerInStock (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerInStockRate:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerInStockRate (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            retailerOutOfStock:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for retailerOutOfStock (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            skuSelected:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for skuSelected (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            successfulSearches:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for successfulSearches (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            transactions:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for transactions (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+            unsuccessfulSearches:
+              anyOf:
+              - $ref: '#/components/schemas/MetricNumericFilterRule'
+              - type: 'null'
+              description: Post-aggregation numeric bounds for unsuccessfulSearches (is_higher_than / is_lower_than). At most one metric may use numeric filters per request; the metric must also be listed in 'metrics'.
+          additionalProperties: false
+          type: object
+          title: Filters
+          description: 'Per-field filters: each dimension key uses a typed filter object (e.g. country/shopperCountry require ISO 3166-1 alpha-2 codes; commerceType uses CommerceType codes; subaccountId/experience use 24-char ObjectIds; coded dimensions expose includes/excludes only). Metrics may use is_higher_than / is_lower_than (post-aggregation).'
+        accountId:
+          type: string
+          title: Accountid
+          description: If accountId is not provided, the accountId will be taken from the token.
+        currency:
+          type: string
+          enum:
+          - AED
+          - AFN
+          - ALL
+          - AMD
+          - ANG
+          - AOA
+          - ARS
+          - AUD
+          - AWG
+          - AZN
+          - BAM
+          - BBD
+          - BDT
+          - BGN
+          - BHD
+          - BIF
+          - BMD
+          - BND
+          - BOB
+          - BOV
+          - BRL
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
+          - CAD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
+          - CLF
+          - CLP
+          - CNY
+          - COP
+          - COU
+          - CRC
+          - CUC
+          - CUP
+          - CVE
+          - CZK
+          - DJF
+          - DKK
+          - DOP
+          - DZD
+          - EGP
+          - ERN
+          - ETB
+          - EUR
+          - FJD
+          - FKP
+          - GBP
+          - GEL
+          - GHS
+          - GIP
+          - GMD
+          - GNF
+          - GTQ
+          - GYD
+          - HKD
+          - HNL
+          - HRK
+          - HTG
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - IQD
+          - IRR
+          - ISK
+          - JMD
+          - JOD
+          - JPY
+          - KES
+          - KGS
+          - KHR
+          - KMF
+          - KPW
+          - KRW
+          - KWD
+          - KYD
+          - KZT
+          - LAK
+          - LBP
+          - LKR
+          - LRD
+          - LSL
+          - LYD
+          - MAD
+          - MDL
+          - MGA
+          - MKD
+          - MMK
+          - MNT
+          - MOP
+          - MRU
+          - MUR
+          - MVR
+          - MWK
+          - MXN
+          - MXV
+          - MYR
+          - MZN
+          - NAD
+          - NGN
+          - NIO
+          - NOK
+          - NPR
+          - NZD
+          - OMR
+          - PAB
+          - PEN
+          - PGK
+          - PHP
+          - PKR
+          - PLN
+          - PYG
+          - QAR
+          - RON
+          - RSD
+          - RUB
+          - RWF
+          - SAR
+          - SBD
+          - SCR
+          - SDG
+          - SEK
+          - SGD
+          - SHP
+          - SLE
+          - SLL
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
+          - SYP
+          - SZL
+          - THB
+          - TJS
+          - TMT
+          - TND
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
+          - UAH
+          - UGX
+          - USD
+          - USN
+          - UYI
+          - UYU
+          - UYW
+          - UZS
+          - VED
+          - VES
+          - VND
+          - VUV
+          - WST
+          - XAF
+          - XAG
+          - XAU
+          - XBA
+          - XBB
+          - XBC
+          - XBD
+          - XCD
+          - XDR
+          - XOF
+          - XPD
+          - XPF
+          - XPT
+          - XSU
+          - XTS
+          - XUA
+          - XXX
+          - YER
+          - ZAR
+          - ZMW
+          - ZWL
+          maxLength: 3
+          minLength: 3
+          title: Currency
+          description: The Currency field is required in the request body to provide the monetary metrics in the adequate currency.
+        fieldDetails:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Fielddetails
+          description: When set to 'yes', includes tooltip and category fields in the response.
+        startDate:
+          type: string
+          format: date
+          title: Startdate
+        endDate:
+          type: string
+          format: date
+          title: Enddate
+        subaccountIds:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Subaccountids
+          default: []
+        filtersJoinOperator:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filtersjoinoperator
+          description: 'How to combine top-level filter conditions: AND (default) or OR. Case-insensitive.'
+          default: AND
+        useAdvancedFilters:
+          type: boolean
+          title: Useadvancedfilters
+          description: When true, filters may use advanced-only fields (e.g. utmPlacement). When false or omitted, filters may only use base filter dimensions.
+          default: false
+        sortBy:
+          type: string
+          enum:
+          - date
+          - country
+          - currency
+          - productBrandName
+          - experience
+          - commerceType
+          - productName
+          - alternateProductName
+          - modelName
+          - retailer
+          - utmSource
+          - utmMedium
+          - utmCampaign
+          - utmTerm
+          - utmContent
+          - utmAdId
+          - utmPlacement
+          - utmBu
+          - utmClicktype
+          - utmVariant
+          - utmAdvertiserId
+          - utmPlacementId
+          - utmFormat
+          - utmCreativeid
+          - utmConfig
+          - utmId
+          - utmMarketingTactic
+          - utmSourcePlatform
+          - utmCreativeFormat
+          - standardSource
+          - standardMedium
+          - productCategoryName
+          - productLine
+          - productRange
+          - productCustomCategory
+          - productCustomSubcategory1
+          - productCustomSubcategory2
+          - productCustomSubcategory3
+          - productCustomSubcategory4
+          - subaccountId
+          - ean
+          - mpn
+          - partnerId
+          - recipeName
+          - recipeRetailer
+          - recipeUtmSource
+          - recipeUtmMedium
+          - recipeUtmCampaign
+          - domain
+          - pageUrl
+          - domainUrl
+          - shopperCity
+          - shopperRegion
+          - shopperCountry
+          - shopperZipCode
+          - brandEntity
+          - isBundle
+          - deviceType
+          - purchaseIntentValue
+          - averageClickPrice
+          - purchaseIntentClicks
+          - ctaView
+          - rawSalesAccountAmount
+          - rawSalesAmount
+          - commerceLoads
+          - purchaseIntentRate
+          - ctaViewSessions
+          - commerceLoadSessions
+          - purchaseIntentClickSessions
+          - purchaseIntentRateSession
+          - transactions
+          - skuSelected
+          - successfulSearches
+          - unsuccessfulSearches
+          - onlinePurchaseIntentClicks
+          - offlinePurchaseIntentClicks
+          - avgPriceLocalCurrency
+          - minPriceLocalCurrency
+          - maxPriceLocalCurrency
+          - medianPriceLocalCurrency
+          - inStock
+          - outOfStock
+          - retailerOpportunities
+          - missedRetailerOpportunities
+          - retailerImpressions
+          - retailerDisplayed
+          - retailerInStock
+          - retailerOutOfStock
+          - retailerInStockRate
+          - retailerDisplayRate
+          - retailerCTR
+          - transactionValue
+          - commerceLoadedRate
+          - shoppableCommerceLoadedRate
+          - visitorConversionRate
+          - shoppableTransactionConversionRate
+          - shoppableTransactionValueConversionRate
+          - minAuraRoas
+          - maxAuraRoas
+          - auraAdSpend
+          - auraIncrementalContribution
+          title: Sortby
+        sortDir:
+          $ref: '#/components/schemas/OrderDirection'
+        dateFreq:
+          $ref: '#/components/schemas/DateFreq'
+          default: D
+      type: object
+      required:
+      - dimensions
+      - metrics
+      - filters
+      - accountId
+      - currency
+      - startDate
+      - endDate
+      - sortBy
+      - sortDir
+      title: CustomReportRequestBody
+    CommerceType:
+      description: 'Commerce touchpoint type (the ``commerceType`` dimension).
+
+
+        Members:
+
+        - ST: Brand.com (direct brand website touchpoint).
+
+        - LP: Landing Page.
+
+        - DP: Ad Unit (Display).
+
+        - VD: Ad Unit (Video).
+
+        - IP: Media.
+
+        - DL: Retailer Direct (Retail Media).
+
+        - AP: In-App.
+
+        - API: API (programmatic integration).'
+      enum:
+      - ST
+      - LP
+      - DP
+      - VD
+      - IP
+      - DL
+      - AP
+      - API
+      title: CommerceType
+      type: string
+    MetricDataType:
+      type: string
+      enum:
+      - integer
+      - percentage
+      - currency
+      - float
+      - string
+      - date
+      title: MetricDataType
+      description: 'Allowed ``dataType`` values in the advanced-filter metric metadata response.
+
+
+        Members:
+
+        - integer: Integer metric.
+
+        - percentage: Percentage rate (0.0 - 100.0 conventionally).
+
+        - currency: Monetary metric; the actual currency code comes from the request.
+
+        - float: Floating-point numeric metric.
+
+        - string: String metric (rare; string-typed aggregation).
+
+        - date: Date metric.'
+    DateFreq:
+      type: string
+      enum:
+      - D
+      - W
+      - M
+      - Q
+      - Y
+      title: DateFreq
+      description: 'Date bucket granularity for time-series reports.
+
+
+        Members:
+
+        - D: Daily (one row per calendar day).
+
+        - W: Weekly (one row per ISO week, Monday-starting).
+
+        - M: Monthly (one row per calendar month).
+
+        - Q: Quarterly (one row per calendar quarter).
+
+        - Y: Yearly (one row per calendar year).'
   securitySchemes:
     authorization:
       type: http

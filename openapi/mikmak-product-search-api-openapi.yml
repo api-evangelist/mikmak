@@ -151,26 +151,12 @@ paths:
             > **When:** Returned when the server encounters an unhandled error while processing the request.
 
             '
+      summary: Get commerce search products
+      x-summary-source: derived
+      operationId: getCommerceV1SearchProducts
+      x-operation-id-source: derived
 components:
   schemas:
-    ProductsSearchResponse:
-      type: object
-      description: Paginated product search response
-      properties:
-        offset:
-          type: integer
-          description: Pagination offset (zero-based)
-        limit:
-          type: integer
-          description: Number of products returned per page
-        total:
-          type: integer
-          description: Total number of matching products
-        products:
-          type: array
-          description: Product list for the current page
-          items:
-            $ref: '#/components/schemas/ProductsSearchProduct'
     ProductsSearchProduct:
       type: object
       description: Product item returned by product search
@@ -220,6 +206,24 @@ components:
             roundedAverageRating:
               type: number
               description: Rounded average rating
+    ProductsSearchResponse:
+      type: object
+      description: Paginated product search response
+      properties:
+        offset:
+          type: integer
+          description: Pagination offset (zero-based)
+        limit:
+          type: integer
+          description: Number of products returned per page
+        total:
+          type: integer
+          description: Total number of matching products
+        products:
+          type: array
+          description: Product list for the current page
+          items:
+            $ref: '#/components/schemas/ProductsSearchProduct'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

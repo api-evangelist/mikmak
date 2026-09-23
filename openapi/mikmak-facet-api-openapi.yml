@@ -160,6 +160,10 @@ paths:
             > **When:** Returned when the server encounters an unhandled error while processing the request.
 
             '
+      summary: Get commerce products facet
+      x-summary-source: derived
+      operationId: getCommerceV1ProductsFacet
+      x-operation-id-source: derived
 components:
   securitySchemes:
     ApiKeyAuth:

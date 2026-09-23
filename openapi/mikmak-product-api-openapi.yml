@@ -184,6 +184,10 @@ paths:
             > **When:** Returned when the server encounters an unhandled error while processing the request.
 
             '
+      summary: Get commerce products by id
+      x-summary-source: derived
+      operationId: getCommerceV1ProductsById
+      x-operation-id-source: derived
 components:
   schemas:
     Location:

@@ -393,6 +393,10 @@ paths:
             > **When:** Returned when the server encounters an unhandled error while processing the request.
 
             '
+      summary: Get commerce availabilities cart by id
+      x-summary-source: derived
+      operationId: getCommerceV1AvailabilitiesCartById
+      x-operation-id-source: derived
 components:
   schemas:
     CatalogProduct:
@@ -452,198 +456,6 @@ components:
             roundedAverageRating:
               type: number
               description: Rounded rating
-    CartAvailabilityLine:
-      type: object
-      description: Line item within a store cart (public `CartAvailability` shape)
-      properties:
-        productId:
-          type: string
-          description: Product identifier
-        gtin:
-          type: string
-          description: GTIN
-        quantity:
-          type: integer
-          description: Quantity in cart
-        stockStatus:
-          type: string
-          description: Stock status for the line
-        price:
-          type: object
-          description: Unit price
-          properties:
-            currency:
-              type: string
-              description: Currency
-            value:
-              type: number
-              description: Value
-            valueFormatted:
-              type: string
-              description: Display-formatted price string
-            valueWithVoucher:
-              type:
-              - number
-              - 'null'
-              description: Unit price after voucher when applicable
-        totalPrice:
-          type: object
-          description: Line total price
-          properties:
-            currency:
-              type: string
-              description: Currency
-            value:
-              type: number
-              description: Value
-            valueFormatted:
-              type: string
-              description: Display-formatted price string
-            valueWithVoucher:
-              type:
-              - number
-              - 'null'
-              description: Line total after voucher when applicable
-        voucher:
-          allOf:
-          - $ref: '#/components/schemas/Voucher'
-        clickUrl:
-          type: string
-          description: Tracked click URL for this line
-        doNotTrackClickUrl:
-          type: string
-          description: Click URL without tracking
-        isTiedHouseLaw:
-          type: boolean
-          description: Whether tied house law applies to this line
-    Voucher:
-      type: object
-      description: Promotional voucher that may apply to a line item
-      properties:
-        id:
-          type: string
-        versionId:
-          type: string
-        name:
-          type: string
-        code:
-          type: string
-        retailerId:
-          type:
-          - integer
-          - 'null'
-        online:
-          type:
-          - boolean
-          - 'null'
-        offline:
-          type: boolean
-        startDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        type:
-          type: string
-          description: Voucher type (configuration enum)
-        text:
-          type: string
-        imageUrl:
-          type: string
-        description:
-          type: string
-        ctaText:
-          type: string
-        discountType:
-          type:
-          - string
-          - 'null'
-        discountPercent:
-          type:
-          - number
-          - 'null'
-          format: double
-        discountAmount:
-          type:
-          - number
-          - 'null'
-          format: double
-        url:
-          type: string
-        gtins:
-          type: array
-          items:
-            type: string
-        hasSecondStep:
-          type: boolean
-        secondStepUrl:
-          type: string
-        secondStepType:
-          type:
-          - string
-          - 'null'
-        formId:
-          type:
-          - string
-          - 'null'
-        locales:
-          type: object
-    CartResponse:
-      type: object
-      description: Public cart response (location, requested products, per-store carts, optional sessionId and alcoholSettings).
-      properties:
-        location:
-          $ref: '#/components/schemas/Location'
-        products:
-          type: array
-          description: Requested products (catalog metadata)
-          items:
-            $ref: '#/components/schemas/CatalogProduct'
-        carts:
-          type: array
-          description: One entry per store with aggregated cart totals and per-line availability
-          items:
-            $ref: '#/components/schemas/CartStoreGroup'
-        sessionId:
-          type:
-          - string
-          - 'null'
-          description: SessionID value
-        alcoholSettings:
-          type:
-          - object
-          - 'null'
-          description: Alcohol settings configuration
-          properties:
-            tiedHouseLaw:
-              type: integer
-              description: Tied house law setting code
-              example: 4
-            showLocalRetailers:
-              type: boolean
-              description: Whether to show local retailers
-              example: true
-            showRetailerText:
-              type: boolean
-              description: Whether to show retailer text
-              example: true
-            settingCode:
-              type: integer
-              description: Alcohol setting code
-              example: 3
-            applyTiedHouseLaw:
-              type: boolean
-              description: Whether to apply tied house law
-              example: true
-            tiedHouseConditionMet:
-              type: boolean
-              description: Whether tied house condition is met (null if applyTiedHouseLaw is false)
-              example: false
     Location:
       type: object
       description: Resolved or requested search location (shared across products, availabilities, and cart responses).
@@ -919,6 +731,198 @@ components:
           description: Line items per product at this store
           items:
             $ref: '#/components/schemas/CartAvailabilityLine'
+    Voucher:
+      type: object
+      description: Promotional voucher that may apply to a line item
+      properties:
+        id:
+          type: string
+        versionId:
+          type: string
+        name:
+          type: string
+        code:
+          type: string
+        retailerId:
+          type:
+          - integer
+          - 'null'
+        online:
+          type:
+          - boolean
+          - 'null'
+        offline:
+          type: boolean
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        type:
+          type: string
+          description: Voucher type (configuration enum)
+        text:
+          type: string
+        imageUrl:
+          type: string
+        description:
+          type: string
+        ctaText:
+          type: string
+        discountType:
+          type:
+          - string
+          - 'null'
+        discountPercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        discountAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        url:
+          type: string
+        gtins:
+          type: array
+          items:
+            type: string
+        hasSecondStep:
+          type: boolean
+        secondStepUrl:
+          type: string
+        secondStepType:
+          type:
+          - string
+          - 'null'
+        formId:
+          type:
+          - string
+          - 'null'
+        locales:
+          type: object
+    CartAvailabilityLine:
+      type: object
+      description: Line item within a store cart (public `CartAvailability` shape)
+      properties:
+        productId:
+          type: string
+          description: Product identifier
+        gtin:
+          type: string
+          description: GTIN
+        quantity:
+          type: integer
+          description: Quantity in cart
+        stockStatus:
+          type: string
+          description: Stock status for the line
+        price:
+          type: object
+          description: Unit price
+          properties:
+            currency:
+              type: string
+              description: Currency
+            value:
+              type: number
+              description: Value
+            valueFormatted:
+              type: string
+              description: Display-formatted price string
+            valueWithVoucher:
+              type:
+              - number
+              - 'null'
+              description: Unit price after voucher when applicable
+        totalPrice:
+          type: object
+          description: Line total price
+          properties:
+            currency:
+              type: string
+              description: Currency
+            value:
+              type: number
+              description: Value
+            valueFormatted:
+              type: string
+              description: Display-formatted price string
+            valueWithVoucher:
+              type:
+              - number
+              - 'null'
+              description: Line total after voucher when applicable
+        voucher:
+          allOf:
+          - $ref: '#/components/schemas/Voucher'
+        clickUrl:
+          type: string
+          description: Tracked click URL for this line
+        doNotTrackClickUrl:
+          type: string
+          description: Click URL without tracking
+        isTiedHouseLaw:
+          type: boolean
+          description: Whether tied house law applies to this line
+    CartResponse:
+      type: object
+      description: Public cart response (location, requested products, per-store carts, optional sessionId and alcoholSettings).
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        products:
+          type: array
+          description: Requested products (catalog metadata)
+          items:
+            $ref: '#/components/schemas/CatalogProduct'
+        carts:
+          type: array
+          description: One entry per store with aggregated cart totals and per-line availability
+          items:
+            $ref: '#/components/schemas/CartStoreGroup'
+        sessionId:
+          type:
+          - string
+          - 'null'
+          description: SessionID value
+        alcoholSettings:
+          type:
+          - object
+          - 'null'
+          description: Alcohol settings configuration
+          properties:
+            tiedHouseLaw:
+              type: integer
+              description: Tied house law setting code
+              example: 4
+            showLocalRetailers:
+              type: boolean
+              description: Whether to show local retailers
+              example: true
+            showRetailerText:
+              type: boolean
+              description: Whether to show retailer text
+              example: true
+            settingCode:
+              type: integer
+              description: Alcohol setting code
+              example: 3
+            applyTiedHouseLaw:
+              type: boolean
+              description: Whether to apply tied house law
+              example: true
+            tiedHouseConditionMet:
+              type: boolean
+              description: Whether tied house condition is met (null if applyTiedHouseLaw is false)
+              example: false
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -1,0 +1,56 @@
+{
+  "provider": "mikmak",
+  "sources": [
+    "_original/mikmak-commerce-api-openapi.json",
+    "_original/mikmak-insights-api-openapi.json"
+  ],
+  "outputs": [
+    "mikmak-availabilities-api-openapi.yml",
+    "mikmak-cart-api-openapi.yml",
+    "mikmak-experiences-api-openapi.yml",
+    "mikmak-facet-api-openapi.yml",
+    "mikmak-offers-api-openapi.yml",
+    "mikmak-product-api-openapi.yml",
+    "mikmak-product-search-api-openapi.yml",
+    "mikmak-authentication-api-openapi.yml",
+    "mikmak-custom-reports-api-openapi.yml",
+    "mikmak-historical-pricing-reports-api-openapi.yml",
+    "mikmak-shoppable-recipe-reports-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "2 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "mikmak-commerce-api-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "mikmak-commerce-api-openapi.json: declared missing tag: Availabilities",
+    "mikmak-commerce-api-openapi.json: declared missing tag: Cart",
+    "mikmak-commerce-api-openapi.json: declared missing tag: Experiences",
+    "mikmak-commerce-api-openapi.json: declared missing tag: Facet",
+    "mikmak-commerce-api-openapi.json: declared missing tag: Offers",
+    "mikmak-commerce-api-openapi.json: declared missing tag: Product",
+    "mikmak-commerce-api-openapi.json: declared missing tag: Product Search",
+    "mikmak-insights-api-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "mikmak-insights-api-openapi.json: declared missing tag: Authentication",
+    "mikmak-insights-api-openapi.json: declared missing tag: Custom Reports",
+    "mikmak-insights-api-openapi.json: declared missing tag: Historical Pricing Reports",
+    "mikmak-insights-api-openapi.json: declared missing tag: Shoppable Recipe Reports",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/mikmak-insights-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/mikmak-commerce-api-openapi.yml: archived document superseded by a larger archived document",
+    "mikmak-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mikmak-availabilities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mikmak-cart-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mikmak-custom-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mikmak-experiences-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mikmak-facet-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mikmak-historical-pricing-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mikmak-offers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mikmak-product-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mikmak-product-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mikmak-shoppable-recipe-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

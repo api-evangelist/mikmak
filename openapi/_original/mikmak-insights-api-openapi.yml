@@ -6866,6 +6866,9 @@ components:
       - msg
       - type
       title: ValidationError
+servers:
+- url: https://api.mikmak.ai
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 paths:
   /reporting/authenticate:
     post:

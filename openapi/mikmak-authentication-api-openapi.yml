@@ -1,17 +1,12 @@
 openapi: 3.2.0
 info:
   title: MikMak Insights Authentication API
-  description: '
-
-    ## Introduction
+  description: '## Introduction
 
     An API for querying reports and report-related data. A set of API credentials is tied to one account; each request
 
     to the API will return data specific to that account.'
   version: 1.0.0
-servers:
-- url: https://api.mikmak.ai
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Authentication
 paths:
@@ -61,6 +56,8 @@ paths:
           description: Invalid client credentials
         '500':
           description: Internal server error
+      operationId: postReportingAuthenticate
+      x-operation-id-source: derived
 components:
   securitySchemes:
     authorization:

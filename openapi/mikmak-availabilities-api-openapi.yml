@@ -325,6 +325,10 @@ paths:
             > **When:** Returned when the server encounters an unhandled error while processing the request.
 
             '
+      summary: Get commerce availabilities by id
+      x-summary-source: derived
+      operationId: getCommerceV1AvailabilitiesById
+      x-operation-id-source: derived
 components:
   schemas:
     Location:
@@ -362,63 +366,83 @@ components:
         isMetricRegion:
           type: boolean
           description: Country is standard metric system (m) or not (miles)
-    CatalogProduct:
+    Voucher:
       type: object
-      description: Product metadata returned with availability and cart responses (catalog fields; not store-specific).
+      description: Promotional voucher that may apply to a line item
       properties:
         id:
           type: string
-          description: Product id (when applicable)
-        ids:
-          type: array
-          description: Alternate product identifiers
-          items:
-            type: string
-        gtin:
+        versionId:
           type: string
-          description: GTIN
-        gtins:
-          type: array
-          description: List of GTINs
-          items:
-            type: string
-            description: GTIN
-        imageUrl:
+        name:
           type: string
-          description: Product image URL
-        thumbnailImageUrl:
+        code:
           type: string
-          description: Product thumbnail image URL (optimized for small displays, 144px width)
-        brand:
-          type: string
-          description: Brand
-        title:
-          type: string
-          description: Title
-        subtitle:
+        retailerId:
+          type:
+          - integer
+          - 'null'
+        online:
+          type:
+          - boolean
+          - 'null'
+        offline:
+          type: boolean
+        startDate:
           type:
           - string
           - 'null'
-          description: Subtitle
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        type:
+          type: string
+          description: Voucher type (configuration enum)
+        text:
+          type: string
+        imageUrl:
+          type: string
         description:
           type: string
-          description: Product description (empty by default)
-        packaging:
+        ctaText:
           type: string
-          description: Containing or color
-        review:
+        discountType:
+          type:
+          - string
+          - 'null'
+        discountPercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        discountAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        url:
+          type: string
+        gtins:
+          type: array
+          items:
+            type: string
+        hasSecondStep:
+          type: boolean
+        secondStepUrl:
+          type: string
+        secondStepType:
+          type:
+          - string
+          - 'null'
+        formId:
+          type:
+          - string
+          - 'null'
+        locales:
           type: object
-          description: Review
-          properties:
-            count:
-              type: number
-              description: Count
-            averageRating:
-              type: number
-              description: Rating
-            roundedAverageRating:
-              type: number
-              description: Rounded rating
     AvailabilitiesResponse:
       type: object
       description: Availabilities response
@@ -649,83 +673,63 @@ components:
               type: boolean
               description: Whether tied house condition is met (null if applyTiedHouseLaw is false)
               example: false
-    Voucher:
+    CatalogProduct:
       type: object
-      description: Promotional voucher that may apply to a line item
+      description: Product metadata returned with availability and cart responses (catalog fields; not store-specific).
       properties:
         id:
           type: string
-        versionId:
-          type: string
-        name:
-          type: string
-        code:
-          type: string
-        retailerId:
-          type:
-          - integer
-          - 'null'
-        online:
-          type:
-          - boolean
-          - 'null'
-        offline:
-          type: boolean
-        startDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        type:
-          type: string
-          description: Voucher type (configuration enum)
-        text:
-          type: string
-        imageUrl:
-          type: string
-        description:
-          type: string
-        ctaText:
-          type: string
-        discountType:
-          type:
-          - string
-          - 'null'
-        discountPercent:
-          type:
-          - number
-          - 'null'
-          format: double
-        discountAmount:
-          type:
-          - number
-          - 'null'
-          format: double
-        url:
-          type: string
-        gtins:
+          description: Product id (when applicable)
+        ids:
           type: array
+          description: Alternate product identifiers
           items:
             type: string
-        hasSecondStep:
-          type: boolean
-        secondStepUrl:
+        gtin:
           type: string
-        secondStepType:
+          description: GTIN
+        gtins:
+          type: array
+          description: List of GTINs
+          items:
+            type: string
+            description: GTIN
+        imageUrl:
+          type: string
+          description: Product image URL
+        thumbnailImageUrl:
+          type: string
+          description: Product thumbnail image URL (optimized for small displays, 144px width)
+        brand:
+          type: string
+          description: Brand
+        title:
+          type: string
+          description: Title
+        subtitle:
           type:
           - string
           - 'null'
-        formId:
-          type:
-          - string
-          - 'null'
-        locales:
+          description: Subtitle
+        description:
+          type: string
+          description: Product description (empty by default)
+        packaging:
+          type: string
+          description: Containing or color
+        review:
           type: object
+          description: Review
+          properties:
+            count:
+              type: number
+              description: Count
+            averageRating:
+              type: number
+              description: Rating
+            roundedAverageRating:
+              type: number
+              description: Rounded rating
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

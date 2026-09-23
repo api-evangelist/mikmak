@@ -85,6 +85,10 @@ paths:
             > **When:** Returned when the server encounters an unhandled error while processing the request.
 
             '
+      summary: Get commerce experiences config by id
+      x-summary-source: derived
+      operationId: getCommerceV1ExperiencesConfigById
+      x-operation-id-source: derived
   /commerce/v1/experiences:
     get:
       tags:
@@ -196,6 +200,10 @@ paths:
             > **When:** Returned when the server encounters an unhandled error while processing the request.
 
             '
+      summary: Get commerce experiences
+      x-summary-source: derived
+      operationId: getCommerceV1Experiences
+      x-operation-id-source: derived
 components:
   schemas:
     ExperiencesResponse:
