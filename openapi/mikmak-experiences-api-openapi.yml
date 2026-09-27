@@ -206,6 +206,45 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ConfigurationResponse:
+      type: object
+      description: Configuration metadata for an experience
+      properties:
+        experienceId:
+          type: string
+          description: The experience ID
+          example: 54511c2f827bef6f9c68f29a
+        retailerSortType:
+          type: string
+          description: How retailers should be sorted in availabilities
+          enum:
+          - manual
+          - random
+          - price_low_to_high
+          example: manual
+        pinnedRetailerIds:
+          type: array
+          description: List of retailer IDs that should be pinned/featured at the top
+          items:
+            type: integer
+          example:
+          - 1
+          - 2
+          - 3
+        retailers:
+          type: array
+          description: List of retailers in the experience configuration
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Retailer ID
+                example: 245
+              name:
+                type: string
+                description: Retailer name
+                example: Walmart
     ExperiencesResponse:
       type: object
       description: List of experiences for an account
@@ -267,45 +306,6 @@ components:
                     thumbnailImageUrl:
                       type: string
                       description: Product thumbnail image URL (optimized for small displays, 144px width)
-    ConfigurationResponse:
-      type: object
-      description: Configuration metadata for an experience
-      properties:
-        experienceId:
-          type: string
-          description: The experience ID
-          example: 54511c2f827bef6f9c68f29a
-        retailerSortType:
-          type: string
-          description: How retailers should be sorted in availabilities
-          enum:
-          - manual
-          - random
-          - price_low_to_high
-          example: manual
-        pinnedRetailerIds:
-          type: array
-          description: List of retailer IDs that should be pinned/featured at the top
-          items:
-            type: integer
-          example:
-          - 1
-          - 2
-          - 3
-        retailers:
-          type: array
-          description: List of retailers in the experience configuration
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: Retailer ID
-                example: 245
-              name:
-                type: string
-                description: Retailer name
-                example: Walmart
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

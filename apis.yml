@@ -47,9 +47,9 @@ tags:
 - Shoppable Media
 - Product Availability
 - MCP
-- agent-native
+- Agent-Native
 - Reporting
-- CPG
+- Consumer Packaged Goods
 tags_raw:
 - Analytics
 - Commerce
@@ -63,6 +63,7 @@ tags_raw:
 - Agent Native
 - Reporting
 - CPG
+- agent-native
 created: '2025-02-21'
 modified: '2026-09-16'
 url: https://raw.githubusercontent.com/api-evangelist/mikmak/refs/heads/main/apis.yml
@@ -98,7 +99,7 @@ apis:
   baseURL: https://mcp.mikmak.ai/commerce/v1
   tags:
   - MCP
-  - agent-native
+  - Agent-Native
   - Commerce
   - Where to Buy
   - Product Availability
@@ -112,6 +113,7 @@ apis:
   - Product Availability
   - AI Agents
   - Tools
+  - agent-native
   properties:
   - type: MCPServer
     url: mcp/mikmak-mcp.yml

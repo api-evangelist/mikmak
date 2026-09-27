@@ -331,118 +331,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Location:
-      type: object
-      description: Resolved or requested search location (shared across products, availabilities, and cart responses).
-      properties:
-        latitude:
-          type: number
-          description: Latitude
-        longitude:
-          type: number
-          description: Longitude
-        address:
-          type:
-          - string
-          - 'null'
-          description: Address
-        city:
-          type: string
-          description: City
-        country:
-          type: string
-          description: Country
-        state:
-          type: string
-          description: State
-        zipCode:
-          type: string
-          description: Zip code
-        placeType:
-          type:
-          - string
-          - 'null'
-          description: Place type
-        isMetricRegion:
-          type: boolean
-          description: Country is standard metric system (m) or not (miles)
-    Voucher:
-      type: object
-      description: Promotional voucher that may apply to a line item
-      properties:
-        id:
-          type: string
-        versionId:
-          type: string
-        name:
-          type: string
-        code:
-          type: string
-        retailerId:
-          type:
-          - integer
-          - 'null'
-        online:
-          type:
-          - boolean
-          - 'null'
-        offline:
-          type: boolean
-        startDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        type:
-          type: string
-          description: Voucher type (configuration enum)
-        text:
-          type: string
-        imageUrl:
-          type: string
-        description:
-          type: string
-        ctaText:
-          type: string
-        discountType:
-          type:
-          - string
-          - 'null'
-        discountPercent:
-          type:
-          - number
-          - 'null'
-          format: double
-        discountAmount:
-          type:
-          - number
-          - 'null'
-          format: double
-        url:
-          type: string
-        gtins:
-          type: array
-          items:
-            type: string
-        hasSecondStep:
-          type: boolean
-        secondStepUrl:
-          type: string
-        secondStepType:
-          type:
-          - string
-          - 'null'
-        formId:
-          type:
-          - string
-          - 'null'
-        locales:
-          type: object
     AvailabilitiesResponse:
       type: object
       description: Availabilities response
@@ -673,6 +561,41 @@ components:
               type: boolean
               description: Whether tied house condition is met (null if applyTiedHouseLaw is false)
               example: false
+    Location:
+      type: object
+      description: Resolved or requested search location (shared across products, availabilities, and cart responses).
+      properties:
+        latitude:
+          type: number
+          description: Latitude
+        longitude:
+          type: number
+          description: Longitude
+        address:
+          type:
+          - string
+          - 'null'
+          description: Address
+        city:
+          type: string
+          description: City
+        country:
+          type: string
+          description: Country
+        state:
+          type: string
+          description: State
+        zipCode:
+          type: string
+          description: Zip code
+        placeType:
+          type:
+          - string
+          - 'null'
+          description: Place type
+        isMetricRegion:
+          type: boolean
+          description: Country is standard metric system (m) or not (miles)
     CatalogProduct:
       type: object
       description: Product metadata returned with availability and cart responses (catalog fields; not store-specific).
@@ -730,6 +653,83 @@ components:
             roundedAverageRating:
               type: number
               description: Rounded rating
+    Voucher:
+      type: object
+      description: Promotional voucher that may apply to a line item
+      properties:
+        id:
+          type: string
+        versionId:
+          type: string
+        name:
+          type: string
+        code:
+          type: string
+        retailerId:
+          type:
+          - integer
+          - 'null'
+        online:
+          type:
+          - boolean
+          - 'null'
+        offline:
+          type: boolean
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        type:
+          type: string
+          description: Voucher type (configuration enum)
+        text:
+          type: string
+        imageUrl:
+          type: string
+        description:
+          type: string
+        ctaText:
+          type: string
+        discountType:
+          type:
+          - string
+          - 'null'
+        discountPercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        discountAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        url:
+          type: string
+        gtins:
+          type: array
+          items:
+            type: string
+        hasSecondStep:
+          type: boolean
+        secondStepUrl:
+          type: string
+        secondStepType:
+          type:
+          - string
+          - 'null'
+        formId:
+          type:
+          - string
+          - 'null'
+        locales:
+          type: object
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
