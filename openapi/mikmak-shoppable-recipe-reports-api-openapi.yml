@@ -217,69 +217,6 @@ paths:
       - x-api-key: []
 components:
   schemas:
-    ColumnType:
-      type: string
-      enum:
-      - count
-      - date
-      - str
-      - percent
-      - money
-      - int
-      - float
-      - distinct
-      title: ColumnType
-      description: 'UI-facing column rendering hint for report cells.
-
-
-        Members:
-
-        - count: Integer count (rendered as a plain number).
-
-        - date: Calendar date.
-
-        - str: Free-form string.
-
-        - percent: Percentage rate (rendered with % suffix).
-
-        - money: Monetary value (rendered with the report''s currency).
-
-        - int: Integer value (non-count, e.g., identifiers).
-
-        - float: Floating-point number.
-
-        - distinct: Distinct count / cardinality.'
-    StrFilters:
-      additionalProperties: false
-      properties:
-        includes:
-          description: Include rows where value is in this list (IN).
-          items:
-            type: string
-          title: Includes
-          type: array
-        excludes:
-          description: Exclude rows where value is in this list (NOT IN).
-          items:
-            type: string
-          title: Excludes
-          type: array
-        contains:
-          description: Include rows where value contains any of these strings (case-insensitive LIKE %...%). Combined with OR. Max 5 values.
-          items:
-            type: string
-          maxItems: 5
-          title: Contains
-          type: array
-        notContains:
-          description: Exclude rows where value contains any of these strings (case-insensitive NOT LIKE %...%). Combined with AND. Max 5 values.
-          items:
-            type: string
-          maxItems: 5
-          title: Notcontains
-          type: array
-      title: StrFilters
-      type: object
     ShoppableRecipeReportRequestBody:
       properties:
         dimensions:
@@ -631,643 +568,6 @@ components:
       - sortBy
       - sortDir
       title: ShoppableRecipeReportRequestBody
-    ReportFields:
-      properties:
-        dimensions:
-          anyOf:
-          - $ref: '#/components/schemas/ListConfig'
-          - type: 'null'
-        metrics:
-          anyOf:
-          - $ref: '#/components/schemas/ListConfig'
-          - type: 'null'
-      type: object
-      title: ReportFields
-      description: Report builder configuration
-    Row:
-      properties:
-        date:
-          type: string
-          format: date
-          title: Date
-        country:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Country
-        currency:
-          type: string
-          title: Currency
-        productBrandName:
-          type: string
-          title: Productbrandname
-        experience:
-          type: string
-          title: Experience
-        commerceType:
-          type: string
-          title: Commercetype
-        productName:
-          type: string
-          title: Productname
-        alternateProductName:
-          type: string
-          title: Alternateproductname
-        modelName:
-          type: string
-          title: Modelname
-        retailer:
-          type: string
-          title: Retailer
-        utmSource:
-          type: string
-          title: Utmsource
-        utmMedium:
-          type: string
-          title: Utmmedium
-        utmCampaign:
-          type: string
-          title: Utmcampaign
-        utmTerm:
-          type: string
-          title: Utmterm
-        utmContent:
-          type: string
-          title: Utmcontent
-        utmAdId:
-          type: string
-          title: Utmadid
-        utmPlacement:
-          type: string
-          title: Utmplacement
-        utmBu:
-          type: string
-          title: Utmbu
-        utmClicktype:
-          type: string
-          title: Utmclicktype
-        utmVariant:
-          type: string
-          title: Utmvariant
-        utmAdvertiserId:
-          type: string
-          title: Utmadvertiserid
-        utmPlacementId:
-          type: string
-          title: Utmplacementid
-        utmFormat:
-          type: string
-          title: Utmformat
-        utmCreativeid:
-          type: string
-          title: Utmcreativeid
-        utmConfig:
-          type: string
-          title: Utmconfig
-        utmId:
-          type: string
-          title: Utmid
-        utmMarketingTactic:
-          type: string
-          title: Utmmarketingtactic
-        utmSourcePlatform:
-          type: string
-          title: Utmsourceplatform
-        utmCreativeFormat:
-          type: string
-          title: Utmcreativeformat
-        standardSource:
-          type: string
-          title: Standardsource
-        standardMedium:
-          type: string
-          title: Standardmedium
-        productCategoryName:
-          type: string
-          title: Productcategoryname
-        productLine:
-          type: string
-          title: Productline
-        productRange:
-          type: string
-          title: Productrange
-        productCustomCategory:
-          type: string
-          title: Productcustomcategory
-        productCustomSubcategory1:
-          type: string
-          title: Productcustomsubcategory1
-        productCustomSubcategory2:
-          type: string
-          title: Productcustomsubcategory2
-        productCustomSubcategory3:
-          type: string
-          title: Productcustomsubcategory3
-        productCustomSubcategory4:
-          type: string
-          title: Productcustomsubcategory4
-        subaccountId:
-          type: string
-          title: Subaccountid
-        ean:
-          type: string
-          title: Ean
-        mpn:
-          type: string
-          title: Mpn
-        partnerId:
-          type: string
-          title: Partnerid
-        recipeName:
-          type: string
-          title: Recipename
-        recipeRetailer:
-          type: string
-          title: Reciperetailer
-        recipeUtmSource:
-          type: string
-          title: Recipeutmsource
-        recipeUtmMedium:
-          type: string
-          title: Recipeutmmedium
-        recipeUtmCampaign:
-          type: string
-          title: Recipeutmcampaign
-        domain:
-          type: string
-          title: Domain
-        pageUrl:
-          type: string
-          title: Pageurl
-        domainUrl:
-          type: string
-          title: Domainurl
-        shopperCity:
-          type: string
-          title: Shoppercity
-        shopperRegion:
-          type: string
-          title: Shopperregion
-        shopperCountry:
-          type: string
-          title: Shoppercountry
-        shopperZipCode:
-          type: string
-          title: Shopperzipcode
-        brandEntity:
-          type: string
-          title: Brandentity
-        isBundle:
-          type: string
-          title: Isbundle
-        deviceType:
-          type: string
-          title: Devicetype
-        purchaseIntentValue:
-          type: number
-          title: Purchaseintentvalue
-        averageClickPrice:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Averageclickprice
-        purchaseIntentClicks:
-          type: integer
-          title: Purchaseintentclicks
-        ctaView:
-          type: integer
-          title: Ctaview
-        rawSalesAccountAmount:
-          type: number
-          title: Rawsalesaccountamount
-        rawSalesAmount:
-          type: number
-          title: Rawsalesamount
-        commerceLoads:
-          type: integer
-          title: Commerceloads
-        purchaseIntentRate:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Purchaseintentrate
-        ctaViewSessions:
-          type: integer
-          title: Ctaviewsessions
-        commerceLoadSessions:
-          type: integer
-          title: Commerceloadsessions
-        purchaseIntentClickSessions:
-          type: integer
-          title: Purchaseintentclicksessions
-        purchaseIntentRateSession:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Purchaseintentratesession
-        transactions:
-          type: integer
-          title: Transactions
-        skuSelected:
-          type: integer
-          title: Skuselected
-        successfulSearches:
-          type: integer
-          title: Successfulsearches
-        unsuccessfulSearches:
-          type: integer
-          title: Unsuccessfulsearches
-        onlinePurchaseIntentClicks:
-          type: integer
-          title: Onlinepurchaseintentclicks
-        offlinePurchaseIntentClicks:
-          type: integer
-          title: Offlinepurchaseintentclicks
-        avgPriceLocalCurrency:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Avgpricelocalcurrency
-        minPriceLocalCurrency:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Minpricelocalcurrency
-        maxPriceLocalCurrency:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Maxpricelocalcurrency
-        medianPriceLocalCurrency:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Medianpricelocalcurrency
-        inStock:
-          type: integer
-          title: Instock
-        outOfStock:
-          type: integer
-          title: Outofstock
-        retailerOpportunities:
-          type: integer
-          title: Retaileropportunities
-        missedRetailerOpportunities:
-          type: integer
-          title: Missedretaileropportunities
-        retailerImpressions:
-          type: integer
-          title: Retailerimpressions
-        retailerDisplayed:
-          type: integer
-          title: Retailerdisplayed
-        retailerInStock:
-          type: integer
-          title: Retailerinstock
-        retailerOutOfStock:
-          type: integer
-          title: Retaileroutofstock
-        retailerInStockRate:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Retailerinstockrate
-        retailerDisplayRate:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Retailerdisplayrate
-        retailerCTR:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Retailerctr
-        transactionValue:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Transactionvalue
-        commerceLoadedRate:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Commerceloadedrate
-        shoppableCommerceLoadedRate:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Shoppablecommerceloadedrate
-        visitorConversionRate:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Visitorconversionrate
-        shoppableTransactionConversionRate:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Shoppabletransactionconversionrate
-        shoppableTransactionValueConversionRate:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Shoppabletransactionvalueconversionrate
-        minAuraRoas:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Minauraroas
-        maxAuraRoas:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Maxauraroas
-        auraAdSpend:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Auraadspend
-        auraIncrementalContribution:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Auraincrementalcontribution
-      type: object
-      title: Row
-    IntFilters:
-      properties:
-        includes:
-          items:
-            type: integer
-          type: array
-          title: Includes
-      additionalProperties: false
-      type: object
-      required:
-      - includes
-      title: IntFilters
-    ShoppableRecipeReportFiltersRequestBody:
-      properties:
-        dimensions:
-          items:
-            $ref: '#/components/schemas/Dimensions'
-          type: array
-          title: Dimensions
-        metrics:
-          items:
-            $ref: '#/components/schemas/Metrics'
-          type: array
-          title: Metrics
-        filters:
-          additionalProperties:
-            anyOf:
-            - $ref: '#/components/schemas/IntFilters'
-            - $ref: '#/components/schemas/StrFilters'
-          propertyNames:
-            $ref: '#/components/schemas/Dimensions'
-          type: object
-          title: Filters
-        accountId:
-          type: string
-          title: Accountid
-          description: If accountId is not provided, the accountId will be taken from the token.
-        currency:
-          type: string
-          enum:
-          - AED
-          - AFN
-          - ALL
-          - AMD
-          - ANG
-          - AOA
-          - ARS
-          - AUD
-          - AWG
-          - AZN
-          - BAM
-          - BBD
-          - BDT
-          - BGN
-          - BHD
-          - BIF
-          - BMD
-          - BND
-          - BOB
-          - BOV
-          - BRL
-          - BSD
-          - BTN
-          - BWP
-          - BYN
-          - BZD
-          - CAD
-          - CDF
-          - CHE
-          - CHF
-          - CHW
-          - CLF
-          - CLP
-          - CNY
-          - COP
-          - COU
-          - CRC
-          - CUC
-          - CUP
-          - CVE
-          - CZK
-          - DJF
-          - DKK
-          - DOP
-          - DZD
-          - EGP
-          - ERN
-          - ETB
-          - EUR
-          - FJD
-          - FKP
-          - GBP
-          - GEL
-          - GHS
-          - GIP
-          - GMD
-          - GNF
-          - GTQ
-          - GYD
-          - HKD
-          - HNL
-          - HRK
-          - HTG
-          - HUF
-          - IDR
-          - ILS
-          - INR
-          - IQD
-          - IRR
-          - ISK
-          - JMD
-          - JOD
-          - JPY
-          - KES
-          - KGS
-          - KHR
-          - KMF
-          - KPW
-          - KRW
-          - KWD
-          - KYD
-          - KZT
-          - LAK
-          - LBP
-          - LKR
-          - LRD
-          - LSL
-          - LYD
-          - MAD
-          - MDL
-          - MGA
-          - MKD
-          - MMK
-          - MNT
-          - MOP
-          - MRU
-          - MUR
-          - MVR
-          - MWK
-          - MXN
-          - MXV
-          - MYR
-          - MZN
-          - NAD
-          - NGN
-          - NIO
-          - NOK
-          - NPR
-          - NZD
-          - OMR
-          - PAB
-          - PEN
-          - PGK
-          - PHP
-          - PKR
-          - PLN
-          - PYG
-          - QAR
-          - RON
-          - RSD
-          - RUB
-          - RWF
-          - SAR
-          - SBD
-          - SCR
-          - SDG
-          - SEK
-          - SGD
-          - SHP
-          - SLE
-          - SLL
-          - SOS
-          - SRD
-          - SSP
-          - STN
-          - SVC
-          - SYP
-          - SZL
-          - THB
-          - TJS
-          - TMT
-          - TND
-          - TOP
-          - TRY
-          - TTD
-          - TWD
-          - TZS
-          - UAH
-          - UGX
-          - USD
-          - USN
-          - UYI
-          - UYU
-          - UYW
-          - UZS
-          - VED
-          - VES
-          - VND
-          - VUV
-          - WST
-          - XAF
-          - XAG
-          - XAU
-          - XBA
-          - XBB
-          - XBC
-          - XBD
-          - XCD
-          - XDR
-          - XOF
-          - XPD
-          - XPF
-          - XPT
-          - XSU
-          - XTS
-          - XUA
-          - XXX
-          - YER
-          - ZAR
-          - ZMW
-          - ZWL
-          maxLength: 3
-          minLength: 3
-          title: Currency
-          description: The Currency field is required in the request body to provide the monetary metrics in the adequate currency.
-        startDate:
-          type: string
-          format: date
-          title: Startdate
-        endDate:
-          type: string
-          format: date
-          title: Enddate
-        subaccountIds:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Subaccountids
-          default: []
-      type: object
-      required:
-      - dimensions
-      - metrics
-      - filters
-      - accountId
-      - currency
-      - startDate
-      - endDate
-      title: ShoppableRecipeReportFiltersRequestBody
-    OrderDirection:
-      type: string
-      enum:
-      - ASC
-      - DESC
-      title: OrderDirection
-      description: 'Sort direction applied to ``sort_by`` in custom reports.
-
-
-        Members:
-
-        - ASC: Ascending (smallest/earliest first).
-
-        - DESC: Descending (largest/latest first).'
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     Column:
       properties:
         key:
@@ -1292,36 +592,6 @@ components:
       - type
       - displayName
       title: Column
-    ExportResponse:
-      properties:
-        url:
-          type: string
-          title: Url
-      type: object
-      required:
-      - url
-      title: ExportResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     Dimensions:
       type: string
       enum:
@@ -1498,6 +768,215 @@ components:
         - isBundle: Whether the experience is a bundle (Yes or No).
 
         - deviceType: The category of the visitor''s hardware (Desktop, Mobile, Tablet, or Others), detected via the user agent associated with the metric.'
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ReportPaginatedResponse:
+      properties:
+        total:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Total
+        nextPage:
+          type: boolean
+          title: Nextpage
+        columns:
+          items:
+            $ref: '#/components/schemas/Column'
+          type: array
+          title: Columns
+        data:
+          items:
+            $ref: '#/components/schemas/Row'
+          type: array
+          title: Data
+      type: object
+      required:
+      - nextPage
+      - columns
+      - data
+      title: ReportPaginatedResponse
+    ListConfig:
+      properties:
+        apiFilterParam:
+          type: string
+          title: Apifilterparam
+        displayName:
+          type: string
+          title: Displayname
+        tooltip:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tooltip
+        values:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ListItem'
+            type: array
+          - type: 'null'
+          title: Values
+      type: object
+      required:
+      - apiFilterParam
+      - displayName
+      title: ListConfig
+      description: Menu item for providing a dropdown list of values with a display name
+    Metrics:
+      type: string
+      enum:
+      - purchaseIntentValue
+      - averageClickPrice
+      - purchaseIntentClicks
+      - ctaView
+      - rawSalesAccountAmount
+      - rawSalesAmount
+      - commerceLoads
+      - purchaseIntentRate
+      - ctaViewSessions
+      - commerceLoadSessions
+      - purchaseIntentClickSessions
+      - purchaseIntentRateSession
+      - transactions
+      - skuSelected
+      - successfulSearches
+      - unsuccessfulSearches
+      - onlinePurchaseIntentClicks
+      - offlinePurchaseIntentClicks
+      - avgPriceLocalCurrency
+      - minPriceLocalCurrency
+      - maxPriceLocalCurrency
+      - medianPriceLocalCurrency
+      - inStock
+      - outOfStock
+      - retailerOpportunities
+      - missedRetailerOpportunities
+      - retailerImpressions
+      - retailerDisplayed
+      - retailerInStock
+      - retailerOutOfStock
+      - retailerInStockRate
+      - retailerDisplayRate
+      - retailerCTR
+      - transactionValue
+      - commerceLoadedRate
+      - shoppableCommerceLoadedRate
+      - visitorConversionRate
+      - shoppableTransactionConversionRate
+      - shoppableTransactionValueConversionRate
+      - minAuraRoas
+      - maxAuraRoas
+      - auraAdSpend
+      - auraIncrementalContribution
+      title: Metrics
+      description: 'Metrics available in custom reports (aggregated numeric values).
+
+
+        Members:
+
+        - purchaseIntentValue: Total financial value of Purchase Intent Clicks (price x clicks), in the selected currency.
+
+        - averageClickPrice: Average listed price of clicked products (Purchase Intent Value / Total Purchase Intent Clicks).
+
+        - purchaseIntentClicks: Total number of clicks-through to a retailer from a MikMak Commerce Experience (online + offline).
+
+        - ctaView: Times the MikMak button was present on a page (or immediately before an auto-loaded Experience).
+
+        - rawSalesAccountAmount: Transaction value attributed to Purchase Intent Clicks, restricted to products associated with the account.
+
+        - rawSalesAmount: Transaction value attributed to Purchase Intent Clicks across all products (including other brands'').
+
+        - commerceLoads: Number of times a MikMak Commerce Experience was fully initialized.
+
+        - purchaseIntentRate: Percentage of shoppers who opened an Experience and then clicked through to a retailer.
+
+        - ctaViewSessions: Unique user sessions containing at least one CTA View.
+
+        - commerceLoadSessions: Unique user sessions containing at least one Commerce Load.
+
+        - purchaseIntentClickSessions: Unique user sessions containing at least one Purchase Intent Click.
+
+        - purchaseIntentRateSession: Purchase Intent Click Sessions divided by Commerce Load Sessions.
+
+        - transactions: Number of attributable, unique orders within the retailer-defined attribution window.
+
+        - skuSelected: Number of times a product was selected within a Commerce Experience.
+
+        - onlinePurchaseIntentClicks: Purchase Intent Clicks targeting online stores (e.g., retailer PDPs).
+
+        - offlinePurchaseIntentClicks: Purchase Intent Clicks targeting physical stores (e.g., store cards).
+
+        - avgPriceLocalCurrency: Average product price in the product''s local currency (historical pricing).
+
+        - minPriceLocalCurrency: Minimum product price in the product''s local currency (historical pricing).
+
+        - maxPriceLocalCurrency: Maximum product price in the product''s local currency (historical pricing).
+
+        - medianPriceLocalCurrency: Median product price in the product''s local currency (historical pricing).
+
+        - inStock: Count of in-stock observations for the product at the retailer (historical pricing).
+
+        - outOfStock: Count of out-of-stock observations for the product at the retailer (historical pricing).
+
+        - retailerOpportunities: Count of retailer-display opportunities in the window.
+
+        - missedRetailerOpportunities: Opportunities where no retailer was actually displayed.
+
+        - retailerImpressions: Count of times a retailer was an option to checkout for a recipe.
+
+        - retailerDisplayed: Times at least one store of a retailer was visible in an Experience (logo on-screen).
+
+        - retailerInStock: Times at least one store of a retailer had stock available as a click-through option.
+
+        - retailerOutOfStock: Times an eligible retailer had only out-of-stock stores in the Experience.
+
+        - retailerInStockRate: retailerInStock / (retailerInStock + retailerOutOfStock).
+
+        - retailerDisplayRate: retailerDisplayed / (retailerInStock + retailerOutOfStock).
+
+        - retailerCTR: purchaseIntentClicks / retailerDisplayed (retailer click-through rate).
+
+        - transactionValue: Attributed transaction value (shoppable recipes), in the selected currency.
+
+        - commerceLoadedRate: Commerce-load rate for custom reports (ratio).
+
+        - shoppableCommerceLoadedRate: Percentage of CTA Views that resulted in a Commerce Load (shoppable).
+
+        - visitorConversionRate: purchaseIntentClicks / ctaView.
+
+        - shoppableTransactionConversionRate: transactions / purchaseIntentClicks (shoppable).
+
+        - shoppableTransactionValueConversionRate: transactionValue / purchaseIntentValue (shoppable).'
+    ReportFiltersResponse:
+      properties:
+        filters:
+          additionalProperties:
+            $ref: '#/components/schemas/ListConfig'
+          type: object
+          title: Filters
+      type: object
+      required:
+      - filters
+      title: ReportFiltersResponse
     ShoppableRecipeReportPaginatedRequestBody:
       properties:
         dimensions:
@@ -1860,17 +1339,6 @@ components:
       - offset
       - count
       title: ShoppableRecipeReportPaginatedRequestBody
-    ReportFiltersResponse:
-      properties:
-        filters:
-          additionalProperties:
-            $ref: '#/components/schemas/ListConfig'
-          type: object
-          title: Filters
-      type: object
-      required:
-      - filters
-      title: ReportFiltersResponse
     ShoppableRecipeReportFieldsRequestBody:
       properties:
         dimensions:
@@ -2089,32 +1557,245 @@ components:
       - accountId
       - currency
       title: ShoppableRecipeReportFieldsRequestBody
-    ListConfig:
+    ShoppableRecipeReportFiltersRequestBody:
       properties:
-        apiFilterParam:
+        dimensions:
+          items:
+            $ref: '#/components/schemas/Dimensions'
+          type: array
+          title: Dimensions
+        metrics:
+          items:
+            $ref: '#/components/schemas/Metrics'
+          type: array
+          title: Metrics
+        filters:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/IntFilters'
+            - $ref: '#/components/schemas/StrFilters'
+          propertyNames:
+            $ref: '#/components/schemas/Dimensions'
+          type: object
+          title: Filters
+        accountId:
           type: string
-          title: Apifilterparam
-        displayName:
+          title: Accountid
+          description: If accountId is not provided, the accountId will be taken from the token.
+        currency:
           type: string
-          title: Displayname
-        tooltip:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tooltip
-        values:
+          enum:
+          - AED
+          - AFN
+          - ALL
+          - AMD
+          - ANG
+          - AOA
+          - ARS
+          - AUD
+          - AWG
+          - AZN
+          - BAM
+          - BBD
+          - BDT
+          - BGN
+          - BHD
+          - BIF
+          - BMD
+          - BND
+          - BOB
+          - BOV
+          - BRL
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
+          - CAD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
+          - CLF
+          - CLP
+          - CNY
+          - COP
+          - COU
+          - CRC
+          - CUC
+          - CUP
+          - CVE
+          - CZK
+          - DJF
+          - DKK
+          - DOP
+          - DZD
+          - EGP
+          - ERN
+          - ETB
+          - EUR
+          - FJD
+          - FKP
+          - GBP
+          - GEL
+          - GHS
+          - GIP
+          - GMD
+          - GNF
+          - GTQ
+          - GYD
+          - HKD
+          - HNL
+          - HRK
+          - HTG
+          - HUF
+          - IDR
+          - ILS
+          - INR
+          - IQD
+          - IRR
+          - ISK
+          - JMD
+          - JOD
+          - JPY
+          - KES
+          - KGS
+          - KHR
+          - KMF
+          - KPW
+          - KRW
+          - KWD
+          - KYD
+          - KZT
+          - LAK
+          - LBP
+          - LKR
+          - LRD
+          - LSL
+          - LYD
+          - MAD
+          - MDL
+          - MGA
+          - MKD
+          - MMK
+          - MNT
+          - MOP
+          - MRU
+          - MUR
+          - MVR
+          - MWK
+          - MXN
+          - MXV
+          - MYR
+          - MZN
+          - NAD
+          - NGN
+          - NIO
+          - NOK
+          - NPR
+          - NZD
+          - OMR
+          - PAB
+          - PEN
+          - PGK
+          - PHP
+          - PKR
+          - PLN
+          - PYG
+          - QAR
+          - RON
+          - RSD
+          - RUB
+          - RWF
+          - SAR
+          - SBD
+          - SCR
+          - SDG
+          - SEK
+          - SGD
+          - SHP
+          - SLE
+          - SLL
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
+          - SYP
+          - SZL
+          - THB
+          - TJS
+          - TMT
+          - TND
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
+          - UAH
+          - UGX
+          - USD
+          - USN
+          - UYI
+          - UYU
+          - UYW
+          - UZS
+          - VED
+          - VES
+          - VND
+          - VUV
+          - WST
+          - XAF
+          - XAG
+          - XAU
+          - XBA
+          - XBB
+          - XBC
+          - XBD
+          - XCD
+          - XDR
+          - XOF
+          - XPD
+          - XPF
+          - XPT
+          - XSU
+          - XTS
+          - XUA
+          - XXX
+          - YER
+          - ZAR
+          - ZMW
+          - ZWL
+          maxLength: 3
+          minLength: 3
+          title: Currency
+          description: The Currency field is required in the request body to provide the monetary metrics in the adequate currency.
+        startDate:
+          type: string
+          format: date
+          title: Startdate
+        endDate:
+          type: string
+          format: date
+          title: Enddate
+        subaccountIds:
           anyOf:
           - items:
-              $ref: '#/components/schemas/ListItem'
+              type: string
             type: array
           - type: 'null'
-          title: Values
+          title: Subaccountids
+          default: []
       type: object
       required:
-      - apiFilterParam
-      - displayName
-      title: ListConfig
-      description: Menu item for providing a dropdown list of values with a display name
+      - dimensions
+      - metrics
+      - filters
+      - accountId
+      - currency
+      - startDate
+      - endDate
+      title: ShoppableRecipeReportFiltersRequestBody
     DateFreq:
       type: string
       enum:
@@ -2138,6 +1819,38 @@ components:
         - Q: Quarterly (one row per calendar quarter).
 
         - Y: Yearly (one row per calendar year).'
+    ColumnType:
+      type: string
+      enum:
+      - count
+      - date
+      - str
+      - percent
+      - money
+      - int
+      - float
+      - distinct
+      title: ColumnType
+      description: 'UI-facing column rendering hint for report cells.
+
+
+        Members:
+
+        - count: Integer count (rendered as a plain number).
+
+        - date: Calendar date.
+
+        - str: Free-form string.
+
+        - percent: Percentage rate (rendered with % suffix).
+
+        - money: Monetary value (rendered with the report''s currency).
+
+        - int: Integer value (non-count, e.g., identifiers).
+
+        - float: Floating-point number.
+
+        - distinct: Distinct count / cardinality.'
     ReportFieldsResponse:
       properties:
         data:
@@ -2147,32 +1860,46 @@ components:
       - data
       title: ReportFieldsResponse
       description: Model for holding all the report builder configurations
-    ReportPaginatedResponse:
+    ExportResponse:
       properties:
-        total:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Total
-        nextPage:
-          type: boolean
-          title: Nextpage
-        columns:
-          items:
-            $ref: '#/components/schemas/Column'
-          type: array
-          title: Columns
-        data:
-          items:
-            $ref: '#/components/schemas/Row'
-          type: array
-          title: Data
+        url:
+          type: string
+          title: Url
       type: object
       required:
-      - nextPage
-      - columns
-      - data
-      title: ReportPaginatedResponse
+      - url
+      title: ExportResponse
+    StrFilters:
+      additionalProperties: false
+      properties:
+        includes:
+          description: Include rows where value is in this list (IN).
+          items:
+            type: string
+          title: Includes
+          type: array
+        excludes:
+          description: Exclude rows where value is in this list (NOT IN).
+          items:
+            type: string
+          title: Excludes
+          type: array
+        contains:
+          description: Include rows where value contains any of these strings (case-insensitive LIKE %...%). Combined with OR. Max 5 values.
+          items:
+            type: string
+          maxItems: 5
+          title: Contains
+          type: array
+        notContains:
+          description: Exclude rows where value contains any of these strings (case-insensitive NOT LIKE %...%). Combined with AND. Max 5 values.
+          items:
+            type: string
+          maxItems: 5
+          title: Notcontains
+          type: array
+      title: StrFilters
+      type: object
     ListItem:
       properties:
         label:
@@ -2202,131 +1929,404 @@ components:
       - code
       title: ListItem
       description: Values for displaying item in a list
-    Metrics:
+    IntFilters:
+      properties:
+        includes:
+          items:
+            type: integer
+          type: array
+          title: Includes
+      additionalProperties: false
+      type: object
+      required:
+      - includes
+      title: IntFilters
+    Row:
+      properties:
+        date:
+          type: string
+          format: date
+          title: Date
+        country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Country
+        currency:
+          type: string
+          title: Currency
+        productBrandName:
+          type: string
+          title: Productbrandname
+        experience:
+          type: string
+          title: Experience
+        commerceType:
+          type: string
+          title: Commercetype
+        productName:
+          type: string
+          title: Productname
+        alternateProductName:
+          type: string
+          title: Alternateproductname
+        modelName:
+          type: string
+          title: Modelname
+        retailer:
+          type: string
+          title: Retailer
+        utmSource:
+          type: string
+          title: Utmsource
+        utmMedium:
+          type: string
+          title: Utmmedium
+        utmCampaign:
+          type: string
+          title: Utmcampaign
+        utmTerm:
+          type: string
+          title: Utmterm
+        utmContent:
+          type: string
+          title: Utmcontent
+        utmAdId:
+          type: string
+          title: Utmadid
+        utmPlacement:
+          type: string
+          title: Utmplacement
+        utmBu:
+          type: string
+          title: Utmbu
+        utmClicktype:
+          type: string
+          title: Utmclicktype
+        utmVariant:
+          type: string
+          title: Utmvariant
+        utmAdvertiserId:
+          type: string
+          title: Utmadvertiserid
+        utmPlacementId:
+          type: string
+          title: Utmplacementid
+        utmFormat:
+          type: string
+          title: Utmformat
+        utmCreativeid:
+          type: string
+          title: Utmcreativeid
+        utmConfig:
+          type: string
+          title: Utmconfig
+        utmId:
+          type: string
+          title: Utmid
+        utmMarketingTactic:
+          type: string
+          title: Utmmarketingtactic
+        utmSourcePlatform:
+          type: string
+          title: Utmsourceplatform
+        utmCreativeFormat:
+          type: string
+          title: Utmcreativeformat
+        standardSource:
+          type: string
+          title: Standardsource
+        standardMedium:
+          type: string
+          title: Standardmedium
+        productCategoryName:
+          type: string
+          title: Productcategoryname
+        productLine:
+          type: string
+          title: Productline
+        productRange:
+          type: string
+          title: Productrange
+        productCustomCategory:
+          type: string
+          title: Productcustomcategory
+        productCustomSubcategory1:
+          type: string
+          title: Productcustomsubcategory1
+        productCustomSubcategory2:
+          type: string
+          title: Productcustomsubcategory2
+        productCustomSubcategory3:
+          type: string
+          title: Productcustomsubcategory3
+        productCustomSubcategory4:
+          type: string
+          title: Productcustomsubcategory4
+        subaccountId:
+          type: string
+          title: Subaccountid
+        ean:
+          type: string
+          title: Ean
+        mpn:
+          type: string
+          title: Mpn
+        partnerId:
+          type: string
+          title: Partnerid
+        recipeName:
+          type: string
+          title: Recipename
+        recipeRetailer:
+          type: string
+          title: Reciperetailer
+        recipeUtmSource:
+          type: string
+          title: Recipeutmsource
+        recipeUtmMedium:
+          type: string
+          title: Recipeutmmedium
+        recipeUtmCampaign:
+          type: string
+          title: Recipeutmcampaign
+        domain:
+          type: string
+          title: Domain
+        pageUrl:
+          type: string
+          title: Pageurl
+        domainUrl:
+          type: string
+          title: Domainurl
+        shopperCity:
+          type: string
+          title: Shoppercity
+        shopperRegion:
+          type: string
+          title: Shopperregion
+        shopperCountry:
+          type: string
+          title: Shoppercountry
+        shopperZipCode:
+          type: string
+          title: Shopperzipcode
+        brandEntity:
+          type: string
+          title: Brandentity
+        isBundle:
+          type: string
+          title: Isbundle
+        deviceType:
+          type: string
+          title: Devicetype
+        purchaseIntentValue:
+          type: number
+          title: Purchaseintentvalue
+        averageClickPrice:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Averageclickprice
+        purchaseIntentClicks:
+          type: integer
+          title: Purchaseintentclicks
+        ctaView:
+          type: integer
+          title: Ctaview
+        rawSalesAccountAmount:
+          type: number
+          title: Rawsalesaccountamount
+        rawSalesAmount:
+          type: number
+          title: Rawsalesamount
+        commerceLoads:
+          type: integer
+          title: Commerceloads
+        purchaseIntentRate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Purchaseintentrate
+        ctaViewSessions:
+          type: integer
+          title: Ctaviewsessions
+        commerceLoadSessions:
+          type: integer
+          title: Commerceloadsessions
+        purchaseIntentClickSessions:
+          type: integer
+          title: Purchaseintentclicksessions
+        purchaseIntentRateSession:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Purchaseintentratesession
+        transactions:
+          type: integer
+          title: Transactions
+        skuSelected:
+          type: integer
+          title: Skuselected
+        successfulSearches:
+          type: integer
+          title: Successfulsearches
+        unsuccessfulSearches:
+          type: integer
+          title: Unsuccessfulsearches
+        onlinePurchaseIntentClicks:
+          type: integer
+          title: Onlinepurchaseintentclicks
+        offlinePurchaseIntentClicks:
+          type: integer
+          title: Offlinepurchaseintentclicks
+        avgPriceLocalCurrency:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Avgpricelocalcurrency
+        minPriceLocalCurrency:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Minpricelocalcurrency
+        maxPriceLocalCurrency:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Maxpricelocalcurrency
+        medianPriceLocalCurrency:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Medianpricelocalcurrency
+        inStock:
+          type: integer
+          title: Instock
+        outOfStock:
+          type: integer
+          title: Outofstock
+        retailerOpportunities:
+          type: integer
+          title: Retaileropportunities
+        missedRetailerOpportunities:
+          type: integer
+          title: Missedretaileropportunities
+        retailerImpressions:
+          type: integer
+          title: Retailerimpressions
+        retailerDisplayed:
+          type: integer
+          title: Retailerdisplayed
+        retailerInStock:
+          type: integer
+          title: Retailerinstock
+        retailerOutOfStock:
+          type: integer
+          title: Retaileroutofstock
+        retailerInStockRate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Retailerinstockrate
+        retailerDisplayRate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Retailerdisplayrate
+        retailerCTR:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Retailerctr
+        transactionValue:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Transactionvalue
+        commerceLoadedRate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Commerceloadedrate
+        shoppableCommerceLoadedRate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Shoppablecommerceloadedrate
+        visitorConversionRate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Visitorconversionrate
+        shoppableTransactionConversionRate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Shoppabletransactionconversionrate
+        shoppableTransactionValueConversionRate:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Shoppabletransactionvalueconversionrate
+        minAuraRoas:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Minauraroas
+        maxAuraRoas:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Maxauraroas
+        auraAdSpend:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Auraadspend
+        auraIncrementalContribution:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Auraincrementalcontribution
+      type: object
+      title: Row
+    OrderDirection:
       type: string
       enum:
-      - purchaseIntentValue
-      - averageClickPrice
-      - purchaseIntentClicks
-      - ctaView
-      - rawSalesAccountAmount
-      - rawSalesAmount
-      - commerceLoads
-      - purchaseIntentRate
-      - ctaViewSessions
-      - commerceLoadSessions
-      - purchaseIntentClickSessions
-      - purchaseIntentRateSession
-      - transactions
-      - skuSelected
-      - successfulSearches
-      - unsuccessfulSearches
-      - onlinePurchaseIntentClicks
-      - offlinePurchaseIntentClicks
-      - avgPriceLocalCurrency
-      - minPriceLocalCurrency
-      - maxPriceLocalCurrency
-      - medianPriceLocalCurrency
-      - inStock
-      - outOfStock
-      - retailerOpportunities
-      - missedRetailerOpportunities
-      - retailerImpressions
-      - retailerDisplayed
-      - retailerInStock
-      - retailerOutOfStock
-      - retailerInStockRate
-      - retailerDisplayRate
-      - retailerCTR
-      - transactionValue
-      - commerceLoadedRate
-      - shoppableCommerceLoadedRate
-      - visitorConversionRate
-      - shoppableTransactionConversionRate
-      - shoppableTransactionValueConversionRate
-      - minAuraRoas
-      - maxAuraRoas
-      - auraAdSpend
-      - auraIncrementalContribution
-      title: Metrics
-      description: 'Metrics available in custom reports (aggregated numeric values).
+      - ASC
+      - DESC
+      title: OrderDirection
+      description: 'Sort direction applied to ``sort_by`` in custom reports.
 
 
         Members:
 
-        - purchaseIntentValue: Total financial value of Purchase Intent Clicks (price x clicks), in the selected currency.
+        - ASC: Ascending (smallest/earliest first).
 
-        - averageClickPrice: Average listed price of clicked products (Purchase Intent Value / Total Purchase Intent Clicks).
-
-        - purchaseIntentClicks: Total number of clicks-through to a retailer from a MikMak Commerce Experience (online + offline).
-
-        - ctaView: Times the MikMak button was present on a page (or immediately before an auto-loaded Experience).
-
-        - rawSalesAccountAmount: Transaction value attributed to Purchase Intent Clicks, restricted to products associated with the account.
-
-        - rawSalesAmount: Transaction value attributed to Purchase Intent Clicks across all products (including other brands'').
-
-        - commerceLoads: Number of times a MikMak Commerce Experience was fully initialized.
-
-        - purchaseIntentRate: Percentage of shoppers who opened an Experience and then clicked through to a retailer.
-
-        - ctaViewSessions: Unique user sessions containing at least one CTA View.
-
-        - commerceLoadSessions: Unique user sessions containing at least one Commerce Load.
-
-        - purchaseIntentClickSessions: Unique user sessions containing at least one Purchase Intent Click.
-
-        - purchaseIntentRateSession: Purchase Intent Click Sessions divided by Commerce Load Sessions.
-
-        - transactions: Number of attributable, unique orders within the retailer-defined attribution window.
-
-        - skuSelected: Number of times a product was selected within a Commerce Experience.
-
-        - onlinePurchaseIntentClicks: Purchase Intent Clicks targeting online stores (e.g., retailer PDPs).
-
-        - offlinePurchaseIntentClicks: Purchase Intent Clicks targeting physical stores (e.g., store cards).
-
-        - avgPriceLocalCurrency: Average product price in the product''s local currency (historical pricing).
-
-        - minPriceLocalCurrency: Minimum product price in the product''s local currency (historical pricing).
-
-        - maxPriceLocalCurrency: Maximum product price in the product''s local currency (historical pricing).
-
-        - medianPriceLocalCurrency: Median product price in the product''s local currency (historical pricing).
-
-        - inStock: Count of in-stock observations for the product at the retailer (historical pricing).
-
-        - outOfStock: Count of out-of-stock observations for the product at the retailer (historical pricing).
-
-        - retailerOpportunities: Count of retailer-display opportunities in the window.
-
-        - missedRetailerOpportunities: Opportunities where no retailer was actually displayed.
-
-        - retailerImpressions: Count of times a retailer was an option to checkout for a recipe.
-
-        - retailerDisplayed: Times at least one store of a retailer was visible in an Experience (logo on-screen).
-
-        - retailerInStock: Times at least one store of a retailer had stock available as a click-through option.
-
-        - retailerOutOfStock: Times an eligible retailer had only out-of-stock stores in the Experience.
-
-        - retailerInStockRate: retailerInStock / (retailerInStock + retailerOutOfStock).
-
-        - retailerDisplayRate: retailerDisplayed / (retailerInStock + retailerOutOfStock).
-
-        - retailerCTR: purchaseIntentClicks / retailerDisplayed (retailer click-through rate).
-
-        - transactionValue: Attributed transaction value (shoppable recipes), in the selected currency.
-
-        - commerceLoadedRate: Commerce-load rate for custom reports (ratio).
-
-        - shoppableCommerceLoadedRate: Percentage of CTA Views that resulted in a Commerce Load (shoppable).
-
-        - visitorConversionRate: purchaseIntentClicks / ctaView.
-
-        - shoppableTransactionConversionRate: transactions / purchaseIntentClicks (shoppable).
-
-        - shoppableTransactionValueConversionRate: transactionValue / purchaseIntentValue (shoppable).'
+        - DESC: Descending (largest/latest first).'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ReportFields:
+      properties:
+        dimensions:
+          anyOf:
+          - $ref: '#/components/schemas/ListConfig'
+          - type: 'null'
+        metrics:
+          anyOf:
+          - $ref: '#/components/schemas/ListConfig'
+          - type: 'null'
+      type: object
+      title: ReportFields
+      description: Report builder configuration
   securitySchemes:
     authorization:
       type: http

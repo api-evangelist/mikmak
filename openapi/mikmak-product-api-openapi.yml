@@ -190,41 +190,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Location:
-      type: object
-      description: Resolved or requested search location (shared across products, availabilities, and cart responses).
-      properties:
-        latitude:
-          type: number
-          description: Latitude
-        longitude:
-          type: number
-          description: Longitude
-        address:
-          type:
-          - string
-          - 'null'
-          description: Address
-        city:
-          type: string
-          description: City
-        country:
-          type: string
-          description: Country
-        state:
-          type: string
-          description: State
-        zipCode:
-          type: string
-          description: Zip code
-        placeType:
-          type:
-          - string
-          - 'null'
-          description: Place type
-        isMetricRegion:
-          type: boolean
-          description: Country is standard metric system (m) or not (miles)
     ProductsResponse:
       type: object
       description: List of products
@@ -278,6 +243,41 @@ components:
                 roundedAverageRating:
                   type: number
                   description: Rounded rating
+    Location:
+      type: object
+      description: Resolved or requested search location (shared across products, availabilities, and cart responses).
+      properties:
+        latitude:
+          type: number
+          description: Latitude
+        longitude:
+          type: number
+          description: Longitude
+        address:
+          type:
+          - string
+          - 'null'
+          description: Address
+        city:
+          type: string
+          description: City
+        country:
+          type: string
+          description: Country
+        state:
+          type: string
+          description: State
+        zipCode:
+          type: string
+          description: Zip code
+        placeType:
+          type:
+          - string
+          - 'null'
+          description: Place type
+        isMetricRegion:
+          type: boolean
+          description: Country is standard metric system (m) or not (miles)
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
