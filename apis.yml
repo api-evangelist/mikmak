@@ -494,6 +494,9 @@ apis:
   - type: APIReference
     url: https://api.mikmak.ai/reporting/docs
 common:
+- type: CapabilityMap
+  url: capabilities/mikmak-capability-edges.yml
+  name: MikMak Business Capability Map
 - type: DeveloperPortal
   url: https://docs.mikmak.ai/docs/developer-portal
 - type: Documentation
