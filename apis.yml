@@ -494,6 +494,10 @@ apis:
   - type: APIReference
     url: https://api.mikmak.ai/reporting/docs
 common:
+- type: Plans
+  url: plans/mikmak-plans-pricing.yml
+- type: FinOps
+  url: finops/mikmak-finops.yml
 - type: CapabilityMap
   url: capabilities/mikmak-capability-edges.yml
   name: MikMak Business Capability Map
