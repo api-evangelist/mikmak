@@ -1,4 +1,4 @@
-# MikMak (mikmak)
+# MikMak
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,78 +64,153 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-MikMak provides eCommerce enablement and analytics software for multichannel brands to convert global customers across social media, retail media, brand websites, search, CTV, display, and QR codes. The platform combines commerce, analytics, and AI-powered insights to connect marketing spend to retail sales performance.
+MikMak is an eCommerce enablement and analytics platform for multichannel brands, converting shoppers across social media, retail media, brand-owned websites, search, CTV, display and QR codes. The platform pairs a Headless Commerce API — product lookup, retailer availability, offers, carts and experience configuration across a global retailer network — with the MikMak Insights reporting API that pushes purchase-intent and attributable-sales data into data lakes and BI tools, and a hosted Model Context Protocol server that exposes the same commerce surface to AI agents. MikMak acquired the French shoppable-media company Swaven in 2021, whose where-to-buy tag technology still powers the brand.com widget and whose name persists in the platform's asset hosts.
 
-**URL:** [https://raw.githubusercontent.com/api-evangelist/mikmak/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/mikmak/refs/heads/main/apis.yml)
+**Areas:** Analytics · Commerce · E-Commerce · Multi-Channel · Retail Media · Where to Buy · Shoppable Media · Product Availability · MCP · Agent-Native · Reporting · Consumer Packaged Goods
 
-## Scope
+## MikMak on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for MikMak is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/mikmak/](https://apis.io/providers/mikmak/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (14)
 
-- Analytics, Commerce, eCommerce, Multichannel, Retail Media
+- [MikMak Aura](https://apis.io/apis/mikmak/mikmak-aura/) — MikMak Aura provides real-time intelligence, fueled by AI, to connect marketing spend across channels to actual sales performance at retailers.
+- [MikMak Commerce MCP Server](https://apis.io/apis/mikmak/mikmak-commerce-mcp/) — The MikMak Commerce MCP Server is a hosted Model Context Protocol surface in front of the Headless Commerce API (v1). It exposes three strictly-typed,…
+- [MikMak Commerce for Brand.com (WTB Tag)](https://apis.io/apis/mikmak/mikmak-brand-com-tag/) — The MikMak where-to-buy tag is the client-side distribution of MikMak Commerce for brand-owned websites. A single async script loaded from wtb-tag.mikmak.ai…
+- [MikMak Authentication API](https://apis.io/apis/mikmak/mikmak-authentication-api/) — The Authentication API from MikMak — 1 operation(s) for authentication.
+- [MikMak Availabilities API](https://apis.io/apis/mikmak/mikmak-availabilities-api/) — The Availabilities API from MikMak — 1 operation(s) for availabilities.
+- [MikMak Cart API](https://apis.io/apis/mikmak/mikmak-cart-api/) — The Cart API from MikMak — 1 operation(s) for cart.
+- [MikMak Custom Reports API](https://apis.io/apis/mikmak/mikmak-custom-reports-api/) — The Custom Reports API from MikMak — 6 operation(s) for custom reports.
+- [MikMak Experiences API](https://apis.io/apis/mikmak/mikmak-experiences-api/) — The Experiences API from MikMak — 2 operation(s) for experiences.
+- [MikMak Facet API](https://apis.io/apis/mikmak/mikmak-facet-api/) — The Facet API from MikMak — 1 operation(s) for facet.
+- [MikMak Historical Pricing Reports API](https://apis.io/apis/mikmak/mikmak-historical-pricing-reports-api/) — The Historical Pricing Reports API from MikMak — 4 operation(s) for historical pricing reports.
+- [MikMak Offers API](https://apis.io/apis/mikmak/mikmak-offers-api/) — The Offers API from MikMak — 1 operation(s) for offers.
+- [MikMak Product API](https://apis.io/apis/mikmak/mikmak-product-api/) — The Product API from MikMak — 1 operation(s) for product.
+- [MikMak Product Search API](https://apis.io/apis/mikmak/mikmak-product-search-api/) — The Product Search API from MikMak — 1 operation(s) for product search.
+- [MikMak Shoppable Recipe Reports API](https://apis.io/apis/mikmak/mikmak-shoppable-recipe-reports-api/) — The Shoppable Recipe Reports API from MikMak — 4 operation(s) for shoppable recipe reports.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-02-21
-- **Modified:** 2026-04-28
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### MikMak Commerce
-MikMak Commerce enables checkout across retailers through various channels including social media, retail media, brand websites, search, CTV, display, QR codes, and more, with AI-powered inventory accuracy.
+Model Context Protocol servers that expose the API to agents.
 
-**Human URL:** [https://www.mikmak.com/products/commerce](https://www.mikmak.com/products/commerce)
+- [MikMak Commerce MCP Server](https://apis.io/servers/mikmak/mikmak-commerce-mcp-server/)
 
-#### Tags
+#### Collections (2)
 
-- Checkout, Commerce, Multichannel
+Postman and Open Collection request collections.
 
-#### Properties
+- [Commerce API (v1)](https://apis.io/collections/mikmak/open-mikmak-commerce-api/)
+- [MikMak Insights API](https://apis.io/collections/mikmak/open-mikmak-insights-api/)
 
-- [Documentation](https://www.mikmak.com/products/commerce)
-- [Help Center](https://help.mikmak.ai/hc)
+#### Overlays (2)
 
-### MikMak Aura
-MikMak Aura provides real-time intelligence, fueled by AI, to connect marketing spend across channels to actual sales performance at retailers.
+OpenAPI overlays, including conversational phrasing for each operation.
 
-**Human URL:** [https://www.mikmak.com/products/aura](https://www.mikmak.com/products/aura)
+- [Mikmak Commerce Api Overlay](https://apis.io/overlays/mikmak/mikmak-commerce-api-overlay/)
+- [Mikmak Insights Api Overlay](https://apis.io/overlays/mikmak/mikmak-insights-api-overlay/)
 
-#### Tags
+#### Security (3)
 
-- AI, Analytics, Marketing Intelligence
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Mikmak Authentication](https://apis.io/security/mikmak/mikmak-authentication/)
+- [Mikmak Domain Security](https://apis.io/security/mikmak/mikmak-domain-security/)
+- [Mikmak Trust Center](https://apis.io/security/mikmak/mikmak-trust-center/)
 
-- [Documentation](https://www.mikmak.com/products/aura)
-- [Help Center](https://help.mikmak.ai/hc)
+#### OAuth scopes (1)
 
-### MikMak Insights
-MikMak Insights delivers multichannel commerce analytics to help brands understand retailer sales impact and consumers' online behavior and preferences.
+The permissions the API asks for.
 
-**Human URL:** [https://www.mikmak.com/products/insights](https://www.mikmak.com/products/insights)
+- [Mikmak Scopes](https://apis.io/scopes/mikmak/mikmak-scopes/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Analytics, Commerce Analytics, Insights
+Published plans, tiers and prices.
 
-#### Properties
+- [Mikmak Plans Pricing](https://apis.io/plans/mikmak/mikmak-plans-pricing/)
 
-- [Documentation](https://www.mikmak.com/products/insights)
-- [Help Center](https://help.mikmak.ai/hc)
+#### Rate limits (1)
 
-## Common Properties
+Published request limits.
+
+- [Mikmak Rate Limits](https://apis.io/rate-limits/mikmak/mikmak-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Mikmak Finops](https://apis.io/finops/mikmak/mikmak-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.mikmak.com)
-- [Help Center](https://help.mikmak.ai/hc)
+- [Documentation](https://docs.mikmak.ai/)
+- [Getting started](https://docs.mikmak.ai/docs/quick-start-1)
+- [API reference](https://docs.mikmak.ai/reference/mikmak-headless-commerce-api)
+- [Support](https://docs.mikmak.ai/page/support)
+- [Changelog](https://www.mikmak.com/product-updates)
 - [Blog](https://www.mikmak.com/blog)
-- [Contact](https://www.mikmak.com/contact)
+- [Terms of service](https://www.mikmak.com/legal/terms)
+- [Privacy policy](https://www.mikmak.com/legal/privacypolicy)
+- [GitHub](https://github.com/Swaven)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
+**Kin Score 47.1** — developing · rubric 0.25.0 · scored 2026-10-23
 
-**Email:** kin@apievangelist.com
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 51.4 |
+| Contract governance | 4.5 |
+| Operational transparency | 50.0 |
+| Developer ergonomics | 41.1 |
+| Access clarity | 43.4 |
+
+**Agent readiness 33.4** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 43.1** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/mikmak/](https://apis.io/providers/mikmak/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for MikMak: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/mikmak/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
